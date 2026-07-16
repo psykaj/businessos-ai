@@ -1,7 +1,9 @@
 using System.Text;
 using backend.Authentication;
 using backend.Configurations;
-using backend.Data;
+using backend.Persistence;
+using backend.Extensions;
+using backend.Seed;
 using backend.Interfaces;
 using backend.Middleware;
 using backend.Services;
@@ -22,8 +24,7 @@ var jwtSettings = builder.Configuration
     .Get<JwtSettings>()!;
 
 // ─── Database ─────────────────────────────────────────────────────────────────
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDatabaseInfrastructure(builder.Configuration);
 
 // ─── Authentication & Authorization ───────────────────────────────────────────
 builder.Services
@@ -91,23 +92,23 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// ─── Auto-apply Migrations on Startup ─────────────────────────────────────────
-using (var scope = app.Services.CreateScope())
+// ─── Auto-apply Migrations & Seed on Startup ──────────────────────────────────
+try
 {
-    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-    try
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    if (app.Environment.IsDevelopment())
     {
-        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        db.Database.Migrate();
-        logger.LogInformation("Database migrations applied successfully.");
+        await SeedData.InitializeAsync(app.Services);
+        logger.LogInformation("Database migrations and seed data applied successfully.");
     }
-    catch (Exception ex)
-    {
-        logger.LogWarning(
-            "Could not connect to the database on startup: {Message}. " +
-            "Ensure PostgreSQL is running. The API will start but database operations will fail.",
-            ex.Message);
-    }
+}
+catch (Exception ex)
+{
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    logger.LogWarning(
+        "Could not connect to the database on startup: {Message}. " +
+        "Ensure PostgreSQL is running. The API will start but database operations will fail.",
+        ex.Message);
 }
 
 
