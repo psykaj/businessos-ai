@@ -14,6 +14,7 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<Organization> Organizations => Set<Organization>();
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<QRCode> QRCodes => Set<QRCode>();
+    public DbSet<backend.Modules.Analytics.Models.QRScan> QRScans => Set<backend.Modules.Analytics.Models.QRScan>();
     public DbSet<Review> Reviews => Set<Review>();
     public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<Campaign> Campaigns => Set<Campaign>();
