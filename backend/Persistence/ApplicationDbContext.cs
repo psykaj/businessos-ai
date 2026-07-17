@@ -1,5 +1,6 @@
 using backend.Common;
 using backend.Entities;
+using backend.Modules.QRCode.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Persistence;

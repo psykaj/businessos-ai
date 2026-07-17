@@ -3,6 +3,7 @@ using backend.Authentication;
 using backend.Configurations;
 using backend.Persistence;
 using backend.Extensions;
+using backend.Modules.QRCode.Extensions;
 using backend.Seed;
 using backend.Interfaces;
 using backend.Middleware;
@@ -72,6 +73,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
 
 // ─── Controllers & OpenAPI ────────────────────────────────────────────────────
+builder.Services.AddQRCodeModule();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
