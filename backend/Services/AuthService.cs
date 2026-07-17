@@ -27,13 +27,25 @@ public sealed class AuthService : IAuthService
         if (emailExists)
             throw new InvalidOperationException("An account with this email address already exists.");
 
+        var organization = new backend.Entities.Organization
+        {
+            Name = $"{request.FullName}'s Organization",
+            Slug = request.Email.Split('@')[0].ToLower() + "-" + Guid.NewGuid().ToString().Substring(0, 8),
+            Email = request.Email.ToLower().Trim(),
+            SubscriptionPlan = "Free",
+            SubscriptionStatus = "Active"
+        };
+
+        _context.Organizations.Add(organization);
+
         var user = new User
         {
             FullName = request.FullName.Trim(),
             Email = request.Email.ToLower().Trim(),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-            Role = "User",
-            IsActive = true
+            Role = "Admin", // First user in org is Admin
+            IsActive = true,
+            Organization = organization
         };
 
         _context.Users.Add(user);

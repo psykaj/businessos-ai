@@ -4,6 +4,14 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: "../",
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5294"}/api/:path*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

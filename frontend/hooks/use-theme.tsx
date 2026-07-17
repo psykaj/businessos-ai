@@ -49,6 +49,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const initial = stored ?? "system";
     const resolved = resolveTheme(initial);
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setThemeState(initial);
     setResolvedTheme(resolved);
     applyTheme(resolved);

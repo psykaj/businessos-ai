@@ -53,12 +53,7 @@ public class CustomerConfiguration : BaseEntityConfiguration<Customer> {
         builder.HasIndex(e => e.OrganizationId);
     }
 }
-public class QRCodeConfiguration : BaseEntityConfiguration<QRCode> {
-    public override void Configure(EntityTypeBuilder<QRCode> builder) {
-        base.Configure(builder);
-        builder.HasIndex(e => e.OrganizationId);
-    }
-}
+
 public class ReviewConfiguration : BaseEntityConfiguration<Review> {
     public override void Configure(EntityTypeBuilder<Review> builder) {
         base.Configure(builder);
