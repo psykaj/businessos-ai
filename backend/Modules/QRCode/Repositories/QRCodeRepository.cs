@@ -17,8 +17,12 @@ public class QRCodeRepository : IQRCodeRepository
 
     public async Task<Models.QRCode?> GetByIdAsync(Guid id, Guid organizationId, CancellationToken cancellationToken = default)
     {
-        return await _context.QRCodes
-            .FirstOrDefaultAsync(x => x.Id == id && x.OrganizationId == organizationId && !x.IsDeleted, cancellationToken);
+        var query = _context.QRCodes.Where(x => x.Id == id && !x.IsDeleted);
+        if (organizationId != Guid.Empty)
+        {
+            query = query.Where(x => x.OrganizationId == organizationId);
+        }
+        return await query.FirstOrDefaultAsync(cancellationToken);
     }
 
     public async Task<Models.QRCode?> GetByShortCodeAsync(string shortCode, CancellationToken cancellationToken = default)

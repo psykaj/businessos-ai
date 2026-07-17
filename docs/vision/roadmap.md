@@ -2,9 +2,11 @@
 
 ## Phase 1
 
-- Project Setup
-- Authentication
-- Dashboard
+- [x] Project Setup
+- [x] Authentication
+- [x] Dashboard
+- [x] QR Code Module Backend (Generation & CRUD)
+- [x] QR Code Module Frontend (Dashboard & Builder)
 
 ## Phase 2
 

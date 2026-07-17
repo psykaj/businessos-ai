@@ -15,9 +15,11 @@ public class QRCodeDto
     public string Status { get; set; } = string.Empty;
     public string? Folder { get; set; }
     public List<string> Tags { get; set; } = new();
-    public string ForegroundColor { get; set; } = string.Empty;
-    public string BackgroundColor { get; set; } = string.Empty;
+    public string ForegroundColor { get; set; } = "#000000";
+    public string BackgroundColor { get; set; } = "#FFFFFF";
     public string? LogoUrl { get; set; }
+    public string? LabelText { get; set; }
+    public string? LabelFont { get; set; }
     public int Size { get; set; }
     public int Margin { get; set; }
     public string ErrorCorrectionLevel { get; set; } = string.Empty;

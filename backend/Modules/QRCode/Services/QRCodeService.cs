@@ -39,6 +39,8 @@ public class QRCodeService : IQRCodeService
             ForegroundColor = dto.ForegroundColor,
             BackgroundColor = dto.BackgroundColor,
             LogoUrl = dto.LogoUrl,
+            LabelText = dto.LabelText,
+            LabelFont = dto.LabelFont,
             Size = dto.Size,
             Margin = dto.Margin,
             ErrorCorrectionLevel = dto.ErrorCorrectionLevel,
@@ -65,10 +67,12 @@ public class QRCodeService : IQRCodeService
         qrCode.Folder = dto.Folder;
         qrCode.Tags = dto.Tags ?? new List<string>();
         qrCode.Status = dto.Status;
-        qrCode.ForegroundColor = dto.ForegroundColor;
-        qrCode.BackgroundColor = dto.BackgroundColor;
-        qrCode.LogoUrl = dto.LogoUrl;
-        qrCode.Size = dto.Size;
+        if (!string.IsNullOrEmpty(dto.ForegroundColor)) qrCode.ForegroundColor = dto.ForegroundColor;
+        if (!string.IsNullOrEmpty(dto.BackgroundColor)) qrCode.BackgroundColor = dto.BackgroundColor;
+        if (dto.LogoUrl != null) qrCode.LogoUrl = dto.LogoUrl;
+        if (dto.LabelText != null) qrCode.LabelText = dto.LabelText;
+        if (dto.LabelFont != null) qrCode.LabelFont = dto.LabelFont;
+        if (dto.Size.HasValue) qrCode.Size = dto.Size.Value;
         qrCode.Margin = dto.Margin;
         qrCode.ErrorCorrectionLevel = dto.ErrorCorrectionLevel;
         qrCode.ExpirationDate = dto.ExpirationDate;
@@ -131,9 +135,10 @@ public class QRCodeService : IQRCodeService
         if (qrCode == null)
             throw new KeyNotFoundException($"QRCode with ID {id} not found.");
 
-        // Normally, the content embedded in the QR code might be a link to our tracking short url.
-        // For now, let's embed the original value directly or a simulated short URL.
-        string contentToEmbed = qrCode.OriginalValue;
+        // Use a frontend redirect route for tracking and password protection
+        // Ideally we'd pull the base URL from appsettings.json, but for now fallback to localhost
+        var appUrl = Environment.GetEnvironmentVariable("NEXT_PUBLIC_APP_URL") ?? "http://localhost:3000";
+        string contentToEmbed = $"{appUrl}/r/{qrCode.ShortCode}";
 
         if (format.ToLower() == "svg")
         {
@@ -183,6 +188,8 @@ public class QRCodeService : IQRCodeService
             ForegroundColor = qrCode.ForegroundColor,
             BackgroundColor = qrCode.BackgroundColor,
             LogoUrl = qrCode.LogoUrl,
+            LabelText = qrCode.LabelText,
+            LabelFont = qrCode.LabelFont,
             Size = qrCode.Size,
             Margin = qrCode.Margin,
             ErrorCorrectionLevel = qrCode.ErrorCorrectionLevel,

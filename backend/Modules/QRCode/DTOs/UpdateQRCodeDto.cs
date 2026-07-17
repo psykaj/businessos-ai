@@ -12,10 +12,12 @@ public class UpdateQRCodeDto
     public string Status { get; set; } = "Active";
     
     // Customization
-    public string ForegroundColor { get; set; } = "#000000";
-    public string BackgroundColor { get; set; } = "#FFFFFF";
+    public string? ForegroundColor { get; set; }
+    public string? BackgroundColor { get; set; }
     public string? LogoUrl { get; set; }
-    public int Size { get; set; } = 256;
+    public string? LabelText { get; set; }
+    public string? LabelFont { get; set; }
+    public int? Size { get; set; } = 256;
     public int Margin { get; set; } = 1;
     public string ErrorCorrectionLevel { get; set; } = "M";
     

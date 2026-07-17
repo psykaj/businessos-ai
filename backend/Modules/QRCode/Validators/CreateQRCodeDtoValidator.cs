@@ -18,6 +18,9 @@ public class CreateQRCodeDtoValidator : AbstractValidator<CreateQRCodeDto>
         RuleFor(x => x.Description)
             .MaximumLength(500).WithMessage("Description cannot exceed 500 characters.");
 
+        RuleFor(x => x.LabelText)
+            .MaximumLength(100).WithMessage("Label Text cannot exceed 100 characters.");
+
         RuleFor(x => x.QRType)
             .IsInEnum().WithMessage("Invalid QR Type.");
 

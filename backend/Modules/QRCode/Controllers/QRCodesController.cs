@@ -140,17 +140,14 @@ public class QRCodesController : ControllerBase
     }
 
     [HttpGet("{id:guid}/image")]
+    [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetImage(Guid id, [FromQuery] string format = "png", CancellationToken cancellationToken = default)
     {
-        var orgId = await GetOrganizationIdAsync(cancellationToken);
-        if (orgId == Guid.Empty)
-            return Unauthorized(ApiResponse<object>.Fail(["User not associated with an organization."]));
-
         try
         {
-            var imageBytes = await _qrCodeService.GenerateImageAsync(id, orgId, format, cancellationToken);
+            var imageBytes = await _qrCodeService.GenerateImageAsync(id, Guid.Empty, format, cancellationToken);
             if (format.ToLower() == "svg")
                 return File(imageBytes, "image/svg+xml");
             else
