@@ -1,0 +1,19 @@
+- `[x]` Backend History Endpoint
+  - `[x]` Create `ScanHistoryDto.cs`
+  - `[x]` Update `IAnalyticsRepository.cs` and `AnalyticsRepository.cs`
+  - `[x]` Update `AnalyticsController.cs`
+- `[x]` Frontend Architecture
+  - `[x]` Define TypeScript interfaces in `types/analytics.ts`
+  - `[x]` Create `lib/analytics-service.ts`
+  - `[x]` Add React Query Provider in `components/providers/query-provider.tsx` and `app/layout.tsx`
+- `[x]` UI Components
+  - `[x]` Build `date-range-picker.tsx`
+  - `[x]` Build `kpi-cards.tsx`
+  - `[x]` Build `analytics-charts.tsx`
+  - `[x]` Build `scan-history-table.tsx`
+- `[x]` Pages
+  - `[x]` Implement `/dashboard/analytics/page.tsx`
+  - `[x]` Implement `/dashboard/analytics/[qrId]/page.tsx`
+- `[x]` Verification
+  - `[x]` Ensure strict TypeScript checks pass
+  - `[x]` Verify responsiveness across views
