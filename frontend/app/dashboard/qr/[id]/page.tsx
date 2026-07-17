@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { QRPreview } from "@/components/qr/qr-preview";
 import { toPng, toSvg } from "html-to-image";
+import { QRAnalyticsChart } from "@/components/qr/qr-analytics-chart";
 
 export default function QRDetailsPage() {
   const params = useParams();
@@ -129,7 +130,7 @@ export default function QRDetailsPage() {
                 foregroundColor={data.foregroundColor}
                 backgroundColor={data.backgroundColor}
                 size={data.size}
-                originalValue={data.originalValue}
+                originalValue={typeof window !== 'undefined' ? `${window.location.origin}/r/${data.shortCode}` : ""}
                 margin={data.margin}
                 errorCorrectionLevel={data.errorCorrectionLevel}
                 labelText={data.labelText}
@@ -217,9 +218,7 @@ export default function QRDetailsPage() {
           <CardDescription>Total Scans: <span className="font-bold">{data.scanCount}</span></CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-64 flex items-center justify-center border border-dashed rounded-lg bg-muted/20">
-            <p className="text-muted-foreground text-sm">Detailed analytics charts coming soon.</p>
-          </div>
+          <QRAnalyticsChart totalScans={data.scanCount} />
         </CardContent>
       </Card>
     </div>

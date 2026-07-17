@@ -23,22 +23,30 @@ import { ColorPicker } from "./color-picker";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required").max(150),
-  description: z.string().max(500).optional(),
-  qrType: z.nativeEnum(QRType),
+  description: z.string().max(500).optional().nullable(),
+  qrType: z.string().min(1),
   originalValue: z.string().min(1, "Destination Value is required"),
-  folder: z.string().optional(),
-  tags: z.string().optional(), // Will split by comma
-  foregroundColor: z.string().regex(/^#(?:[0-9a-fA-F]{3}){1,2}$/, "Must be a valid hex color"),
-  backgroundColor: z.string().regex(/^#(?:[0-9a-fA-F]{3}){1,2}$/, "Must be a valid hex color"),
-  size: z.number().min(100).max(2000),
+  folder: z.string().optional().nullable(),
+  tags: z.string().optional().nullable(),
+  foregroundColor: z.string(),
+  backgroundColor: z.string(),
+  size: z.number().min(50).max(2500),
   margin: z.number().min(0).max(10),
-  errorCorrectionLevel: z.enum(["L", "M", "Q", "H"]),
-  labelText: z.string().max(100).optional(),
-  labelFont: z.string().optional(),
-  logoUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+  errorCorrectionLevel: z.string(),
+  labelText: z.string().max(100).optional().nullable(),
+  labelFont: z.string().optional().nullable(),
+  logoUrl: z.string().optional().nullable(),
   passwordProtected: z.boolean(),
-  password: z.string().optional(),
-  expirationDate: z.string().optional(),
+  password: z.string().optional().nullable(),
+  expirationDate: z.string().optional().nullable(),
+}).refine(data => {
+  if (data.passwordProtected && (!data.password || data.password.trim().length === 0)) {
+    return false;
+  }
+  return true;
+}, {
+  message: "Password is required",
+  path: ["password"]
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -118,18 +126,42 @@ export function QRForm({ initialData, isEditing }: QRFormProps) {
       
       if (isEditing && initialData) {
         const updateDto: UpdateQRCodeDto = {
-          ...data,
+          name: data.name,
+          description: data.description || undefined,
+          originalValue: data.originalValue,
+          folder: data.folder || undefined,
           tags: tagsArray,
           status: initialData.status,
+          foregroundColor: data.foregroundColor,
+          backgroundColor: data.backgroundColor,
+          logoUrl: data.logoUrl || undefined,
+          labelText: data.labelText || undefined,
+          labelFont: data.labelFont || undefined,
+          size: data.size,
+          margin: data.margin,
+          errorCorrectionLevel: data.errorCorrectionLevel,
+          password: data.passwordProtected ? (data.password || undefined) : undefined,
           expirationDate: data.expirationDate ? new Date(data.expirationDate).toISOString() : undefined,
-          password: data.passwordProtected ? data.password : "",
         };
         await qrService.updateQRCode(initialData.id, updateDto);
         toast.success("QR Code updated successfully");
       } else {
         const createDto: CreateQRCodeDto = {
-          ...data,
+          name: data.name,
+          qrType: data.qrType as QRType,
+          description: data.description || undefined,
+          originalValue: data.originalValue,
+          folder: data.folder || undefined,
           tags: tagsArray,
+          foregroundColor: data.foregroundColor,
+          backgroundColor: data.backgroundColor,
+          logoUrl: data.logoUrl || undefined,
+          labelText: data.labelText || undefined,
+          labelFont: data.labelFont || undefined,
+          size: data.size,
+          margin: data.margin,
+          errorCorrectionLevel: data.errorCorrectionLevel,
+          password: data.passwordProtected ? (data.password || undefined) : undefined,
           expirationDate: data.expirationDate ? new Date(data.expirationDate).toISOString() : undefined,
         };
         await qrService.createQRCode(createDto);
@@ -138,33 +170,43 @@ export function QRForm({ initialData, isEditing }: QRFormProps) {
       router.push("/dashboard/qr");
       router.refresh();
     } catch (error: unknown) {
-      toast.error((error as { response?: { data?: { Message?: string } } }).response?.data?.Message || "An error occurred");
+      console.error("Submission error:", error);
+      toast.error((error as { response?: { data?: { Message?: string } } }).response?.data?.Message || "An error occurred during submission");
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const onError = (errors: any) => {
+    console.error("Form validation errors:", errors);
+    toast.error("Please fill in all required fields correctly.");
   };
 
   return (
     <TooltipProvider>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-7 xl:col-span-8">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 bg-card p-6 md:p-8 rounded-xl border shadow-sm">
+          <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-8 bg-card p-6 md:p-8 rounded-xl border shadow-sm">
             <div>
               <h2 className="text-2xl font-semibold mb-6">Create QR Code</h2>
               <div className="space-y-6">
                 
                 {/* 1. Essential Input */}
                 <div className="space-y-2">
-                  <Label htmlFor="originalValue" className="text-base">Destination URL or Text *</Label>
-                  <Input id="originalValue" className="h-12 text-base" {...register("originalValue")} placeholder={getDestinationPlaceholder(watchQrType)} autoFocus />
-                  {errors.originalValue && <p className="text-sm text-destructive">{errors.originalValue.message}</p>}
+                  <div className="flex justify-between items-baseline">
+                    <Label htmlFor="originalValue" className="text-base">Destination URL or Text *</Label>
+                    {errors.originalValue && <span className="text-sm font-medium text-destructive">{errors.originalValue.message}</span>}
+                  </div>
+                  <Input id="originalValue" className={`h-12 text-base ${errors.originalValue ? 'border-destructive focus-visible:ring-destructive' : ''}`} {...register("originalValue")} placeholder={getDestinationPlaceholder(watchQrType as QRType)} autoFocus />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Internal Name *</Label>
-                    <Input id="name" {...register("name")} placeholder="My Website QR" />
-                    {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
+                    <div className="flex justify-between items-baseline">
+                      <Label htmlFor="name">Internal Name *</Label>
+                      {errors.name && <span className="text-sm font-medium text-destructive">{errors.name.message}</span>}
+                    </div>
+                    <Input id="name" className={errors.name ? 'border-destructive focus-visible:ring-destructive' : ''} {...register("name")} placeholder="My Website QR" />
                   </div>
 
                   <div className="space-y-2">
@@ -188,8 +230,18 @@ export function QRForm({ initialData, isEditing }: QRFormProps) {
                   </div>
                 </div>
 
-                {/* 2. Visuals & Layout Settings */}
-                <div className="pt-4 border-t border-border mt-4">
+                {/* 3. Advanced Settings Accordion */}
+                <Accordion className="w-full mt-4">
+                  <AccordionItem value="advanced-settings" className="border-t border-border mt-4">
+                    <AccordionTrigger className="text-muted-foreground hover:text-foreground">
+                      <div className="flex items-center gap-2">
+                        <Settings className="h-4 w-4" />
+                        <span>Advanced Options (Colors, Branding, Protection)</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-6 pt-4 pb-2 px-1">
+{/* 2. Visuals & Layout Settings */}
+                <div className="pt-2">
                   <h3 className="text-lg font-medium mb-4">Design & Adjustments</h3>
                   <div className="space-y-6">
                     <div className="space-y-4">
@@ -269,16 +321,9 @@ export function QRForm({ initialData, isEditing }: QRFormProps) {
                   </div>
                 </div>
 
-                {/* 3. Advanced Settings Accordion */}
-                <Accordion className="w-full mt-4">
-                  <AccordionItem value="advanced-settings" className="border-t border-border mt-4">
-                    <AccordionTrigger className="text-muted-foreground hover:text-foreground">
-                      <div className="flex items-center gap-2">
-                        <Settings className="h-4 w-4" />
-                        <span>Advanced Options (Colors, Branding, Protection)</span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="space-y-6 pt-4 pb-2 px-1">
+                
+<div className="border-t border-border my-6"></div>
+
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Controller
@@ -342,7 +387,11 @@ export function QRForm({ initialData, isEditing }: QRFormProps) {
                           
                           {watchPasswordProtected && (
                             <div className="space-y-2 mt-2">
-                              <Input id="password" type="password" {...register("password")} placeholder="Set a password" />
+                              <div className="flex justify-between items-baseline">
+                                <Label htmlFor="password">Password *</Label>
+                                {errors.password && <span className="text-sm font-medium text-destructive">{errors.password.message}</span>}
+                              </div>
+                              <Input id="password" type="password" className={errors.password ? 'border-destructive focus-visible:ring-destructive' : ''} {...register("password")} placeholder="Set a password" />
                             </div>
                           )}
                         </div>
@@ -391,12 +440,12 @@ export function QRForm({ initialData, isEditing }: QRFormProps) {
               foregroundColor={watchForegroundColor} 
               backgroundColor={watchBackgroundColor} 
               size={watchSize} 
-              originalValue={watchOriginalValue}
+              originalValue={(isEditing && initialData?.shortCode && typeof window !== 'undefined') ? `${window.location.origin}/r/${initialData.shortCode}` : watchOriginalValue}
               margin={watchMargin}
               errorCorrectionLevel={watchErrorCorrectionLevel}
-              labelText={watchLabelText}
-              labelFont={watchLabelFont}
-              logoUrl={watchLogoUrl}
+              labelText={watchLabelText ?? undefined}
+              labelFont={watchLabelFont ?? undefined}
+              logoUrl={watchLogoUrl ?? undefined}
               qrImageUrl={qrImageUrl}
             />
           </div>

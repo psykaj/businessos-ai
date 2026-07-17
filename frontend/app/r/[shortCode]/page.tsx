@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Lock, AlertCircle, Loader2 } from "lucide-react";
+import { Lock, AlertCircle, Loader2, FileText, Copy } from "lucide-react";
 import { toast } from "sonner";
 
 export default function RedirectPage() {
@@ -19,6 +19,29 @@ export default function RedirectPage() {
   const [isPasswordProtected, setIsPasswordProtected] = useState(false);
   const [password, setPassword] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
+  const [scannedData, setScannedData] = useState<string | null>(null);
+
+  const handleOriginalValue = (value: string) => {
+    let urlToRedirect = value;
+    
+    // Intelligently prepend https:// if it looks like a domain without a protocol
+    if (!/^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(value) && value.includes('.') && !value.includes(' ')) {
+      urlToRedirect = `https://${value}`;
+    }
+
+    if (
+      urlToRedirect.startsWith("http://") || 
+      urlToRedirect.startsWith("https://") || 
+      urlToRedirect.startsWith("mailto:") || 
+      urlToRedirect.startsWith("tel:") || 
+      urlToRedirect.startsWith("sms:")
+    ) {
+      window.location.replace(urlToRedirect);
+    } else {
+      setScannedData(value);
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!shortCode) return;
@@ -33,7 +56,7 @@ export default function RedirectPage() {
         } else {
           // If not password protected, verify with empty password to get URL and log scan
           const originalValue = await qrService.verifyPassword(shortCode, "");
-          window.location.replace(originalValue);
+          handleOriginalValue(originalValue);
         }
       } catch (err: any) {
         setIsLoading(false);
@@ -54,8 +77,8 @@ export default function RedirectPage() {
     setIsVerifying(true);
     try {
       const originalValue = await qrService.verifyPassword(shortCode, password);
-      // Successful verification, redirect
-      window.location.replace(originalValue);
+      // Successful verification, handle value
+      handleOriginalValue(originalValue);
     } catch (err: any) {
       toast.error(err.response?.data?.Message || "Invalid password");
       setPassword("");
@@ -128,6 +151,39 @@ export default function RedirectPage() {
               </Button>
             </CardFooter>
           </form>
+        </Card>
+      </div>
+    );
+  }
+
+  if (scannedData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-muted/30 p-4">
+        <Card className="max-w-md w-full">
+          <CardHeader className="text-center pb-2">
+            <div className="mx-auto bg-primary/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+              <FileText className="h-6 w-6 text-primary" />
+            </div>
+            <CardTitle>Scanned Content</CardTitle>
+            <CardDescription>
+              The QR code contained the following information.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="bg-muted p-4 rounded-md whitespace-pre-wrap break-all font-mono text-sm max-h-64 overflow-y-auto">
+              {scannedData}
+            </div>
+            <Button 
+              className="w-full" 
+              variant="outline" 
+              onClick={() => {
+                navigator.clipboard.writeText(scannedData);
+                toast.success("Copied to clipboard!");
+              }}
+            >
+              <Copy className="mr-2 h-4 w-4" /> Copy to Clipboard
+            </Button>
+          </CardContent>
         </Card>
       </div>
     );
