@@ -1,0 +1,5 @@
+- [ ] Restructure `sidebar.tsx` with navigation groups
+- [ ] Add Billing, Subscriptions, Invoices, Payments, Pricing links to Sidebar
+- [ ] Add "Upgrade to Pro" banner in Sidebar
+- [ ] Update `header.tsx` with dynamic page titles
+- [ ] Verify responsive design and build

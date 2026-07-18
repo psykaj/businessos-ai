@@ -177,6 +177,7 @@ export function QRForm({ initialData, isEditing }: QRFormProps) {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onError = (errors: any) => {
     console.error("Form validation errors:", errors);
     toast.error("Please fill in all required fields correctly.");

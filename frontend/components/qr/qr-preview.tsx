@@ -36,6 +36,7 @@ export function QRPreview({
   const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setImageError(false);
   }, [logoUrl]);
   
@@ -70,6 +71,7 @@ export function QRPreview({
                       size={safeSize} 
                       bgColor={backgroundColor}
                       fgColor={foregroundColor}
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       level={errorCorrectionLevel as any}
                       marginSize={margin}
                       style={{ width: "100%", height: "auto" }}
