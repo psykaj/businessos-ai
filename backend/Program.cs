@@ -5,6 +5,7 @@ using backend.Persistence;
 using backend.Extensions;
 using backend.Modules.QRCode.Extensions;
 using backend.Modules.Analytics.Extensions;
+using backend.Modules.Billing.Extensions;
 using backend.Seed;
 using backend.Interfaces;
 using backend.Middleware;
@@ -76,6 +77,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>()
 // ─── Controllers & OpenAPI ────────────────────────────────────────────────────
 builder.Services.AddQRCodeModule();
 builder.Services.AddAnalyticsModule();
+builder.Services.AddBillingModule();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {

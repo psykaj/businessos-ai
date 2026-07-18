@@ -2,14 +2,15 @@ using backend.Common;
 
 namespace backend.Entities;
 
-public class Invoice : BaseEntity
+public class Payment : BaseEntity
 {
     public Guid OrganizationId { get; set; }
     public Organization? Organization { get; set; }
     
-    public string Number { get; set; } = string.Empty;
+    public string PlanName { get; set; } = string.Empty;
     public decimal Amount { get; set; }
     public string Status { get; set; } = string.Empty;
-    public string? PdfUrl { get; set; }
-    public string? RazorpayInvoiceId { get; set; }
+    public string TransactionId { get; set; } = string.Empty;
+    public Guid? InvoiceId { get; set; }
+    public Invoice? Invoice { get; set; }
 }

@@ -48,6 +48,7 @@ export const qrService = {
     window.URL.revokeObjectURL(url);
   },
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getPublicQRCode(shortCode: string): Promise<any> {
     const { data } = await apiClient.get(`/api/public/qrcodes/${shortCode}`);
     return data.data;

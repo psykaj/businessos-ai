@@ -121,3 +121,10 @@ public class SubscriptionConfiguration : BaseEntityConfiguration<Subscription> {
         builder.HasIndex(e => e.OrganizationId);
     }
 }
+
+public class PaymentConfiguration : BaseEntityConfiguration<Payment> {
+    public override void Configure(EntityTypeBuilder<Payment> builder) {
+        base.Configure(builder);
+        builder.HasIndex(e => e.OrganizationId);
+    }
+}

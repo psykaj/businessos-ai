@@ -12,28 +12,41 @@ namespace backend.Modules.Analytics.Controllers;
 public class AnalyticsController : ControllerBase
 {
     private readonly IAnalyticsRepository _analyticsRepository;
+    private readonly backend.Persistence.ApplicationDbContext _context;
 
-    public AnalyticsController(IAnalyticsRepository analyticsRepository)
+    public AnalyticsController(IAnalyticsRepository analyticsRepository, backend.Persistence.ApplicationDbContext context)
     {
         _analyticsRepository = analyticsRepository;
+        _context = context;
     }
 
-    private Guid GetOrganizationId()
+    private async Task<Guid> GetOrganizationIdAsync(CancellationToken cancellationToken = default)
     {
         var orgIdClaim = User.FindFirst("OrganizationId")?.Value;
         if (Guid.TryParse(orgIdClaim, out var orgId))
         {
             return orgId;
         }
+
+        var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            throw new UnauthorizedAccessException("User not authenticated");
+
+        var user = await _context.Users.FindAsync(new object[] { userId }, cancellationToken);
+        if (user != null)
+        {
+            return user.OrganizationId;
+        }
+
         throw new UnauthorizedAccessException("Organization ID not found in token.");
     }
 
     [HttpGet("overview")]
-    public async Task<ActionResult<AnalyticsOverviewDto>> GetOverview([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    public async Task<ActionResult<AnalyticsOverviewDto>> GetOverview([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, CancellationToken cancellationToken)
     {
         try
         {
-            var orgId = GetOrganizationId();
+            var orgId = await GetOrganizationIdAsync(cancellationToken);
             var overview = await _analyticsRepository.GetOverviewAsync(orgId, startDate, endDate);
             return Ok(overview);
         }
@@ -44,11 +57,11 @@ public class AnalyticsController : ControllerBase
     }
 
     [HttpGet("qrcode/{id}")]
-    public async Task<ActionResult<QRPerformanceDto>> GetQRPerformance(Guid id, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    public async Task<ActionResult<QRPerformanceDto>> GetQRPerformance(Guid id, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, CancellationToken cancellationToken)
     {
         try
         {
-            var orgId = GetOrganizationId();
+            var orgId = await GetOrganizationIdAsync(cancellationToken);
             var performance = await _analyticsRepository.GetQRPerformanceAsync(orgId, id, startDate, endDate);
             if (performance == null) return NotFound("QR Code not found for this organization.");
             return Ok(performance);
@@ -60,11 +73,11 @@ public class AnalyticsController : ControllerBase
     }
 
     [HttpGet("timeline")]
-    public async Task<ActionResult<IEnumerable<ScanTimelineDto>>> GetTimeline([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    public async Task<ActionResult<IEnumerable<ScanTimelineDto>>> GetTimeline([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, CancellationToken cancellationToken)
     {
         try
         {
-            var orgId = GetOrganizationId();
+            var orgId = await GetOrganizationIdAsync(cancellationToken);
             var timeline = await _analyticsRepository.GetTimelineAsync(orgId, startDate, endDate);
             return Ok(timeline);
         }
@@ -75,11 +88,11 @@ public class AnalyticsController : ControllerBase
     }
 
     [HttpGet("devices")]
-    public async Task<ActionResult<IEnumerable<DeviceAnalyticsDto>>> GetDevices([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    public async Task<ActionResult<IEnumerable<DeviceAnalyticsDto>>> GetDevices([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, CancellationToken cancellationToken)
     {
         try
         {
-            var orgId = GetOrganizationId();
+            var orgId = await GetOrganizationIdAsync(cancellationToken);
             var devices = await _analyticsRepository.GetDeviceAnalyticsAsync(orgId, startDate, endDate);
             return Ok(devices);
         }
@@ -90,11 +103,11 @@ public class AnalyticsController : ControllerBase
     }
 
     [HttpGet("browsers")]
-    public async Task<ActionResult<IEnumerable<BrowserAnalyticsDto>>> GetBrowsers([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    public async Task<ActionResult<IEnumerable<BrowserAnalyticsDto>>> GetBrowsers([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, CancellationToken cancellationToken)
     {
         try
         {
-            var orgId = GetOrganizationId();
+            var orgId = await GetOrganizationIdAsync(cancellationToken);
             var browsers = await _analyticsRepository.GetBrowserAnalyticsAsync(orgId, startDate, endDate);
             return Ok(browsers);
         }
@@ -105,11 +118,11 @@ public class AnalyticsController : ControllerBase
     }
 
     [HttpGet("countries")]
-    public async Task<ActionResult<IEnumerable<CountryAnalyticsDto>>> GetCountries([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    public async Task<ActionResult<IEnumerable<CountryAnalyticsDto>>> GetCountries([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, CancellationToken cancellationToken)
     {
         try
         {
-            var orgId = GetOrganizationId();
+            var orgId = await GetOrganizationIdAsync(cancellationToken);
             var countries = await _analyticsRepository.GetCountryAnalyticsAsync(orgId, startDate, endDate);
             return Ok(countries);
         }
@@ -120,11 +133,11 @@ public class AnalyticsController : ControllerBase
     }
 
     [HttpGet("referrers")]
-    public async Task<ActionResult<IEnumerable<ReferrerAnalyticsDto>>> GetReferrers([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    public async Task<ActionResult<IEnumerable<ReferrerAnalyticsDto>>> GetReferrers([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, CancellationToken cancellationToken)
     {
         try
         {
-            var orgId = GetOrganizationId();
+            var orgId = await GetOrganizationIdAsync(cancellationToken);
             var referrers = await _analyticsRepository.GetReferrerAnalyticsAsync(orgId, startDate, endDate);
             return Ok(referrers);
         }
@@ -141,11 +154,12 @@ public class AnalyticsController : ControllerBase
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10,
         [FromQuery] DateTime? startDate = null,
-        [FromQuery] DateTime? endDate = null)
+        [FromQuery] DateTime? endDate = null,
+        CancellationToken cancellationToken = default)
     {
         try
         {
-            var orgId = GetOrganizationId();
+            var orgId = await GetOrganizationIdAsync(cancellationToken);
             var history = await _analyticsRepository.GetHistoryAsync(orgId, qrCodeId, search, page, pageSize, startDate, endDate);
             return Ok(history);
         }
@@ -156,11 +170,11 @@ public class AnalyticsController : ControllerBase
     }
 
     [HttpGet("export")]
-    public async Task<IActionResult> ExportCSV([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    public async Task<IActionResult> ExportCSV([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, CancellationToken cancellationToken)
     {
         try
         {
-            var orgId = GetOrganizationId();
+            var orgId = await GetOrganizationIdAsync(cancellationToken);
             var timeline = await _analyticsRepository.GetTimelineAsync(orgId, startDate, endDate);
             
             // Build simple CSV for demonstration

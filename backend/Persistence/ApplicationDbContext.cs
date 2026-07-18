@@ -26,6 +26,7 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<ActivityLog> ActivityLogs => Set<ActivityLog>();
     public DbSet<BusinessCard> BusinessCards => Set<BusinessCard>();
     public DbSet<Subscription> Subscriptions => Set<Subscription>();
+    public DbSet<Payment> Payments => Set<Payment>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
