@@ -46,15 +46,25 @@ public sealed class JwtTokenGenerator : IJwtTokenGenerator
         return new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
     }
 
-    private static IEnumerable<Claim> CreateClaims(User user) =>
-    [
-        new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-        new Claim(JwtRegisteredClaimNames.Email, user.Email),
-        new Claim(JwtRegisteredClaimNames.Name, user.FullName),
-        new Claim(ClaimTypes.Role, user.Role),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(JwtRegisteredClaimNames.Iat,
-            DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
-            ClaimValueTypes.Integer64),
-    ];
+    private static IEnumerable<Claim> CreateClaims(User user)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim(JwtRegisteredClaimNames.Name, user.FullName),
+            new Claim(ClaimTypes.Role, user.Role),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(JwtRegisteredClaimNames.Iat,
+                DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                ClaimValueTypes.Integer64),
+        };
+
+        if (user.OrganizationId.HasValue)
+        {
+            claims.Add(new Claim("organizationId", user.OrganizationId.Value.ToString()));
+        }
+
+        return claims;
+    }
 }
