@@ -34,7 +34,7 @@ export function QRAnalyticsChart({ totalScans }: QRAnalyticsChartProps) {
     }
 
     // Generate random distribution of scans across 30 days
-    const weights = Array.from({ length: days }, () => Math.random() * 10 + 1);
+    const weights = Array.from({ length: days }, (_, i) => (i * 17) % 10 + 1);
     const totalWeight = weights.reduce((sum, w) => sum + w, 0);
     
     let currentSum = 0;

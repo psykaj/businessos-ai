@@ -18,7 +18,11 @@ import {
   Crown,
   Receipt,
   ArrowUpCircle,
-  Sparkles
+  Sparkles,
+  ShieldAlert,
+  KeyRound,
+  FileClock,
+  Building
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/auth-context";
@@ -43,6 +47,15 @@ const navGroups = [
     ]
   },
   {
+    title: "Organization",
+    items: [
+      { label: "Team", href: "/dashboard/team", icon: Users },
+      { label: "Roles & Permissions", href: "/dashboard/roles", icon: ShieldAlert },
+      { label: "API Keys", href: "/dashboard/api-keys", icon: KeyRound },
+      { label: "Audit Logs", href: "/dashboard/audit-logs", icon: FileClock },
+    ]
+  },
+  {
     title: "Billing & Settings",
     items: [
       { label: "Billing", href: "/dashboard/billing", icon: CreditCard },
@@ -50,7 +63,8 @@ const navGroups = [
       { label: "Invoices", href: "/dashboard/invoices", icon: FileText },
       { label: "Payments", href: "/dashboard/payments", icon: Receipt },
       { label: "Pricing", href: "/pricing", icon: ArrowUpCircle },
-      { label: "Settings", href: "/dashboard/settings", icon: Settings },
+      { label: "Org Settings", href: "/dashboard/organization", icon: Building },
+      { label: "Profile", href: "/dashboard/profile", icon: Settings },
     ]
   }
 ];

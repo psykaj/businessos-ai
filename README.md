@@ -35,11 +35,11 @@ Instead of juggling 10 different software products, businesses use **one platfor
 | **Day 1** | Project Initialization & Setup | ✅ **Done** | [See below ↓](#day-1--project-initialization) |
 | **Day 2** | Dashboard UI | ✅ **Done** | [See below ↓](#day-2--dashboard-ui) |
 | **Day 3** | Authentication Module | ✅ **Done** | [See below ↓](#day-3--authentication-module) |
-| **Day 4** | QR Code Module | 🔜 **Next** | Dynamic QR creation + tracking |
-| **Day 5** | Reviews Module | ⏳ Pending | AI-powered review replies |
-| **Day 6** | Invoices Module | ⏳ Pending | PDF invoice generation |
-| **Day 7** | CRM / Customers | ⏳ Pending | Customer management |
-| **Day 8** | Analytics | ⏳ Pending | Charts and reporting |
+| **Day 4** | QR Code Module | ✅ **Done** | Dynamic QR creation + tracking |
+| **Day 5** | Billing & Subscriptions | ✅ **Done** | Razorpay integration |
+| **Day 6** | RBAC & Permissions | ✅ **Done** | Role-based access control |
+| **Day 7** | Team Management & API Keys | ✅ **Done** | Organization team, invites, API keys |
+| **Day 8** | Analytics | ✅ **Done** | Charts and reporting |
 | **Day 9** | WhatsApp Integration | ⏳ Pending | Campaign management |
 | **Day 10** | AI Assistant | ⏳ Pending | OpenAI chatbot integration |
 
@@ -58,6 +58,9 @@ The documentation for BusinessOS AI is organized into the `docs/` folder to ensu
 
 ---
 
-## 
----
-## |
+## 🚀 Recent Progress
+We have completed up to **Day 8** of our development roadmap!
+- **Frontend**: Fully functional dashboards, analytics charts, QR code builders, team invite screens, billing layouts, and API key management using Next.js, Tailwind, and Recharts.
+- **Backend**: Robust .NET 8 Web API with complete modules for QR codes, subscriptions, team members, roles, permissions, API key generation, and analytics data aggregation.
+
+Check out [SCHEDULE.md](SCHEDULE.md) for the detailed day-wise breakdown, and [WALKTHROUGH.md](WALKTHROUGH.md) for a comprehensive overview of the architecture and key components.

@@ -36,7 +36,9 @@ public sealed class ExceptionHandlingMiddleware
             InvalidOperationException => (HttpStatusCode.Conflict, exception.Message),
             UnauthorizedAccessException => (HttpStatusCode.Unauthorized, exception.Message),
             KeyNotFoundException => (HttpStatusCode.NotFound, exception.Message),
+            backend.Exceptions.NotFoundException => (HttpStatusCode.NotFound, exception.Message),
             ArgumentException => (HttpStatusCode.BadRequest, exception.Message),
+            backend.Exceptions.BadRequestException => (HttpStatusCode.BadRequest, exception.Message),
             _ => (HttpStatusCode.InternalServerError, "An unexpected error occurred. Please try again later.")
         };
 

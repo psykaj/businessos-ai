@@ -7,7 +7,7 @@ namespace backend.Modules.Analytics.Models;
 public class QRScan : BaseEntity
 {
     public Guid OrganizationId { get; set; }
-    public Organization? Organization { get; set; }
+    public Entities.Organization? Organization { get; set; }
 
     public Guid QRCodeId { get; set; }
     public QRCode.Models.QRCode? QRCode { get; set; }

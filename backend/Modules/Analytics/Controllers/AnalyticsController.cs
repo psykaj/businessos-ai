@@ -33,9 +33,9 @@ public class AnalyticsController : ControllerBase
             throw new UnauthorizedAccessException("User not authenticated");
 
         var user = await _context.Users.FindAsync(new object[] { userId }, cancellationToken);
-        if (user != null)
+        if (user != null && user.OrganizationId.HasValue)
         {
-            return user.OrganizationId;
+            return user.OrganizationId.Value;
         }
 
         throw new UnauthorizedAccessException("Organization ID not found in token.");

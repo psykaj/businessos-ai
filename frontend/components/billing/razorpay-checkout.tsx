@@ -55,7 +55,7 @@ export function RazorpayCheckout({ planId, planName, amount, billingCycle, onSuc
         description: `Subscription to ${planName} Plan (${billingCycle})`,
         image: '/logo.png', // Fallback to a logo if available
         order_id: order.orderId,
-        handler: async function (response: any) {
+        handler: async function (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) {
           try {
             toast.loading('Verifying payment...', { id: 'payment-verification' });
             // Verify payment
@@ -85,9 +85,10 @@ export function RazorpayCheckout({ planId, planName, amount, billingCycle, onSuc
         }
       };
 
-      const paymentObject = new (window as any).Razorpay(options);
+      const Razorpay = (window as unknown as { Razorpay: new (opts: unknown) => { on: (evt: string, cb: (res: { error: { description: string } }) => void) => void; open: () => void } }).Razorpay;
+      const paymentObject = new Razorpay(options);
       
-      paymentObject.on('payment.failed', function (response: any) {
+      paymentObject.on('payment.failed', function (response: { error: { description: string } }) {
         toast.error(`Payment failed: ${response.error.description}`);
       });
       

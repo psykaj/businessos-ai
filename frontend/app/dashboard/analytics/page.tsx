@@ -78,7 +78,7 @@ export default function AnalyticsPage() {
   const handleExport = async () => {
     try {
       const response = await analyticsService.exportCSV(startDate, endDate);
-      const url = window.URL.createObjectURL(new Blob([response as any]));
+      const url = window.URL.createObjectURL(new Blob([response as unknown as BlobPart]));
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", `analytics_export_${new Date().toISOString().split("T")[0]}.csv`);

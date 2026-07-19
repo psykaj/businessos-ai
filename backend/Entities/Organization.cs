@@ -22,13 +22,19 @@ public class Organization : BaseEntity
     // Preferences
     public string? TimeZone { get; set; }
     public string? Currency { get; set; }
+    public string? Language { get; set; }
     
     // Subscription
     public string? SubscriptionPlan { get; set; }
     public string? SubscriptionStatus { get; set; }
+    public Guid? SubscriptionId { get; set; }
     
     public bool IsActive { get; set; } = true;
 
-    // Navigation property
+    // Navigation properties
     public ICollection<User> Users { get; set; } = new List<User>();
+    public ICollection<TeamMember> TeamMembers { get; set; } = new List<TeamMember>();
+    public ICollection<Invitation> Invitations { get; set; } = new List<Invitation>();
+    public ICollection<ApiKey> ApiKeys { get; set; } = new List<ApiKey>();
+    public ICollection<AuditLog> AuditLogs { get; set; } = new List<AuditLog>();
 }

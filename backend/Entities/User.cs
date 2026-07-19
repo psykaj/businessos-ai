@@ -10,7 +10,12 @@ public sealed class User : BaseEntity
     public string Role { get; set; } = "User";
     public bool IsActive { get; set; } = true;
     
-    // Multi-tenant Reference
-    public Guid OrganizationId { get; set; }
+    // Legacy or default Multi-tenant Reference
+    public Guid? OrganizationId { get; set; }
     public Organization? Organization { get; set; }
+
+    // New RBAC & Team Management Navigation properties
+    public ICollection<TeamMember> TeamMembers { get; set; } = new List<TeamMember>();
+    public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+    public ICollection<AuditLog> AuditLogs { get; set; } = new List<AuditLog>();
 }

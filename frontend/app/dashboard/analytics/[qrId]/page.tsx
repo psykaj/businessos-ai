@@ -123,7 +123,7 @@ export default function QRAnalyticsDetailsPage(props: { params: Promise<{ qrId: 
           </CardHeader>
           <CardContent>
             <p className="text-xs text-muted-foreground italic mt-2">
-              "Analyzing the scan behavior, this QR code performs 30% better on weekends. Consider running promotions on Saturdays."
+              &quot;Analyzing the scan behavior, this QR code performs 30% better on weekends. Consider running promotions on Saturdays.&quot;
             </p>
           </CardContent>
         </Card>

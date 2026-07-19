@@ -5,6 +5,7 @@ export interface User {
   role: string;
   isActive: boolean;
   createdAt: string;
+  organizationId?: string;
 }
 
 export interface AuthResponse {
