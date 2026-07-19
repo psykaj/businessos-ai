@@ -35,6 +35,15 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<ApiKey> ApiKeys => Set<ApiKey>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
+    public DbSet<Brand> Brands => Set<Brand>();
+    public DbSet<CustomDomain> CustomDomains => Set<CustomDomain>();
+    public DbSet<Theme> Themes => Set<Theme>();
+    public DbSet<LandingPageSection> LandingPageSections => Set<LandingPageSection>();
+    public DbSet<SEOSettings> SEOSettings => Set<SEOSettings>();
+
+    public DbSet<WhatsAppSettings> WhatsAppSettings => Set<WhatsAppSettings>();
+    public DbSet<WhatsAppTemplate> WhatsAppTemplates => Set<WhatsAppTemplate>();
+    public DbSet<CampaignContact> CampaignContacts => Set<CampaignContact>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

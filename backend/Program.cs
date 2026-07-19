@@ -70,6 +70,8 @@ builder.Services.AddCors(options =>
 // ─── Application Services ─────────────────────────────────────────────────────
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddHttpClient<IWhatsAppService, WhatsAppService>();
+builder.Services.AddScoped<IWhatsAppService, WhatsAppService>();
 
 // ─── Validators ───────────────────────────────────────────────────────────────
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();

@@ -19,14 +19,19 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
   switch (normalizedStatus) {
     case "active":
     case "accepted":
+    case "verified":
+    case "published":
+    case "completed":
       variantClass = "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
       break;
     case "pending":
+    case "draft":
       variantClass = "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400";
       break;
     case "expired":
     case "revoked":
     case "inactive":
+    case "failed":
       variantClass = "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400";
       break;
     default:
