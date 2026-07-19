@@ -17,16 +17,16 @@ export interface WhatsAppTemplate {
 }
 
 export const getWhatsAppSettings = async (): Promise<WhatsAppSettings> => {
-  const response = await api.get('/whatsapp/settings');
+  const response = await api.get('/api/whatsapp/settings');
   return response.data;
 };
 
 export const saveWhatsAppSettings = async (settings: Partial<WhatsAppSettings>): Promise<WhatsAppSettings> => {
-  const response = await api.post('/whatsapp/settings', settings);
+  const response = await api.post('/api/whatsapp/settings', settings);
   return response.data;
 };
 
 export const getWhatsAppTemplates = async (): Promise<WhatsAppTemplate[]> => {
-  const response = await api.get('/whatsapp/templates');
+  const response = await api.get('/api/whatsapp/templates');
   return response.data;
 };

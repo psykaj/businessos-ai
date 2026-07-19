@@ -16,7 +16,7 @@ public class NotificationHub : Hub
 
     public override async Task OnConnectedAsync()
     {
-        var organizationId = Context.User?.FindFirst("OrganizationId")?.Value;
+        var organizationId = Context.User?.FindFirst("organizationId")?.Value;
         var userId = Context.UserIdentifier ?? Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         if (!string.IsNullOrEmpty(organizationId))
@@ -36,7 +36,7 @@ public class NotificationHub : Hub
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        var organizationId = Context.User?.FindFirst("OrganizationId")?.Value;
+        var organizationId = Context.User?.FindFirst("organizationId")?.Value;
         var userId = Context.UserIdentifier ?? Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         if (!string.IsNullOrEmpty(organizationId))

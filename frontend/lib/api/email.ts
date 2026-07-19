@@ -11,11 +11,11 @@ export interface EmailTemplate {
 }
 
 export const getEmailTemplates = async (): Promise<EmailTemplate[]> => {
-  const response = await api.get('/email/templates');
+  const response = await api.get('/api/email/templates');
   return response.data;
 };
 
 export const createEmailTemplate = async (template: Partial<EmailTemplate>): Promise<EmailTemplate> => {
-  const response = await api.post('/email/templates', template);
+  const response = await api.post('/api/email/templates', template);
   return response.data;
 };

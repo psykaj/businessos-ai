@@ -21,16 +21,16 @@ export interface AutomationLog {
 }
 
 export const getAutomationRules = async (): Promise<AutomationRule[]> => {
-  const response = await api.get('/automation/rules');
+  const response = await api.get('/api/automation/rules');
   return response.data;
 };
 
 export const createAutomationRule = async (rule: Partial<AutomationRule>): Promise<AutomationRule> => {
-  const response = await api.post('/automation/rules', rule);
+  const response = await api.post('/api/automation/rules', rule);
   return response.data;
 };
 
 export const getAutomationLogs = async (ruleId: string, limit = 100): Promise<AutomationLog[]> => {
-  const response = await api.get(`/automation/rules/${ruleId}/logs?limit=${limit}`);
+  const response = await api.get(`/api/automation/rules/${ruleId}/logs?limit=${limit}`);
   return response.data;
 };

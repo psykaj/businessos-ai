@@ -13,15 +13,15 @@ export interface AppNotification {
 }
 
 export const getNotifications = async (limit = 50): Promise<AppNotification[]> => {
-  const response = await api.get(`/notifications?limit=${limit}`);
+  const response = await api.get(`/api/notifications?limit=${limit}`);
   return response.data;
 };
 
 export const getUnreadNotifications = async (): Promise<AppNotification[]> => {
-  const response = await api.get('/notifications/unread');
+  const response = await api.get('/api/notifications/unread');
   return response.data;
 };
 
 export const markAllNotificationsRead = async (): Promise<void> => {
-  await api.post('/notifications/mark-all-read');
+  await api.post('/api/notifications/mark-all-read');
 };

@@ -22,7 +22,7 @@ public class NotificationsController : ControllerBase
 
     private Guid GetOrganizationId()
     {
-        var orgClaim = User.FindFirst("OrganizationId")?.Value;
+        var orgClaim = User.FindFirst("organizationId")?.Value;
         return Guid.TryParse(orgClaim, out var orgId) ? orgId : Guid.Empty;
     }
 

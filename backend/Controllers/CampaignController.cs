@@ -21,7 +21,7 @@ public class CampaignController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetCampaigns()
     {
-        var organizationIdStr = User.FindFirst("OrganizationId")?.Value;
+        var organizationIdStr = User.FindFirst("organizationId")?.Value;
         if (string.IsNullOrEmpty(organizationIdStr) || !Guid.TryParse(organizationIdStr, out var organizationId))
         {
             return Unauthorized();
@@ -38,7 +38,7 @@ public class CampaignController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateCampaign([FromBody] Campaign campaign)
     {
-        var organizationIdStr = User.FindFirst("OrganizationId")?.Value;
+        var organizationIdStr = User.FindFirst("organizationId")?.Value;
         if (string.IsNullOrEmpty(organizationIdStr) || !Guid.TryParse(organizationIdStr, out var organizationId))
         {
             return Unauthorized();
