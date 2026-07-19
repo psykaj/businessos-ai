@@ -38,6 +38,7 @@ export function AiChat({ conversationId }: AiChatProps) {
       };
       fetchChat();
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMessages([]);
     }
   }, [conversationId]);
@@ -108,12 +109,10 @@ export function AiChat({ conversationId }: AiChatProps) {
           {messages.length === 0 && !loading && (
             <div className="flex flex-col items-center justify-center h-full text-center mt-32">
               <div className="h-16 w-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-                <Bot className="h-8 w-8 text-primary" />
+                <Bot className="h-10 w-10 text-muted-foreground/30 mb-4" />
               </div>
-              <h2 className="text-2xl font-bold mb-2">How can I help you today?</h2>
-              <p className="text-muted-foreground max-w-md">
-                I'm your BusinessOS AI assistant. I can help you draft emails, analyze customer data, write code, or automate workflows.
-              </p>
+              <h3 className="text-lg font-semibold mb-2">How can I help you today?</h3>
+              <p className="max-w-md">I&apos;m your AI assistant. I can help you draft emails, generate WhatsApp campaigns, or configure automations.</p>
             </div>
           )}
 

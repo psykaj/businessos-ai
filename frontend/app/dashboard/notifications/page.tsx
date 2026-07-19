@@ -27,6 +27,7 @@ export default function NotificationsPage() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchHistory();
   }, []);
 
@@ -54,7 +55,7 @@ export default function NotificationsPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Notification Center</h1>
-          <p className="text-muted-foreground">Stay updated with your organization's activities.</p>
+          <p className="text-muted-foreground">Stay updated with your organization&apos;s activities.</p>
         </div>
         <Button onClick={handleMarkAllRead} variant="outline" className="gap-2">
           <Check className="h-4 w-4" />
@@ -77,8 +78,11 @@ export default function NotificationsPage() {
             <div className="p-8 text-center text-muted-foreground animate-pulse">Loading notifications...</div>
           ) : items.length === 0 ? (
             <div className="p-12 text-center text-muted-foreground flex flex-col items-center gap-3">
-              <Bell className="h-10 w-10 text-muted-foreground/30" />
-              <p>You're all caught up!</p>
+              <Bell className="h-12 w-12 text-muted-foreground/30" />
+              <div>
+                <h3 className="font-semibold text-lg text-foreground mb-1">No notifications yet</h3>
+                <p>You&apos;re all caught up!</p>
+              </div>
             </div>
           ) : (
             <div className="divide-y divide-border">

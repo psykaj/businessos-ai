@@ -40,6 +40,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         .withAutomaticReconnect()
         .build();
 
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setConnection(newConnection);
     } else {
       if (connection) {
@@ -63,6 +64,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
             });
           });
 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           connection.on('ReceiveBroadcast', (broadcast: any) => {
             toast(broadcast.title, {
               description: broadcast.message,
@@ -75,7 +77,9 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   }, [connection]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const value = {

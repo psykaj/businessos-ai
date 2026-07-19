@@ -209,7 +209,7 @@ export default function DomainsPage() {
                                   <DialogHeader>
                                     <DialogTitle>DNS Configuration</DialogTitle>
                                     <DialogDescription>
-                                      Add the following TXT record to your domain's DNS settings to verify ownership.
+                                      Add the following TXT record to your domain&apos;s DNS settings to verify ownership.
                                     </DialogDescription>
                                   </DialogHeader>
                                   {isFetchingDns || !dnsInstructions ? (
@@ -289,8 +289,8 @@ export default function DomainsPage() {
             <div className="text-center py-12 border-2 border-dashed rounded-lg border-muted">
               <Globe className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
               <h3 className="text-lg font-medium">No custom domains</h3>
-              <p className="text-sm text-muted-foreground mt-1 mb-4">
-                Connect your own domain to serve landing pages and dynamic links.
+              <p className="text-sm text-muted-foreground mt-1 max-w-sm">
+                You haven&apos;t added any custom domains yet. Connect a domain to use it with your landing pages and QR codes.
               </p>
               <Button onClick={() => setIsAddOpen(true)}>
                 <Plus className="mr-2 h-4 w-4" /> Add your first domain

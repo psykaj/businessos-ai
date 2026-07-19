@@ -26,6 +26,7 @@ export default function WhatsAppTemplatesPage() {
       queryClient.invalidateQueries({ queryKey: ["whatsapp-templates"] });
       toast.success("Templates synced successfully");
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       toast.error(error.response?.data?.message || "Failed to sync templates");
     },
@@ -81,11 +82,11 @@ export default function WhatsAppTemplatesPage() {
             </div>
           ) : templates?.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center border rounded-lg border-dashed bg-muted/20">
-              <MessageSquare className="h-12 w-12 text-muted-foreground/40 mb-4" />
-              <h3 className="text-lg font-medium">No templates found</h3>
-              <p className="text-sm text-muted-foreground mt-1 max-w-sm">
-                You haven't synced any templates yet or you don't have any approved templates in Meta.
-              </p>
+              <CardContent className="p-12 text-center text-muted-foreground">
+                <MessageSquare className="h-10 w-10 mx-auto mb-4 text-muted-foreground/30" />
+                <h3 className="font-semibold text-lg text-foreground mb-1">No templates found</h3>
+                <p>You haven&apos;t created any WhatsApp templates yet.</p>
+              </CardContent>
               <Button variant="outline" className="mt-4" onClick={() => syncMutation.mutate()} disabled={syncMutation.isPending}>
                 Sync Now
               </Button>
