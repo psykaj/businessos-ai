@@ -38,6 +38,7 @@ export default function WhatsAppSettingsPage() {
       queryClient.invalidateQueries({ queryKey: ["whatsapp-settings"] });
       toast.success("WhatsApp settings saved successfully");
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       toast.error(error.response?.data?.message || "Failed to save settings");
     },

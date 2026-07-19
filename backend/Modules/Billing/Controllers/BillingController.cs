@@ -21,7 +21,7 @@ public class BillingController : ControllerBase
 
     private async Task<Guid> GetOrganizationIdAsync(CancellationToken cancellationToken = default)
     {
-        var orgIdClaim = User.FindFirst("OrganizationId")?.Value;
+        var orgIdClaim = User.FindFirst("organizationId")?.Value;
         if (Guid.TryParse(orgIdClaim, out var orgId))
         {
             return orgId;

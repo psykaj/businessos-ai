@@ -22,7 +22,7 @@ public class WhatsAppController : ControllerBase
     [HttpGet("settings")]
     public async Task<IActionResult> GetSettings()
     {
-        var organizationIdStr = User.FindFirst("OrganizationId")?.Value;
+        var organizationIdStr = User.FindFirst("organizationId")?.Value;
         if (string.IsNullOrEmpty(organizationIdStr) || !Guid.TryParse(organizationIdStr, out var organizationId))
         {
             return Unauthorized();
@@ -35,7 +35,7 @@ public class WhatsAppController : ControllerBase
     [HttpPost("settings")]
     public async Task<IActionResult> SaveSettings([FromBody] WhatsAppSettings settings)
     {
-        var organizationIdStr = User.FindFirst("OrganizationId")?.Value;
+        var organizationIdStr = User.FindFirst("organizationId")?.Value;
         if (string.IsNullOrEmpty(organizationIdStr) || !Guid.TryParse(organizationIdStr, out var organizationId))
         {
             return Unauthorized();
@@ -49,7 +49,7 @@ public class WhatsAppController : ControllerBase
     [HttpPost("sync-templates")]
     public async Task<IActionResult> SyncTemplates()
     {
-        var organizationIdStr = User.FindFirst("OrganizationId")?.Value;
+        var organizationIdStr = User.FindFirst("organizationId")?.Value;
         if (string.IsNullOrEmpty(organizationIdStr) || !Guid.TryParse(organizationIdStr, out var organizationId))
         {
             return Unauthorized();

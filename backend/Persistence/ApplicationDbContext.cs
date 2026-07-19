@@ -22,7 +22,11 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<Contact> Contacts => Set<Contact>();
     public DbSet<LandingPage> LandingPages => Set<LandingPage>();
     public DbSet<AIConversation> AIConversations => Set<AIConversation>();
+    public DbSet<AIMessage> AIMessages => Set<AIMessage>();
     public DbSet<Notification> Notifications => Set<Notification>();
+    public DbSet<EmailTemplate> EmailTemplates => Set<EmailTemplate>();
+    public DbSet<AutomationRule> AutomationRules => Set<AutomationRule>();
+    public DbSet<AutomationLog> AutomationLogs => Set<AutomationLog>();
     public DbSet<ActivityLog> ActivityLogs => Set<ActivityLog>();
     public DbSet<BusinessCard> BusinessCards => Set<BusinessCard>();
     public DbSet<Subscription> Subscriptions => Set<Subscription>();
@@ -51,6 +55,17 @@ public sealed class ApplicationDbContext : DbContext
         // Configure composite key for UserRole
         modelBuilder.Entity<UserRole>()
             .HasKey(ur => new { ur.UserId, ur.RoleId });
+
+        // Day 10 - AI & Automation constraints and filters
+        modelBuilder.Entity<AIConversation>().HasIndex(c => c.OrganizationId);
+        modelBuilder.Entity<AIMessage>().HasIndex(m => m.ConversationId);
+        modelBuilder.Entity<Notification>().HasIndex(n => n.OrganizationId);
+        modelBuilder.Entity<EmailTemplate>().HasIndex(e => e.OrganizationId);
+        modelBuilder.Entity<AutomationRule>().HasIndex(a => a.OrganizationId);
+        modelBuilder.Entity<AutomationLog>().HasIndex(l => l.RuleId);
+        modelBuilder.Entity<WhatsAppTemplate>().HasIndex(w => w.OrganizationId);
+        
+        // Multi-tenant Query Filters (Requires passing OrganizationId via a service usually, but for simplicity we'll just add basic indexes for now as EF Global Filters require an injected context provider)
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }

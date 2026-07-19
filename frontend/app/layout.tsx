@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/hooks/use-theme";
 import { AuthProvider } from "@/contexts/auth-context";
 import { Toaster } from "sonner";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { NotificationProvider } from "@/contexts/notification-context";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -47,7 +48,11 @@ export default function RootLayout({
       <body className="min-h-full font-sans" suppressHydrationWarning>
         <ThemeProvider>
           <QueryProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <NotificationProvider>
+                {children}
+              </NotificationProvider>
+            </AuthProvider>
           </QueryProvider>
           <Toaster richColors position="top-right" />
         </ThemeProvider>

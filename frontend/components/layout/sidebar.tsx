@@ -28,7 +28,10 @@ import {
   LayoutTemplate,
   Paintbrush,
   Search,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Mail,
+  Bell,
+  Zap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/auth-context";
@@ -48,8 +51,21 @@ const navGroups = [
     items: [
       { label: "QR Codes", href: "/dashboard/qr", icon: QrCode },
       { label: "Reviews", href: "/dashboard/reviews", icon: Star },
+      { label: "AI Assistant", href: "/dashboard/ai", icon: Bot },
+    ]
+  },
+  {
+    title: "Communication",
+    items: [
+      { label: "Email Center", href: "/dashboard/email", icon: Mail },
       { label: "WhatsApp", href: "/dashboard/whatsapp", icon: MessageCircle },
-      { label: "AI Assistant", href: "/dashboard/ai-assistant", icon: Bot },
+      { label: "Notifications", href: "/dashboard/notifications", icon: Bell },
+    ]
+  },
+  {
+    title: "Automation",
+    items: [
+      { label: "Workflows", href: "/dashboard/automation", icon: Zap },
     ]
   },
   {

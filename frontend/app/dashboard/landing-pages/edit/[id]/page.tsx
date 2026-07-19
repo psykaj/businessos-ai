@@ -54,6 +54,7 @@ export default function PageBuilder({ params }: { params: Promise<{ id: string }
     if (page && page.sections) {
       // Sort sections by sortOrder
       const sorted = [...page.sections].sort((a, b) => a.sortOrder - b.sortOrder);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSections(sorted);
     }
   }, [page]);

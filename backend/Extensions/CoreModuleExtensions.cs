@@ -46,6 +46,22 @@ public static class CoreModuleExtensions
         services.AddScoped<backend.Modules.SEO.Repositories.ISEORepository, backend.Modules.SEO.Repositories.SEORepository>();
         services.AddScoped<backend.Modules.SEO.Interfaces.ISEOService, backend.Modules.SEO.Services.SEOService>();
 
+        // Day 10 - AI & Automation
+        services.AddScoped<backend.Modules.AI.Interfaces.IAIRepository, backend.Modules.AI.Repositories.AIRepository>();
+        services.AddScoped<backend.Modules.AI.Interfaces.IAIService, backend.Modules.AI.Services.OpenAIAIService>();
+        
+        services.AddScoped<backend.Modules.Notifications.Interfaces.INotificationRepository, backend.Modules.Notifications.Repositories.NotificationRepository>();
+        services.AddScoped<backend.Modules.Notifications.Interfaces.INotificationService, backend.Modules.Notifications.Services.NotificationService>();
+        
+        services.AddScoped<backend.Modules.Email.Interfaces.IEmailRepository, backend.Modules.Email.Repositories.EmailRepository>();
+        services.AddScoped<backend.Modules.Email.Interfaces.IEmailService, backend.Modules.Email.Services.EmailService>();
+        
+        services.AddScoped<backend.Modules.WhatsApp.Interfaces.IWhatsAppRepository, backend.Modules.WhatsApp.Repositories.WhatsAppRepository>();
+        // Note: WhatsAppService is currently registered in Program.cs as a typed HTTP client. We leave that logic in Program.cs.
+
+        services.AddScoped<backend.Modules.Automation.Interfaces.IAutomationRepository, backend.Modules.Automation.Repositories.AutomationRepository>();
+        services.AddScoped<backend.Modules.Automation.Interfaces.IAutomationEngineService, backend.Modules.Automation.Services.AutomationEngineService>();
+
         // RBAC Authorization Setup
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();

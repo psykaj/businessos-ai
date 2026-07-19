@@ -11,6 +11,7 @@ using backend.Interfaces;
 using backend.Middleware;
 using backend.Services;
 using backend.Validators;
+using backend.Modules.Notifications.Hubs;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -87,6 +88,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
     });
 builder.Services.AddOpenApi();
+builder.Services.AddSignalR();
 
 // ─── Build ────────────────────────────────────────────────────────────────────
 var app = builder.Build();
@@ -104,6 +106,7 @@ app.UseCors("FrontendPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<NotificationHub>("/hubs/notifications");
 
 // ─── Auto-apply Migrations & Seed on Startup ──────────────────────────────────
 try

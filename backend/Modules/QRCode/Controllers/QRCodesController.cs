@@ -173,7 +173,7 @@ public class QRCodesController : ControllerBase
         if (userId == Guid.Empty) return Guid.Empty;
 
         // Optionally, check if OrganizationId is in claims directly
-        var orgClaim = User.FindFirst("OrganizationId")?.Value;
+        var orgClaim = User.FindFirst("organizationId")?.Value;
         if (Guid.TryParse(orgClaim, out var orgId))
             return orgId;
 
