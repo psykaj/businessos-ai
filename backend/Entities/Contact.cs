@@ -9,4 +9,7 @@ public class Contact : BaseEntity
     
     // Add additional base properties depending on the module
     public string Name { get; set; } = string.Empty;
+    public string PhoneNumber { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Tags { get; set; } = string.Empty;
 }

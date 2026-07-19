@@ -22,7 +22,13 @@ import {
   ShieldAlert,
   KeyRound,
   FileClock,
-  Building
+  Building,
+  Palette,
+  Globe,
+  LayoutTemplate,
+  Paintbrush,
+  Search,
+  Image as ImageIcon
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/auth-context";
@@ -53,6 +59,17 @@ const navGroups = [
       { label: "Roles & Permissions", href: "/dashboard/roles", icon: ShieldAlert },
       { label: "API Keys", href: "/dashboard/api-keys", icon: KeyRound },
       { label: "Audit Logs", href: "/dashboard/audit-logs", icon: FileClock },
+    ]
+  },
+  {
+    title: "White Label",
+    items: [
+      { label: "Branding", href: "/dashboard/branding", icon: Palette },
+      { label: "Custom Domains", href: "/dashboard/domains", icon: Globe },
+      { label: "Landing Pages", href: "/dashboard/landing-pages", icon: LayoutTemplate },
+      { label: "Themes", href: "/dashboard/themes", icon: Paintbrush },
+      { label: "SEO", href: "/dashboard/seo", icon: Search },
+      { label: "Media Library", href: "/dashboard/media", icon: ImageIcon },
     ]
   },
   {
