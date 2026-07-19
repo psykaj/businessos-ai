@@ -58,9 +58,10 @@ export default function RedirectPage() {
           const originalValue = await qrService.verifyPassword(shortCode, "");
           handleOriginalValue(originalValue);
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         setIsLoading(false);
-        setError(err.response?.data?.Message || "QR Code not found or inactive.");
+        const errorMessage = (err as { response?: { data?: { Message?: string } } }).response?.data?.Message || "QR Code not found or inactive.";
+        setError(errorMessage);
       }
     };
 
@@ -79,8 +80,9 @@ export default function RedirectPage() {
       const originalValue = await qrService.verifyPassword(shortCode, password);
       // Successful verification, handle value
       handleOriginalValue(originalValue);
-    } catch (err: any) {
-      toast.error(err.response?.data?.Message || "Invalid password");
+    } catch (err: unknown) {
+      const errorMessage = (err as { response?: { data?: { Message?: string } } }).response?.data?.Message || "Invalid password";
+      toast.error(errorMessage);
       setPassword("");
     } finally {
       setIsVerifying(false);

@@ -7,7 +7,7 @@ namespace backend.Modules.QRCode.Models;
 public class QRCode : BaseEntity
 {
     public Guid OrganizationId { get; set; }
-    public Organization? Organization { get; set; }
+    public Entities.Organization? Organization { get; set; }
 
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }

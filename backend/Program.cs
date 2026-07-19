@@ -78,6 +78,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>()
 builder.Services.AddQRCodeModule();
 builder.Services.AddAnalyticsModule();
 builder.Services.AddBillingModule();
+builder.Services.AddCoreModules();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {

@@ -84,7 +84,7 @@ export default function PaymentsPage() {
                       <div className="w-12 h-12 rounded-full bg-muted/50 flex items-center justify-center">
                         <Receipt className="w-6 h-6 opacity-50" />
                       </div>
-                      <p className="text-sm font-medium">No payments found matching "{search}".</p>
+                      <p className="text-sm font-medium">No payments found matching &quot;{search}&quot;.</p>
                     </div>
                   </TableCell>
                 </TableRow>

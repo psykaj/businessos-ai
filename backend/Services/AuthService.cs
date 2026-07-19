@@ -92,5 +92,5 @@ public sealed class AuthService : IAuthService
     }
 
     private static UserDto MapToDto(User user) =>
-        new(user.Id, user.FullName, user.Email, user.Role, user.IsActive, user.CreatedAt);
+        new(user.Id, user.FullName, user.Email, user.Role, user.IsActive, user.CreatedAt, user.OrganizationId);
 }

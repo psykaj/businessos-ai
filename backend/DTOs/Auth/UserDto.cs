@@ -6,5 +6,6 @@ public sealed record UserDto(
     string Email,
     string Role,
     bool IsActive,
-    DateTime CreatedAt
+    DateTime CreatedAt,
+    Guid? OrganizationId
 );

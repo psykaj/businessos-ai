@@ -59,7 +59,7 @@ export function ScanTrendChart({ data, isLoading }: { data?: ScanTimeline[] } & 
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                 <XAxis dataKey="formattedDate" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#6b7280' }} />
                 <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#6b7280' }} />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                   labelStyle={{ fontWeight: 'bold', color: '#111827', marginBottom: '4px' }}
                 />
@@ -104,7 +104,8 @@ export function DeviceDistributionChart({ data, isLoading }: { data?: DeviceAnal
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip 
+                <Tooltip
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   formatter={(value: any, name: any, props: any) => [
                     `${value} (${props.payload.percentage.toFixed(1)}%)`,
                     name
@@ -152,7 +153,7 @@ export function BrowserUsageChart({ data, isLoading }: { data?: BrowserAnalytics
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                 <XAxis type="number" hide />
                 <YAxis dataKey="browser" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#4b5563' }} width={80} />
-                <Tooltip 
+                <Tooltip
                   cursor={{ fill: '#f3f4f6' }}
                   contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                 />
@@ -188,7 +189,7 @@ export function LocationChart({ data, isLoading }: { data?: CountryAnalytics[] }
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                 <XAxis type="number" hide />
                 <YAxis dataKey="country" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#4b5563' }} width={80} />
-                <Tooltip 
+                <Tooltip
                   cursor={{ fill: '#f3f4f6' }}
                   contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                 />

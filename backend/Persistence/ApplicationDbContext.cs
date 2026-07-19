@@ -27,10 +27,22 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<BusinessCard> BusinessCards => Set<BusinessCard>();
     public DbSet<Subscription> Subscriptions => Set<Subscription>();
     public DbSet<Payment> Payments => Set<Payment>();
+    public DbSet<TeamMember> TeamMembers => Set<TeamMember>();
+    public DbSet<Role> Roles => Set<Role>();
+    public DbSet<Permission> Permissions => Set<Permission>();
+    public DbSet<UserRole> UserRoles => Set<UserRole>();
+    public DbSet<Invitation> Invitations => Set<Invitation>();
+    public DbSet<ApiKey> ApiKeys => Set<ApiKey>();
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
+        // Configure composite key for UserRole
+        modelBuilder.Entity<UserRole>()
+            .HasKey(ur => new { ur.UserId, ur.RoleId });
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 
