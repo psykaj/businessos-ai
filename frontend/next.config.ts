@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
         source: "/api/:path*",
         destination: `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5294"}/api/:path*`,
       },
+      {
+        source: "/hubs/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5294"}/hubs/:path*`,
+      },
     ];
   },
 };

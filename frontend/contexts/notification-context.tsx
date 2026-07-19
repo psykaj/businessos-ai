@@ -5,7 +5,6 @@ import * as signalR from '@microsoft/signalr';
 import { useAuth } from '@/contexts/auth-context';
 import { toast } from 'sonner';
 import { AppNotification, getUnreadNotifications } from '@/lib/api/notifications';
-import { API_BASE_URL } from '@/lib/api-client';
 
 interface NotificationContextType {
   notifications: AppNotification[];
@@ -34,7 +33,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     const token = typeof window !== 'undefined' ? localStorage.getItem('businessos_token') : null;
     if (user && token) {
       const newConnection = new signalR.HubConnectionBuilder()
-        .withUrl(`${API_BASE_URL.replace('/api', '')}/hubs/notifications`, {
+        .withUrl(`/hubs/notifications`, {
           accessTokenFactory: () => token,
         })
         .withAutomaticReconnect()
