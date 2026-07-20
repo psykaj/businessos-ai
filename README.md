@@ -42,6 +42,7 @@ Instead of juggling 10 different software products, businesses use **one platfor
 | **Day 8** | Analytics | ✅ **Done** | Charts and reporting |
 | **Day 9** | White Label Platform | ✅ **Done** | Custom domains, themes, branding |
 | **Day 10** | AI & Communication Center | ✅ **Done** | AI Assistant, Email, WhatsApp, Automation |
+| **Day 11** | CRM Module | ✅ **Done** | Leads, Contacts, Companies, Deals & Tasks |
 
 ---
 
@@ -59,8 +60,8 @@ The documentation for BusinessOS AI is organized into the `docs/` folder to ensu
 ---
 
 ## 🚀 Recent Progress
-We have completed up to **Day 10** of our development roadmap!
-- **Frontend**: Added the AI Assistant Chat UI, White Labeling module, Email & WhatsApp communication centers, Automation Builder, real-time notifications via SignalR, in addition to previously built dashboards.
-- **Backend**: Robust .NET 9 Web API with full backend logic for OpenAI integrations, SignalR real-time event broadcasting, Automation rules engine, White label configurations, and dynamic CRM/Email services.
+We have completed up to **Day 11** of our development roadmap!
+- **Frontend**: Built the full CRM Module UI (Leads, Deals, Contacts, Tasks), AI Assistant Chat UI, White Labeling module, Email & WhatsApp communication centers, Automation Builder, and real-time notifications.
+- **Backend**: Robust .NET 9 Web API with full backend logic for the CRM entities, OpenAI integrations, SignalR real-time event broadcasting, Automation rules engine, and White label configurations.
 
 Check out [SCHEDULE.md](SCHEDULE.md) for the detailed day-wise breakdown, and [WALKTHROUGH.md](WALKTHROUGH.md) for a comprehensive overview of the architecture and key components.

@@ -56,3 +56,7 @@ This schedule outlines the day-by-day progress and the features added to the Bus
 ## Day 10: AI Assistant
 - Integrate OpenAI for AI-powered review replies and customer assistance.
 - Build the AI Chatbot interface for businesses.
+
+## Day 11: CRM Module
+- Backend: Designed entities and endpoints for multi-tenant Leads, Contacts, Companies, Deals, and Tasks.
+- Frontend: Built the full CRM UI leveraging React Query for robust sales pipeline and relationship tracking.
