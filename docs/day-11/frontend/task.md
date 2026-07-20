@@ -1,0 +1,8 @@
+- [x] Create CRM TypeScript Types (`frontend/types/crm.ts`)
+- [x] Build Axios Client Service (`frontend/lib/crm-service.ts`)
+- [x] Create Dashboard Pages for Leads, Contacts, Companies, Deals, Tasks, Activities
+- [x] Integrate React Query for data fetching, caching, and state management
+- [x] Resolve API Proxy path issues (update to `/api/crm/...`)
+- [x] Fix ESLint warnings and errors across components (`global-search.tsx` unescaped entities)
+- [x] Resolve SignalR connection 500 error loop in `notification-context.tsx`
+- [x] Verify successful zero-error build via `npm run build`

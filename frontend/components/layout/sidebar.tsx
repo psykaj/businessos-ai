@@ -31,7 +31,16 @@ import {
   Image as ImageIcon,
   Mail,
   Bell,
-  Zap
+  Zap,
+  Briefcase,
+  Target,
+  Building2,
+  UserCircle,
+  Kanban,
+  CheckSquare,
+  CalendarDays,
+  Activity,
+  Tags
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/auth-context";
@@ -44,6 +53,20 @@ const navGroups = [
       { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
       { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
       { label: "Customers", href: "/dashboard/customers", icon: Users },
+    ]
+  },
+  {
+    title: "CRM & Sales",
+    items: [
+      { label: "CRM Dashboard", href: "/dashboard/crm", icon: Briefcase },
+      { label: "Leads", href: "/dashboard/leads", icon: Target },
+      { label: "Contacts", href: "/dashboard/contacts", icon: UserCircle },
+      { label: "Companies", href: "/dashboard/companies", icon: Building2 },
+      { label: "Sales Pipeline", href: "/dashboard/deals", icon: Kanban },
+      { label: "Tasks", href: "/dashboard/tasks", icon: CheckSquare },
+      { label: "Calendar", href: "/dashboard/calendar", icon: CalendarDays },
+      { label: "Activities", href: "/dashboard/activities", icon: Activity },
+      { label: "Tags", href: "/dashboard/tags", icon: Tags },
     ]
   },
   {

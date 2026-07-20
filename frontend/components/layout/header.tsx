@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { GlobalSearch } from "@/components/layout/global-search";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -47,15 +48,8 @@ export function Header({ onMenuClick }: HeaderProps) {
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Search (Desktop) */}
-      <div className="relative hidden lg:flex max-w-sm w-full mx-4 items-center">
-        <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
-        <Input
-          type="search"
-          placeholder="Search across your workspace..."
-          className="h-9 w-full rounded-full bg-muted/50 pl-9 pr-4 text-sm focus-visible:ring-1 focus-visible:bg-background transition-all"
-        />
-      </div>
+      {/* Global Search (Desktop) */}
+      <GlobalSearch />
 
       {/* Right section */}
       <div className="flex items-center gap-2 sm:gap-3">

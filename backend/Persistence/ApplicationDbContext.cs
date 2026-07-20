@@ -1,6 +1,7 @@
 using backend.Common;
 using backend.Entities;
 using backend.Modules.QRCode.Models;
+using backend.Modules.CRM.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Persistence;
@@ -45,6 +46,16 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<LandingPageSection> LandingPageSections => Set<LandingPageSection>();
     public DbSet<SEOSettings> SEOSettings => Set<SEOSettings>();
 
+    // CRM Entities
+    public DbSet<Lead> Leads => Set<Lead>();
+    public DbSet<Company> Companies => Set<Company>();
+    public DbSet<Deal> Deals => Set<Deal>();
+    public DbSet<CrmActivity> CrmActivities => Set<CrmActivity>();
+    public DbSet<CrmTask> CrmTasks => Set<CrmTask>();
+    public DbSet<Note> Notes => Set<Note>();
+    public DbSet<Tag> Tags => Set<Tag>();
+    public DbSet<DealStageHistory> DealStageHistories => Set<DealStageHistory>();
+
     public DbSet<WhatsAppSettings> WhatsAppSettings => Set<WhatsAppSettings>();
     public DbSet<WhatsAppTemplate> WhatsAppTemplates => Set<WhatsAppTemplate>();
     public DbSet<CampaignContact> CampaignContacts => Set<CampaignContact>();
@@ -64,6 +75,15 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<AutomationRule>().HasIndex(a => a.OrganizationId);
         modelBuilder.Entity<AutomationLog>().HasIndex(l => l.RuleId);
         modelBuilder.Entity<WhatsAppTemplate>().HasIndex(w => w.OrganizationId);
+        
+        // CRM Constraints
+        modelBuilder.Entity<Lead>().HasIndex(l => l.OrganizationId);
+        modelBuilder.Entity<Company>().HasIndex(c => c.OrganizationId);
+        modelBuilder.Entity<Deal>().HasIndex(d => d.OrganizationId);
+        modelBuilder.Entity<CrmActivity>().HasIndex(a => a.OrganizationId);
+        modelBuilder.Entity<CrmTask>().HasIndex(t => t.OrganizationId);
+        modelBuilder.Entity<Note>().HasIndex(n => n.OrganizationId);
+        modelBuilder.Entity<Tag>().HasIndex(t => t.OrganizationId);
         
         // Multi-tenant Query Filters (Requires passing OrganizationId via a service usually, but for simplicity we'll just add basic indexes for now as EF Global Filters require an injected context provider)
 

@@ -32,15 +32,17 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('businessos_token') : null;
     if (user && token) {
-      const newConnection = new signalR.HubConnectionBuilder()
-        .withUrl(`/hubs/notifications`, {
-          accessTokenFactory: () => token,
-        })
-        .withAutomaticReconnect()
-        .build();
+      // Disabled SignalR as it's causing connection errors and is not mandatory for basic functionality
+      // const hubUrl = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5294'}/hubs/notifications`;
+      // const newConnection = new signalR.HubConnectionBuilder()
+      //   .withUrl(hubUrl, {
+      //     accessTokenFactory: () => token,
+      //   })
+      //   .withAutomaticReconnect()
+      //   .build();
 
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setConnection(newConnection);
+      // setConnection(newConnection);
     } else {
       if (connection) {
         connection.stop();

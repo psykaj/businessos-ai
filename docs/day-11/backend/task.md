@@ -1,0 +1,9 @@
+- [x] Create core CRM Entities (Lead, Contact, Company, Deal, Activity, Task, Tag, Note)
+- [x] Establish Foreign Key Relationships and Entity Configurations
+- [x] Build DTOs for request/response payloads
+- [x] Create generic and specialized Repository Interfaces (`ICrmRepositories`)
+- [x] Implement Repository logic for multi-tenant data access
+- [x] Develop Service layer for business logic (`LeadService`, `DealService`, etc.)
+- [x] Expose Web API Controllers (`LeadsController`, `DealsController`, etc.)
+- [x] Generate and Apply EF Core Migration (`Day11_CRMModule`)
+- [x] Verify backend build success without errors
