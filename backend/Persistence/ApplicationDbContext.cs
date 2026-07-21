@@ -2,6 +2,10 @@ using backend.Common;
 using backend.Entities;
 using backend.Modules.QRCode.Models;
 using backend.Modules.CRM.Entities;
+using backend.Modules.Forms.Entities;
+using backend.Modules.LeadCapture.Entities;
+using backend.Modules.CustomerJourney.Entities;
+using backend.Modules.Webhooks.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Persistence;
@@ -59,6 +63,15 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<WhatsAppSettings> WhatsAppSettings => Set<WhatsAppSettings>();
     public DbSet<WhatsAppTemplate> WhatsAppTemplates => Set<WhatsAppTemplate>();
     public DbSet<CampaignContact> CampaignContacts => Set<CampaignContact>();
+
+    // Day 12 - Lead Capture & Marketing Automation
+    public DbSet<Form> Forms => Set<Form>();
+    public DbSet<FormField> FormFields => Set<FormField>();
+    public DbSet<FormSubmission> FormSubmissions => Set<FormSubmission>();
+    public DbSet<LeadSource> LeadSources => Set<LeadSource>();
+    public DbSet<backend.Modules.CustomerJourney.Entities.CustomerJourney> CustomerJourneys => Set<backend.Modules.CustomerJourney.Entities.CustomerJourney>();
+    public DbSet<WebhookSubscription> WebhookSubscriptions => Set<WebhookSubscription>();
+    public DbSet<WebhookDelivery> WebhookDeliveries => Set<WebhookDelivery>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -84,6 +97,13 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<CrmTask>().HasIndex(t => t.OrganizationId);
         modelBuilder.Entity<Note>().HasIndex(n => n.OrganizationId);
         modelBuilder.Entity<Tag>().HasIndex(t => t.OrganizationId);
+        
+        // Day 12 Constraints
+        modelBuilder.Entity<Form>().HasIndex(f => f.OrganizationId);
+        modelBuilder.Entity<FormSubmission>().HasIndex(fs => fs.OrganizationId);
+        modelBuilder.Entity<LeadSource>().HasIndex(ls => ls.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CustomerJourney.Entities.CustomerJourney>().HasIndex(cj => cj.OrganizationId);
+        modelBuilder.Entity<WebhookSubscription>().HasIndex(ws => ws.OrganizationId);
         
         // Multi-tenant Query Filters (Requires passing OrganizationId via a service usually, but for simplicity we'll just add basic indexes for now as EF Global Filters require an injected context provider)
 

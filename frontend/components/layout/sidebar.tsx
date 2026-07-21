@@ -70,6 +70,16 @@ const navGroups = [
     ]
   },
   {
+    title: "Marketing & Leads",
+    items: [
+      { label: "Forms", href: "/dashboard/forms", icon: FileText },
+      { label: "Submissions", href: "/dashboard/forms/submissions", icon: Receipt },
+      { label: "Campaigns", href: "/dashboard/campaigns", icon: Target },
+      { label: "Customer Journey", href: "/dashboard/customer-journey", icon: Kanban },
+      { label: "Lead Sources", href: "/dashboard/lead-sources", icon: Activity },
+    ]
+  },
+  {
     title: "Apps & Tools",
     items: [
       { label: "QR Codes", href: "/dashboard/qr", icon: QrCode },

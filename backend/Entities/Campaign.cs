@@ -9,7 +9,10 @@ public class Campaign : BaseEntity
     
     // Add additional base properties depending on the module
     public string Name { get; set; } = string.Empty;
-    public string Type { get; set; } = "WhatsApp"; // e.g. WhatsApp, Email
+    public string CampaignType { get; set; } = "Email"; 
+    public string Source { get; set; } = string.Empty;
+    public string Medium { get; set; } = string.Empty;
+    public decimal Budget { get; set; } = 0;
     public string Status { get; set; } = "Draft"; // Draft, Scheduled, Running, Completed
 
     public Guid? TemplateId { get; set; }

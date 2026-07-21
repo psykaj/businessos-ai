@@ -62,6 +62,25 @@ public static class CoreModuleExtensions
         services.AddScoped<backend.Modules.Automation.Interfaces.IAutomationRepository, backend.Modules.Automation.Repositories.AutomationRepository>();
         services.AddScoped<backend.Modules.Automation.Interfaces.IAutomationEngineService, backend.Modules.Automation.Services.AutomationEngineService>();
 
+        // Day 12 - Lead Capture & Marketing Automation
+        services.AddScoped<backend.Modules.Forms.Interfaces.IFormRepository, backend.Modules.Forms.Repositories.FormRepository>();
+        services.AddScoped<backend.Modules.Forms.Interfaces.ISubmissionRepository, backend.Modules.Forms.Repositories.SubmissionRepository>();
+        services.AddScoped<backend.Modules.Forms.Interfaces.IFormService, backend.Modules.Forms.Services.FormService>();
+
+        services.AddScoped<backend.Modules.Campaigns.Interfaces.ICampaignRepository, backend.Modules.Campaigns.Repositories.CampaignRepository>();
+        services.AddScoped<backend.Modules.Campaigns.Interfaces.ICampaignService, backend.Modules.Campaigns.Services.CampaignService>();
+
+        services.AddScoped<backend.Modules.CustomerJourney.Interfaces.IJourneyRepository, backend.Modules.CustomerJourney.Repositories.JourneyRepository>();
+        services.AddScoped<backend.Modules.CustomerJourney.Interfaces.ICustomerJourneyService, backend.Modules.CustomerJourney.Services.CustomerJourneyService>();
+
+        services.AddScoped<backend.Modules.LeadCapture.Interfaces.ILeadCaptureService, backend.Modules.LeadCapture.Services.LeadCaptureService>();
+
+        services.AddScoped<backend.Modules.Webhooks.Interfaces.IWebhookRepository, backend.Modules.Webhooks.Repositories.WebhookRepository>();
+        services.AddScoped<backend.Modules.Webhooks.Interfaces.IWebhookDispatchService, backend.Modules.Webhooks.Services.WebhookDispatchService>();
+        
+        services.AddSingleton<backend.Modules.Webhooks.Services.WebhookQueue>();
+        services.AddHostedService<backend.Modules.Webhooks.Services.WebhookBackgroundService>();
+
         // RBAC Authorization Setup
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();

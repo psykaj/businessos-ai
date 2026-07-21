@@ -1,0 +1,27 @@
+- `[x]` Step 1: Navigation & Layout Updates
+  - `[ ]` Update sidebar.tsx with new Marketing & Leads section
+- `[x]` Step 2: API Hooks Setup
+  - `[ ]` Create `hooks/use-forms.ts`
+  - `[ ]` Create `hooks/use-campaigns.ts`
+  - `[ ]` Create `hooks/use-customer-journey.ts`
+  - `[ ]` Create `hooks/use-marketing-analytics.ts`
+- `[x]` Step 3: Form Builder Module
+  - `[ ]` Create `/dashboard/forms/page.tsx`
+  - `[ ]` Create `/dashboard/forms/create/page.tsx`
+  - `[ ]` Create `/dashboard/forms/edit/[id]/page.tsx`
+  - `[ ]` Create `components/forms/builder` components (Canvas, Settings, Palette)
+- `[x]` Step 4: Public Form Viewer
+  - `[ ]` Create `app/(public)/f/[id]/page.tsx`
+- `[x]` Step 5: Submissions Dashboard
+  - `[ ]` Create `/dashboard/forms/submissions/page.tsx`
+- `[x]` Step 6: Campaign Management
+  - `[ ]` Create `/dashboard/campaigns/page.tsx`
+  - `[ ]` Create `/dashboard/campaigns/create/page.tsx`
+  - `[ ]` Create `/dashboard/campaigns/[id]/page.tsx`
+- `[x]` Step 7: Customer Journey & Analytics
+  - `[ ]` Create `/dashboard/customer-journey/page.tsx`
+  - `[ ]` Create `/dashboard/lead-sources/page.tsx`
+- `[x]` Step 8: Verification & Documentation
+  - `[x]` Create `docs/marketing-ui.md`
+  - `[x]` Update `docs/roadmap.md`
+  - `[x]` Build verification (`npm run lint`, `tsc`)
