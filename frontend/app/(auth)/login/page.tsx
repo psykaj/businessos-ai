@@ -67,7 +67,7 @@ export default function LoginPage() {
     <div className="flex justify-center">
       <AuthFormWrapper
         title="Welcome back"
-        subtitle="Sign in to your BusinessOS AI account"
+        subtitle="Sign in to your Simplify account"
         footer={{
           text: "Don't have an account?",
           linkText: "Create one",

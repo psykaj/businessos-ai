@@ -23,7 +23,7 @@ export default function CreateWorkflowPage() {
     createWorkflow.mutate(
       {
         name,
-        description: "Created via BusinessOS AI Visual Builder",
+        description: "Created via Simplify Visual Builder",
         trigger: {
           triggerType: "LeadCreated",
           triggerConfiguration: "{}",
@@ -32,7 +32,7 @@ export default function CreateWorkflowPage() {
         actions: [
           {
             actionType: "SendWhatsApp",
-            configuration: JSON.stringify({ Message: "Welcome to BusinessOS AI!" }),
+            configuration: JSON.stringify({ Message: "Welcome to Simplify!" }),
             executionOrder: 1,
           },
         ],

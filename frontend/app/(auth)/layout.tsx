@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "BusinessOS AI — Authentication",
-  description: "Sign in or create your BusinessOS AI account.",
+  title: "Simplify — Authentication",
+  description: "Sign in or create your Simplify account.",
 };
 
 export default function AuthLayout({
@@ -27,7 +27,7 @@ export default function AuthLayout({
 
       {/* Bottom brand strip */}
       <footer className="relative z-10 mt-8 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} BusinessOS AI. All rights reserved.
+        © {new Date().getFullYear()} Simplify. All rights reserved.
       </footer>
     </div>
   );

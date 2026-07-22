@@ -1,4 +1,4 @@
-# BusinessOS AI
+# Simplify
 
 > **AI-powered Business Operating System for SMEs.**  
 > Help 1 Million Small & Medium Businesses grow online using AI — one unified platform instead of 10 disparate software tools.
@@ -7,7 +7,7 @@
 
 ## 🎯 Vision
 
-BusinessOS AI is an all-in-one AI platform built for SMEs to manage sales, customer relations, automated marketing, and cross-application workflows seamlessly.
+Simplify is an all-in-one AI platform built for SMEs to manage sales, customer relations, automated marketing, and cross-application workflows seamlessly.
 
 | Module | Description | Status |
 |--------|-------------|--------|
@@ -50,7 +50,7 @@ BusinessOS AI is an all-in-one AI platform built for SMEs to manage sales, custo
 
 ## ⚡ Day 13 Highlights: Workflow Automation & Integration Platform
 
-Deeply integrated inside BusinessOS AI, this module replaces expensive third-party automation tools with an in-house visual workflow builder.
+Deeply integrated inside Simplify, this module replaces expensive third-party automation tools with an in-house visual workflow builder.
 
 ### ⚙️ Backend Architecture (ASP.NET Core .NET 9)
 - **Plugin Registries**: Interface-based registries (`ITriggerHandler`, `IActionHandler`, `IIntegrationProvider`) allow adding new triggers, actions, and integrations without touching core execution logic.

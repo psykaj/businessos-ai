@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BusinessOS AI — Dashboard",
+  title: "Simplify — Dashboard",
   description:
     "AI-powered Business Operating System for SMEs. Manage QR codes, reviews, invoices, customers, and more.",
 };

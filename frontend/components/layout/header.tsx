@@ -41,8 +41,7 @@ export function Header({ onMenuClick }: HeaderProps) {
 
       {/* Mobile brand (visible when sidebar is hidden) */}
       <span className="text-base font-bold tracking-tight text-foreground lg:hidden">
-        BusinessOS
-        <span className="ml-1 text-xs font-semibold text-primary">AI</span>
+        Simplify
       </span>
 
       {/* Spacer */}

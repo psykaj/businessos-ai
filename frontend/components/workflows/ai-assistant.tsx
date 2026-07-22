@@ -60,7 +60,7 @@ export function AiWorkflowAssistant({ isOpen, onClose, onApplyGeneratedWorkflow 
             data: {
               actionType: "SendWhatsApp",
               label: "Send Welcome WhatsApp",
-              description: "Hi {{CustomerName}}, welcome to BusinessOS AI!",
+              description: "Hi {{CustomerName}}, welcome to Simplify!",
             },
           },
         ],

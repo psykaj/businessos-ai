@@ -1,6 +1,6 @@
-# BusinessOS AI - Comprehensive Walkthrough
+# Simplify - Comprehensive Walkthrough
 
-Welcome to the BusinessOS AI platform. This walkthrough explains the project structure, the tech stack, and the key components that power the application.
+Welcome to the Simplify platform. This walkthrough explains the project structure, the tech stack, and the key components that power the application.
 
 ## Tech Stack Overview
 - **Frontend**: Next.js 16 (App Router), React, Tailwind CSS, shadcn/ui, Recharts.

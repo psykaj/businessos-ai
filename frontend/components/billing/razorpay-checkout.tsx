@@ -51,7 +51,7 @@ export function RazorpayCheckout({ planId, planName, amount, billingCycle, onSuc
         key: order.key, 
         amount: order.amount,
         currency: 'USD', 
-        name: 'BusinessOS AI',
+        name: 'Simplify',
         description: `Subscription to ${planName} Plan (${billingCycle})`,
         image: '/logo.png', // Fallback to a logo if available
         order_id: order.orderId,
@@ -76,7 +76,7 @@ export function RazorpayCheckout({ planId, planName, amount, billingCycle, onSuc
           }
         },
         prefill: {
-          name: 'BusinessOS User',
+          name: 'Simplify User',
           email: 'user@example.com',
           contact: '9999999999'
         },

@@ -161,7 +161,7 @@ export default function ApiKeysPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">API Keys</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Manage API keys for programmatic access to the BusinessOS API.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Manage API keys for programmatic access to the Simplify API.</p>
         </div>
         
         <Dialog open={createDialogOpen} onOpenChange={(open) => !open && closeDialog()}>
@@ -197,7 +197,7 @@ export default function ApiKeysPage() {
                 <DialogHeader>
                   <DialogTitle>Generate API Key</DialogTitle>
                   <DialogDescription>
-                    Create a new API key for integrating with BusinessOS.
+                    Create a new API key for integrating with Simplify.
                   </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { AiSidebar } from "./_components/ai-sidebar";
 
 export const metadata: Metadata = {
-  title: "AI Assistant | BusinessOS",
+  title: "AI Assistant | Simplify",
   description: "Chat with your AI assistant",
 };
 

@@ -144,7 +144,7 @@ export default function RegisterPage() {
     <div className="flex justify-center">
       <AuthFormWrapper
         title="Create your account"
-        subtitle="Start your BusinessOS AI journey today"
+        subtitle="Start your Simplify journey today"
         footer={{
           text: "Already have an account?",
           linkText: "Sign in",

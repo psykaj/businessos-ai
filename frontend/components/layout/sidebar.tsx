@@ -190,11 +190,10 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         <div className="flex h-16 shrink-0 items-center justify-between border-b border-border/50 px-6">
           <Link href="/dashboard" className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/20">
-              <span className="text-sm font-bold text-primary-foreground">B</span>
+              <span className="text-sm font-bold text-primary-foreground">S</span>
             </div>
             <span className="text-lg font-bold tracking-tight text-foreground">
-              BusinessOS
-              <span className="ml-1 text-xs font-semibold text-primary">AI</span>
+              Simplify
             </span>
           </Link>
           <button
