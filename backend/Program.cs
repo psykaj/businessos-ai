@@ -7,6 +7,7 @@ using backend.Modules.QRCode.Extensions;
 using backend.Modules.Analytics.Extensions;
 using backend.Modules.Billing.Extensions;
 using backend.Modules.CRM.Extensions;
+using backend.Modules.Workflow.Extensions;
 using backend.Seed;
 using backend.Interfaces;
 using backend.Middleware;
@@ -83,6 +84,7 @@ builder.Services.AddQRCodeModule();
 builder.Services.AddAnalyticsModule();
 builder.Services.AddBillingModule();
 builder.Services.AddCrmModule();
+builder.Services.AddWorkflowModule();
 builder.Services.AddCoreModules();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddControllers()

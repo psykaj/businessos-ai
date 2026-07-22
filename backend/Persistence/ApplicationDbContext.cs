@@ -72,6 +72,15 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.CustomerJourney.Entities.CustomerJourney> CustomerJourneys => Set<backend.Modules.CustomerJourney.Entities.CustomerJourney>();
     public DbSet<WebhookSubscription> WebhookSubscriptions => Set<WebhookSubscription>();
     public DbSet<WebhookDelivery> WebhookDeliveries => Set<WebhookDelivery>();
+
+    // Day 13 - Workflow Automation, Integrations & Webhook Platform
+    public DbSet<backend.Modules.Workflow.Entities.Workflow> Workflows => Set<backend.Modules.Workflow.Entities.Workflow>();
+    public DbSet<backend.Modules.Workflow.Entities.WorkflowTrigger> WorkflowTriggers => Set<backend.Modules.Workflow.Entities.WorkflowTrigger>();
+    public DbSet<backend.Modules.Workflow.Entities.WorkflowAction> WorkflowActions => Set<backend.Modules.Workflow.Entities.WorkflowAction>();
+    public DbSet<backend.Modules.Workflow.Entities.WorkflowCondition> WorkflowConditions => Set<backend.Modules.Workflow.Entities.WorkflowCondition>();
+    public DbSet<backend.Modules.Workflow.Entities.WorkflowExecution> WorkflowExecutions => Set<backend.Modules.Workflow.Entities.WorkflowExecution>();
+    public DbSet<backend.Modules.Workflow.Entities.WorkflowExecutionLog> WorkflowExecutionLogs => Set<backend.Modules.Workflow.Entities.WorkflowExecutionLog>();
+    public DbSet<backend.Modules.Workflow.Entities.Integration> Integrations => Set<backend.Modules.Workflow.Entities.Integration>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -104,6 +113,11 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<LeadSource>().HasIndex(ls => ls.OrganizationId);
         modelBuilder.Entity<backend.Modules.CustomerJourney.Entities.CustomerJourney>().HasIndex(cj => cj.OrganizationId);
         modelBuilder.Entity<WebhookSubscription>().HasIndex(ws => ws.OrganizationId);
+        
+        // Day 13 Workflow Constraints
+        modelBuilder.Entity<backend.Modules.Workflow.Entities.Workflow>().HasIndex(w => w.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Workflow.Entities.WorkflowExecution>().HasIndex(e => e.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Workflow.Entities.Integration>().HasIndex(i => i.OrganizationId);
         
         // Multi-tenant Query Filters (Requires passing OrganizationId via a service usually, but for simplicity we'll just add basic indexes for now as EF Global Filters require an injected context provider)
 

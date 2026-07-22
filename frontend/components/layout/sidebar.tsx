@@ -96,9 +96,12 @@ const navGroups = [
     ]
   },
   {
-    title: "Automation",
+    title: "Automation & Integrations",
     items: [
-      { label: "Workflows", href: "/dashboard/automation", icon: Zap },
+      { label: "Workflows", href: "/dashboard/workflows", icon: Zap },
+      { label: "Integrations", href: "/dashboard/integrations", icon: Globe },
+      { label: "Execution History", href: "/dashboard/workflow-history", icon: FileClock },
+      { label: "Templates", href: "/dashboard/templates/workflows", icon: LayoutTemplate },
     ]
   },
   {
