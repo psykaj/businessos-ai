@@ -7,7 +7,7 @@
 
 ## 🎯 Vision
 
-Simplify is an all-in-one AI platform built for SMEs to manage sales, customer relations, automated marketing, and cross-application workflows seamlessly.
+Simplify is an all-in-one AI platform built for SMEs to manage sales, customer relations, automated marketing, cross-application workflows, and executive analytics seamlessly.
 
 | Module | Description | Status |
 |--------|-------------|--------|
@@ -20,6 +20,7 @@ Simplify is an all-in-one AI platform built for SMEs to manage sales, customer r
 | ⚡ **Workflow Automation** | No-code visual workflow engine (Zapier / n8n alternative) | ✅ Completed |
 | 🔌 **Integration Platform** | Connect Google Sheets, Slack, Teams, Stripe, Twilio, etc. | ✅ Completed |
 | 🤖 **AI Assistant** | 24/7 AI business assistant with natural language workflow builder | ✅ Completed |
+| 👑 **Executive Dashboard & BI** | CEO command center, automatic 14 KPIs, AI decisions & forecasts | ✅ Completed |
 | 📊 **Analytics** | Real-time business reporting and scan analytics | ✅ Completed |
 | 💼 **Digital Business Card** | NFC & QR-based digital business cards | ✅ Completed |
 | 🎨 **White Label Platform** | Custom domains, branding, themes, and SEO settings | ✅ Completed |
@@ -45,28 +46,29 @@ Simplify is an all-in-one AI platform built for SMEs to manage sales, customer r
 | **Day 11** | CRM & Sales Pipeline | ✅ **Done** | Leads, Contacts, Companies, Deals, Tasks, Activities |
 | **Day 12** | Lead Capture & Marketing Automation | ✅ **Done** | Form Builder, Submissions, Customer Journey, Webhooks |
 | **Day 13** | Workflow Automation & Integration Platform | ✅ **Done** | Visual React Flow builder, 13 Triggers, 13 Actions, 12 Integrations, AES-256 encryption, AI Assistant |
+| **Day 14** | Executive Dashboard, BI & AI Decision Engine | ✅ **Done** | CEO Command Center, 14 Enterprise KPIs, AI Recommendations, Predictive Forecasting, Goal Sync, PDF/Excel/CSV Exports |
 
 ---
 
-## ⚡ Day 13 Highlights: Workflow Automation & Integration Platform
+## ⚡ Day 14 Highlights: Executive Dashboard, BI & AI Decision Engine
 
-Deeply integrated inside Simplify, this module replaces expensive third-party automation tools with an in-house visual workflow builder.
+This module builds a CEO-grade command center that consolidates data across CRM, Marketing, Workflows, Billing, and Team performance into real-time actionable intelligence.
 
 ### ⚙️ Backend Architecture (ASP.NET Core .NET 9)
-- **Plugin Registries**: Interface-based registries (`ITriggerHandler`, `IActionHandler`, `IIntegrationProvider`) allow adding new triggers, actions, and integrations without touching core execution logic.
-- **Trigger Engine**: Supports 13 triggers (`LeadCreated`, `FormSubmitted`, `QRCodeScanned`, `PaymentReceived`, `CustomerRegistered`, `SubscriptionExpiring`, `ManualTrigger`, `ScheduledTrigger`, etc.).
-- **Action Engine**: Supports 13 actions (`CreateCrmLead`, `UpdateCrm`, `AssignSalesperson`, `SendEmail`, `SendWhatsApp`, `SendNotification`, `GenerateInvoice`, `GenerateQR`, `CallAiAssistant`, `CallWebhook`, `DelayExecution`, `UpdateCustomerJourney`, `LogActivity`).
-- **Integration Platform**: Supports 12 SaaS providers (`Google Sheets`, `Slack`, `Teams`, `Discord`, `Stripe`, `Razorpay`, `Twilio`, `Resend`, `Google Calendar`, `Outlook Calendar`, `Webhook`, `REST API`).
-- **Security & Encryption**: Sensitive API keys and tokens are encrypted at rest using AES-256 (`EncryptionService`) and masked (`****ABCD`) on read DTOs.
-- **Execution Engine**: Asynchronous sequential processing, condition evaluation (`IF/ELSE`, `AND/OR`), up to 3 retries with exponential backoff, and step-by-step audit logging into `WorkflowExecutionLogs`.
+- **Automatic KPI Calculation Engine**: Automatically calculates 14 enterprise KPIs (Total Revenue, Monthly Revenue, Retention Rate, Churn Rate, Lead Conversion %, Avg Deal Size, Sales Cycle, Campaign ROI, Active Workflows, AI Usage, etc.).
+- **Executive Dashboard API Layer**: Role-tailored endpoints (`/ceo`, `/sales`, `/marketing`, `/finance`, `/operations`, `/team`) with period filters (`7d`, `30d`, `90d`, `1y`, `custom`) and comparison calculations.
+- **AI Business Insights Engine**: Heuristic decision engine surfacing prioritized risk alerts (`Critical`, `High`, `Medium`, `Low`) with business impact and recommended actions.
+- **Predictive Forecast Engine**: Statistical projection models for Revenue, Sales, Leads, Customer Growth, and Subscriptions with confidence scoring.
+- **Report Generator & Multi-Format Exporter**: On-demand report creation with native streaming exports for PDF, Excel (XML/TSV), and CSV.
+- **Goal Tracking Framework**: Goal creation, progress calculation against live KPIs, and status progression (`InProgress`, `Achieved`, `Behind`, `Failed`).
 
-### 🎨 Frontend Architecture (Next.js 16 + React Flow)
-- **Visual Builder**: Built using `@xyflow/react` with custom node types (`TriggerNode`, `ActionNode`, `LogicNode`), connecting edges, minimap, controls, and dot grid canvas.
-- **Node Config Drawer**: Slide-over drawer to configure inputs and insert dynamic variable tags (`{{CustomerName}}`, `{{InvoiceNumber}}`, `{{DealValue}}`, `{{today.date}}`).
-- **AI Workflow Assistant**: Accepts natural language prompts (e.g. *"When a new lead is created, assign to John and send a welcome WhatsApp"*) and auto-generates matching node graphs.
-- **Integration Center**: Provider cards with real-time status badges, test connection triggers, and encrypted key connection modal.
-- **Templates Library**: Pre-configured business workflow templates ready for single-click installation.
-- **Execution Monitoring**: Real-time log inspector drawer displaying step inputs, outputs, duration, and error tracebacks.
+### 🎨 Frontend Architecture (Next.js 16 + Recharts + React Query)
+- **Executive Command Center** (`/dashboard/executive`): Multi-role dashboard switcher with Recharts revenue velocity curves and customizable layout grid.
+- **KPI Performance Center** (`/dashboard/kpis`): Interactive KPI cards across Daily, Weekly, Monthly, Quarterly, and Yearly granularity.
+- **AI Decision Center** (`/dashboard/insights`): Surfacing AI recommendations with priority badges, business impact analysis, and resolution triggers.
+- **Forecast Dashboard** (`/dashboard/forecast`): Growth trajectory curves over 30, 60, or 90 day horizons with model confidence indicators.
+- **Reports Center & Export Hub** (`/dashboard/reports` & `/dashboard/export-center`): Interactive preview modals and instant multi-format downloads.
+- **Goal Management** (`/dashboard/goals`): Visual goal progress bars and live KPI syncing.
 
 ---
 
@@ -82,7 +84,7 @@ Deeply integrated inside Simplify, this module replaces expensive third-party au
 
 ### Frontend
 - **Framework**: Next.js 16 (App Router), React 19, TypeScript
-- **Visual Engine**: `@xyflow/react` (React Flow)
+- **Visual Engine**: Recharts, `@xyflow/react` (React Flow)
 - **Styling**: Tailwind CSS v4, Lucide Icons, Shadcn UI patterns
 - **State & Data**: React Query (`@tanstack/react-query`), Axios, React Hook Form, Zod
 - **Notifications**: Sonner
@@ -93,14 +95,16 @@ Deeply integrated inside Simplify, this module replaces expensive third-party au
 
 Detailed technical documents are available in the [`docs/`](docs/) directory:
 
-- [**docs/workflows.md**](docs/workflows.md) — Workflow Engine Architecture & REST APIs
-- [**docs/triggers.md**](docs/triggers.md) — Trigger Engine & 13 Trigger Types
-- [**docs/actions.md**](docs/actions.md) — Action Engine & 13 Action Types
-- [**docs/integrations.md**](docs/integrations.md) — Integration Platform & 12 SaaS Providers
-- [**docs/executions.md**](docs/executions.md) — Execution Monitoring & Step Logging
-- [**docs/workflow-ui.md**](docs/workflow-ui.md) — Visual Workflow Builder & AI Assistant Frontend Architecture
-- [**docs/day13-implementation-plan.md**](docs/day13-implementation-plan.md) — Day 13 Technical Implementation Plan
-- [**docs/day13-walkthrough.md**](docs/day13-walkthrough.md) — Day 13 Feature & Verification Walkthrough
+- [**docs/business-intelligence.md**](docs/business-intelligence.md) — BI Backend Engine Architecture
+- [**docs/executive-dashboard.md**](docs/executive-dashboard.md) — Executive Dashboard REST APIs
+- [**docs/forecasting.md**](docs/forecasting.md) — Predictive Forecast Engine
+- [**docs/reports.md**](docs/reports.md) — Report Generator & Multi-Format Exporter
+- [**docs/goals.md**](docs/goals.md) — Goal Tracking Architecture
+- [**docs/executive-dashboard-ui.md**](docs/executive-dashboard-ui.md) — Executive Dashboard Frontend Architecture
+- [**docs/kpi-center.md**](docs/kpi-center.md) — KPI Center UI
+- [**docs/ai-insights-ui.md**](docs/ai-insights-ui.md) — AI Decision Center UI
+- [**docs/reports-ui.md**](docs/reports-ui.md) — Reports Center UI
+- [**docs/goal-tracking-ui.md**](docs/goal-tracking-ui.md) — Goal Tracking UI
 
 ---
 
@@ -109,7 +113,7 @@ Detailed technical documents are available in the [`docs/`](docs/) directory:
 ### 1. Backend Server (.NET 9 API)
 ```bash
 dotnet run --project backend/backend.csproj
-# API will start on http://localhost:5000
+# API will start on http://localhost:5294
 ```
 
 ### 2. Frontend Development Server (Next.js 16)

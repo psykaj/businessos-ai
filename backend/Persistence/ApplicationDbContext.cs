@@ -81,6 +81,14 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.Workflow.Entities.WorkflowExecution> WorkflowExecutions => Set<backend.Modules.Workflow.Entities.WorkflowExecution>();
     public DbSet<backend.Modules.Workflow.Entities.WorkflowExecutionLog> WorkflowExecutionLogs => Set<backend.Modules.Workflow.Entities.WorkflowExecutionLog>();
     public DbSet<backend.Modules.Workflow.Entities.Integration> Integrations => Set<backend.Modules.Workflow.Entities.Integration>();
+
+    // Day 14 - Business Intelligence, Executive Dashboard & AI Decision Engine
+    public DbSet<backend.Modules.BusinessIntelligence.Entities.KPI> KPIs => Set<backend.Modules.BusinessIntelligence.Entities.KPI>();
+    public DbSet<backend.Modules.BusinessIntelligence.Entities.Goal> Goals => Set<backend.Modules.BusinessIntelligence.Entities.Goal>();
+    public DbSet<backend.Modules.BusinessIntelligence.Entities.Report> Reports => Set<backend.Modules.BusinessIntelligence.Entities.Report>();
+    public DbSet<backend.Modules.BusinessIntelligence.Entities.Insight> Insights => Set<backend.Modules.BusinessIntelligence.Entities.Insight>();
+    public DbSet<backend.Modules.BusinessIntelligence.Entities.Forecast> Forecasts => Set<backend.Modules.BusinessIntelligence.Entities.Forecast>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -119,7 +127,12 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.Workflow.Entities.WorkflowExecution>().HasIndex(e => e.OrganizationId);
         modelBuilder.Entity<backend.Modules.Workflow.Entities.Integration>().HasIndex(i => i.OrganizationId);
         
-        // Multi-tenant Query Filters (Requires passing OrganizationId via a service usually, but for simplicity we'll just add basic indexes for now as EF Global Filters require an injected context provider)
+        // Day 14 BI Constraints
+        modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.KPI>().HasIndex(k => k.OrganizationId);
+        modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.Goal>().HasIndex(g => g.OrganizationId);
+        modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.Report>().HasIndex(r => r.OrganizationId);
+        modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.Insight>().HasIndex(i => i.OrganizationId);
+        modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.Forecast>().HasIndex(f => f.OrganizationId);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }

@@ -51,8 +51,21 @@ const navGroups = [
     title: "Overview",
     items: [
       { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+      { label: "Executive Command", href: "/dashboard/executive", icon: Crown },
       { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
       { label: "Customers", href: "/dashboard/customers", icon: Users },
+    ]
+  },
+  {
+    title: "Executive & Intelligence",
+    items: [
+      { label: "Executive Dashboard", href: "/dashboard/executive", icon: Crown },
+      { label: "KPI Center", href: "/dashboard/kpis", icon: BarChart3 },
+      { label: "AI Insights", href: "/dashboard/insights", icon: Sparkles },
+      { label: "Forecasting", href: "/dashboard/forecast", icon: Activity },
+      { label: "Reports Center", href: "/dashboard/reports", icon: FileText },
+      { label: "Goal Tracking", href: "/dashboard/goals", icon: Target },
+      { label: "Export Center", href: "/dashboard/export-center", icon: Receipt },
     ]
   },
   {
