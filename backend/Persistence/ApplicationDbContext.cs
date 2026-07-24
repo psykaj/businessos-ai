@@ -89,6 +89,14 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.BusinessIntelligence.Entities.Insight> Insights => Set<backend.Modules.BusinessIntelligence.Entities.Insight>();
     public DbSet<backend.Modules.BusinessIntelligence.Entities.Forecast> Forecasts => Set<backend.Modules.BusinessIntelligence.Entities.Forecast>();
 
+    // Day 15 - AI Business Agent, Task Execution Engine & Enterprise AI Copilot
+    public DbSet<backend.Modules.AiAgent.Entities.Conversation> Conversations => Set<backend.Modules.AiAgent.Entities.Conversation>();
+    public DbSet<backend.Modules.AiAgent.Entities.Message> Messages => Set<backend.Modules.AiAgent.Entities.Message>();
+    public DbSet<backend.Modules.AiAgent.Entities.CommandExecution> CommandExecutions => Set<backend.Modules.AiAgent.Entities.CommandExecution>();
+    public DbSet<backend.Modules.AiAgent.Entities.ToolDefinition> ToolDefinitions => Set<backend.Modules.AiAgent.Entities.ToolDefinition>();
+    public DbSet<backend.Modules.AiAgent.Entities.Recommendation> Recommendations => Set<backend.Modules.AiAgent.Entities.Recommendation>();
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -134,7 +142,14 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.Insight>().HasIndex(i => i.OrganizationId);
         modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.Forecast>().HasIndex(f => f.OrganizationId);
 
+        // Day 15 AI Agent Constraints
+        modelBuilder.Entity<backend.Modules.AiAgent.Entities.Conversation>().HasIndex(c => c.OrganizationId);
+        modelBuilder.Entity<backend.Modules.AiAgent.Entities.Message>().HasIndex(m => m.ConversationId);
+        modelBuilder.Entity<backend.Modules.AiAgent.Entities.CommandExecution>().HasIndex(ce => ce.OrganizationId);
+        modelBuilder.Entity<backend.Modules.AiAgent.Entities.Recommendation>().HasIndex(r => r.OrganizationId);
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
     }
 
     public override int SaveChanges()

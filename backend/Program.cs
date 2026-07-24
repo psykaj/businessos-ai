@@ -9,6 +9,7 @@ using backend.Modules.Billing.Extensions;
 using backend.Modules.CRM.Extensions;
 using backend.Modules.Workflow.Extensions;
 using backend.Modules.BusinessIntelligence.Extensions;
+using backend.Modules.AiAgent.Extensions;
 using backend.Seed;
 using backend.Interfaces;
 using backend.Middleware;
@@ -87,6 +88,7 @@ builder.Services.AddBillingModule();
 builder.Services.AddCrmModule();
 builder.Services.AddWorkflowModule();
 builder.Services.AddBusinessIntelligenceModule();
+builder.Services.AddAiAgentModule();
 builder.Services.AddCoreModules();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddControllers()
