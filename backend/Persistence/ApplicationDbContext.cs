@@ -96,6 +96,15 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.AiAgent.Entities.ToolDefinition> ToolDefinitions => Set<backend.Modules.AiAgent.Entities.ToolDefinition>();
     public DbSet<backend.Modules.AiAgent.Entities.Recommendation> Recommendations => Set<backend.Modules.AiAgent.Entities.Recommendation>();
 
+    // Day 16 - Customer Success, Retention & Loyalty Platform
+    public DbSet<backend.Modules.CustomerSuccess.CustomerHealth.Entities.CustomerHealth> CustomerHealths => Set<backend.Modules.CustomerSuccess.CustomerHealth.Entities.CustomerHealth>();
+    public DbSet<backend.Modules.CustomerSuccess.Loyalty.Entities.LoyaltyProgram> LoyaltyPrograms => Set<backend.Modules.CustomerSuccess.Loyalty.Entities.LoyaltyProgram>();
+    public DbSet<backend.Modules.CustomerSuccess.Loyalty.Entities.LoyaltyTransaction> LoyaltyTransactions => Set<backend.Modules.CustomerSuccess.Loyalty.Entities.LoyaltyTransaction>();
+    public DbSet<backend.Modules.CustomerSuccess.Referrals.Entities.Referral> Referrals => Set<backend.Modules.CustomerSuccess.Referrals.Entities.Referral>();
+    public DbSet<backend.Modules.CustomerSuccess.Satisfaction.Entities.CustomerFeedback> CustomerFeedbacks => Set<backend.Modules.CustomerSuccess.Satisfaction.Entities.CustomerFeedback>();
+    public DbSet<backend.Modules.CustomerSuccess.SuccessTasks.Entities.SuccessTask> SuccessTasks => Set<backend.Modules.CustomerSuccess.SuccessTasks.Entities.SuccessTask>();
+    public DbSet<backend.Modules.CustomerSuccess.CustomerSegments.Entities.CustomerSegment> CustomerSegments => Set<backend.Modules.CustomerSuccess.CustomerSegments.Entities.CustomerSegment>();
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -147,6 +156,18 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.AiAgent.Entities.Message>().HasIndex(m => m.ConversationId);
         modelBuilder.Entity<backend.Modules.AiAgent.Entities.CommandExecution>().HasIndex(ce => ce.OrganizationId);
         modelBuilder.Entity<backend.Modules.AiAgent.Entities.Recommendation>().HasIndex(r => r.OrganizationId);
+
+        // Day 16 Customer Success Constraints
+        modelBuilder.Entity<backend.Modules.CustomerSuccess.CustomerHealth.Entities.CustomerHealth>().HasIndex(ch => ch.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CustomerSuccess.CustomerHealth.Entities.CustomerHealth>().HasIndex(ch => ch.CustomerId);
+        modelBuilder.Entity<backend.Modules.CustomerSuccess.Loyalty.Entities.LoyaltyProgram>().HasIndex(lp => lp.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CustomerSuccess.Loyalty.Entities.LoyaltyTransaction>().HasIndex(lt => lt.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CustomerSuccess.Loyalty.Entities.LoyaltyTransaction>().HasIndex(lt => lt.CustomerId);
+        modelBuilder.Entity<backend.Modules.CustomerSuccess.Referrals.Entities.Referral>().HasIndex(r => r.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CustomerSuccess.Referrals.Entities.Referral>().HasIndex(r => r.ReferralCode);
+        modelBuilder.Entity<backend.Modules.CustomerSuccess.Satisfaction.Entities.CustomerFeedback>().HasIndex(cf => cf.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CustomerSuccess.SuccessTasks.Entities.SuccessTask>().HasIndex(st => st.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CustomerSuccess.CustomerSegments.Entities.CustomerSegment>().HasIndex(cs => cs.OrganizationId);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
