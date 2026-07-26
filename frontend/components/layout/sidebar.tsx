@@ -93,6 +93,16 @@ const navGroups = [
     ]
   },
   {
+    title: "Document & Approvals",
+    items: [
+      { label: "Document Center", href: "/dashboard/documents", icon: FileText },
+      { label: "Templates", href: "/dashboard/documents/templates", icon: LayoutTemplate },
+      { label: "Approval Workspace", href: "/dashboard/approvals", icon: CheckSquare },
+      { label: "E-Signatures", href: "/dashboard/signatures", icon: Sparkles },
+      { label: "Shared Files", href: "/dashboard/shared", icon: Globe },
+    ]
+  },
+  {
     title: "Apps & Tools",
     items: [
       { label: "QR Codes", href: "/dashboard/qr", icon: QrCode },

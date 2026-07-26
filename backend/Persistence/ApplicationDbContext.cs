@@ -105,6 +105,18 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.CustomerSuccess.SuccessTasks.Entities.SuccessTask> SuccessTasks => Set<backend.Modules.CustomerSuccess.SuccessTasks.Entities.SuccessTask>();
     public DbSet<backend.Modules.CustomerSuccess.CustomerSegments.Entities.CustomerSegment> CustomerSegments => Set<backend.Modules.CustomerSuccess.CustomerSegments.Entities.CustomerSegment>();
 
+    // Day 17 - Document Management System (DMS), E-Signature & Approval Workflow
+    public DbSet<backend.Modules.Documents.Entities.Document> Documents => Set<backend.Modules.Documents.Entities.Document>();
+    public DbSet<backend.Modules.Documents.Entities.Folder> Folders => Set<backend.Modules.Documents.Entities.Folder>();
+    public DbSet<backend.Modules.Documents.Entities.DocumentVersion> DocumentVersions => Set<backend.Modules.Documents.Entities.DocumentVersion>();
+    public DbSet<backend.Modules.Documents.Entities.DocumentTemplate> DocumentTemplates => Set<backend.Modules.Documents.Entities.DocumentTemplate>();
+    public DbSet<backend.Modules.Documents.Entities.ApprovalRequest> ApprovalRequests => Set<backend.Modules.Documents.Entities.ApprovalRequest>();
+    public DbSet<backend.Modules.Documents.Entities.ApprovalStep> ApprovalSteps => Set<backend.Modules.Documents.Entities.ApprovalStep>();
+    public DbSet<backend.Modules.Documents.Entities.SignatureRequest> SignatureRequests => Set<backend.Modules.Documents.Entities.SignatureRequest>();
+    public DbSet<backend.Modules.Documents.Entities.SignatureRecipient> SignatureRecipients => Set<backend.Modules.Documents.Entities.SignatureRecipient>();
+    public DbSet<backend.Modules.Documents.Entities.SharedDocument> SharedDocuments => Set<backend.Modules.Documents.Entities.SharedDocument>();
+    public DbSet<backend.Modules.Documents.Entities.DocumentAuditEntry> DocumentAuditEntries => Set<backend.Modules.Documents.Entities.DocumentAuditEntry>();
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
