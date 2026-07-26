@@ -50,8 +50,29 @@ Simplify is an all-in-one AI platform built for SMEs to manage sales, customer r
 | **Day 14** | Executive Dashboard, BI & AI Decision Engine | ✅ **Done** | CEO Command Center, 14 Enterprise KPIs, AI Recommendations, Predictive Forecasting, Goal Sync, PDF/Excel/CSV Exports |
 | **Day 15** | AI Business Agent Backend & AI Copilot Frontend | ✅ **Done** | Provider-independent Command Engine, Tool Registry (9 Tools), Context Engine, Task Execution Engine, Safety Layer, AI Recommendations, Conversation Memory, Copilot Workspace |
 | **Day 16** | Customer Success Center, Customer 360°, Health Engine & Loyalty Platform | ✅ **Done** | Customer Health score Engine (0-100), Loyalty Programs & Rewards, Referral System & Funnel, CSAT Feedback, Automated Success Tasks, Customer Segments, Customer 360° Profile |
+| **Day 17** | Document Management System (DMS), E-Signature & Approval Workspace | ✅ **Done** | Storage provider abstraction (Local/Azure Blob), Multi-versioning, Hierarchical folders, Multi-level sequential/parallel approvals, E-Signature foundation with SHA-256 hash certification, Passcode public share links, Next.js Document Center UI (July 26, 2026) |
 
 ---
+
+## 📄 Day 17 Highlights: Document Management System (DMS), E-Signature & Approval Workspace (July 26, 2026)
+
+This module provides SMEs with a centralized document management platform comparable to DocuSign, Google Drive, Dropbox Business, and PandaDoc, eliminating the need for multiple external software subscriptions.
+
+### ⚙️ Backend Architecture (ASP.NET Core .NET 10)
+- **Storage Abstraction (`IStorageService`)**: Unified storage layer with `LocalStorageService` (HMAC signed URLs) and `AzureBlobStorageService` integration with seamless fallback.
+- **Document & Version Control**: Multi-versioning pointer system, tag and metadata management, soft delete & restore, hierarchical path calculation, and full-text search.
+- **Multi-Level Approval Engine**: Sequential & parallel approval step workflows, approval comments, rejection handling, due date tracking, and automated escalation hooks.
+- **Provider-Independent E-Signatures**: Abstract `IESignatureProviderService` for self-hosted native digital signatures or DocuSign / Adobe Sign APIs. Includes token landing links, security PIN codes, multi-signer roles, completion certificates, and SHA-256 cryptographic hashes.
+- **Passcode & Public Link Sharing**: Internal RBAC permission sharing + external passcode-encrypted public links with expiration date and access count logging.
+- **Immutable Audit Trail**: Document audit entries capturing IP addresses, User Agents, timestamps, and action types.
+
+### 🎨 Frontend Architecture (Next.js 16 + React 19 + React Query)
+- **Document Center (`/dashboard/documents`)**: Folder breadcrumb navigation, grid/list view toggle, drag-and-drop upload dropzone with real-time percentage progress bar, search, tags, favorites, and storage metrics.
+- **Document Viewer & Detail (`/dashboard/documents/[id]`)**: Dual-tab view featuring interactive preview/download, historical version timeline with 1-click reversion, and activity audit trail.
+- **Document Templates (`/dashboard/documents/templates`)**: Categorized template library with variable placeholder substitution (`{{VariableName}}`) and 1-click document generator.
+- **Approval Workspace (`/dashboard/approvals`)**: Tabbed approval queue (Pending, Approved, Rejected) with sequence step badges, due date alerts, and review modal (approve, reject, comment, escalate).
+- **E-Signature Workspace (`/dashboard/signatures`)**: Signature request builder, progress tracking badges, SHA-256 hash verification, and audit certificates.
+- **Shared Files & Public Links (`/dashboard/shared`)**: Passcode share manager, link expiration settings, and access count logging.
 
 ## 💖 Day 16 Highlights: Customer Success Center, Customer Retention & Loyalty Platform
 
@@ -100,6 +121,8 @@ This module provides SMEs with an enterprise-grade customer retention workspace 
 
 Detailed technical documents are available in the [`docs/`](backend/docs/) directory:
 
+- [**docs/DOCUMENT_MANAGEMENT_SYSTEM.md**](docs/DOCUMENT_MANAGEMENT_SYSTEM.md) — Document Management System (DMS) Backend Architecture & APIs
+- [**docs/DOCUMENT_MANAGEMENT_FRONTEND.md**](docs/DOCUMENT_MANAGEMENT_FRONTEND.md) — Document Center & Workspaces Frontend Guide
 - [**docs/customer-success.md**](backend/docs/customer-success.md) — Customer Success Platform Architecture
 - [**docs/customer-health.md**](backend/docs/customer-health.md) — Customer Health Score Engine
 - [**docs/loyalty-program.md**](backend/docs/loyalty-program.md) — Loyalty & Rewards Engine
