@@ -40,7 +40,11 @@ import {
   CheckSquare,
   CalendarDays,
   Activity,
-  Tags
+  Tags,
+  Package,
+  Layers,
+  ShoppingBag,
+  ArrowRightLeft
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/auth-context";
@@ -100,6 +104,18 @@ const navGroups = [
       { label: "Approval Workspace", href: "/dashboard/approvals", icon: CheckSquare },
       { label: "E-Signatures", href: "/dashboard/signatures", icon: Sparkles },
       { label: "Shared Files", href: "/dashboard/shared", icon: Globe },
+    ]
+  },
+  {
+    title: "Inventory & Purchasing",
+    items: [
+      { label: "Inventory Dashboard", href: "/dashboard/inventory", icon: LayoutDashboard },
+      { label: "Products Catalog", href: "/dashboard/products", icon: Package },
+      { label: "Categories", href: "/dashboard/categories", icon: Layers },
+      { label: "Warehouses", href: "/dashboard/warehouses", icon: Building2 },
+      { label: "Purchase Orders", href: "/dashboard/purchase-orders", icon: ShoppingBag },
+      { label: "Suppliers", href: "/dashboard/suppliers", icon: Users },
+      { label: "Stock Audit & Movements", href: "/dashboard/stock-movements", icon: ArrowRightLeft },
     ]
   },
   {
