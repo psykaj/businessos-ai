@@ -29,9 +29,13 @@
 - AI Business Agent ✅
 - Command Engine ✅
 - Tool Registry ✅
-- Context Engine ✅
 - Conversation Memory ✅
 - Recommendation Engine ✅
+- Inventory Platform ✅
+- Purchasing ✅
+- Supplier Management ✅
+- Stock Management ✅
+- Smart Inventory Alerts ✅
 
 
 ## Upcoming

@@ -117,6 +117,20 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.Documents.Entities.SharedDocument> SharedDocuments => Set<backend.Modules.Documents.Entities.SharedDocument>();
     public DbSet<backend.Modules.Documents.Entities.DocumentAuditEntry> DocumentAuditEntries => Set<backend.Modules.Documents.Entities.DocumentAuditEntry>();
 
+    // Day 18 - Inventory Management, Purchasing & Supplier Platform
+    public DbSet<backend.Modules.Inventory.Entities.Product> Products => Set<backend.Modules.Inventory.Entities.Product>();
+    public DbSet<backend.Modules.Inventory.Entities.ProductCategory> ProductCategories => Set<backend.Modules.Inventory.Entities.ProductCategory>();
+    public DbSet<backend.Modules.Inventory.Entities.Warehouse> Warehouses => Set<backend.Modules.Inventory.Entities.Warehouse>();
+    public DbSet<backend.Modules.Inventory.Entities.InventoryStock> InventoryStocks => Set<backend.Modules.Inventory.Entities.InventoryStock>();
+    public DbSet<backend.Modules.Inventory.Entities.StockMovement> StockMovements => Set<backend.Modules.Inventory.Entities.StockMovement>();
+    public DbSet<backend.Modules.Inventory.Entities.Supplier> Suppliers => Set<backend.Modules.Inventory.Entities.Supplier>();
+    public DbSet<backend.Modules.Inventory.Entities.PurchaseOrder> PurchaseOrders => Set<backend.Modules.Inventory.Entities.PurchaseOrder>();
+    public DbSet<backend.Modules.Inventory.Entities.PurchaseOrderItem> PurchaseOrderItems => Set<backend.Modules.Inventory.Entities.PurchaseOrderItem>();
+    public DbSet<backend.Modules.Inventory.Entities.GoodsReceipt> GoodsReceipts => Set<backend.Modules.Inventory.Entities.GoodsReceipt>();
+    public DbSet<backend.Modules.Inventory.Entities.GoodsReceiptItem> GoodsReceiptItems => Set<backend.Modules.Inventory.Entities.GoodsReceiptItem>();
+    public DbSet<backend.Modules.Inventory.Entities.StockAdjustment> StockAdjustments => Set<backend.Modules.Inventory.Entities.StockAdjustment>();
+    public DbSet<backend.Modules.Inventory.Entities.StockAdjustmentItem> StockAdjustmentItems => Set<backend.Modules.Inventory.Entities.StockAdjustmentItem>();
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -180,6 +194,23 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.CustomerSuccess.Satisfaction.Entities.CustomerFeedback>().HasIndex(cf => cf.OrganizationId);
         modelBuilder.Entity<backend.Modules.CustomerSuccess.SuccessTasks.Entities.SuccessTask>().HasIndex(st => st.OrganizationId);
         modelBuilder.Entity<backend.Modules.CustomerSuccess.CustomerSegments.Entities.CustomerSegment>().HasIndex(cs => cs.OrganizationId);
+
+        // Day 18 Inventory & Purchasing Constraints
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.Product>().HasIndex(p => p.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.Product>().HasIndex(p => p.SKU);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.Product>().HasIndex(p => p.Barcode);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.ProductCategory>().HasIndex(c => c.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.Warehouse>().HasIndex(w => w.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.InventoryStock>().HasIndex(s => new { s.OrganizationId, s.ProductId, s.WarehouseId }).IsUnique();
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.StockMovement>().HasIndex(m => m.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.Supplier>().HasIndex(s => s.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.Supplier>().HasIndex(s => s.Code);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.PurchaseOrder>().HasIndex(po => po.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.PurchaseOrder>().HasIndex(po => po.PONumber);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.GoodsReceipt>().HasIndex(gr => gr.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.GoodsReceipt>().HasIndex(gr => gr.ReceiptNumber);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.StockAdjustment>().HasIndex(sa => sa.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Inventory.Entities.StockAdjustment>().HasIndex(sa => sa.AdjustmentNumber);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
