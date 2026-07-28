@@ -131,6 +131,18 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.Inventory.Entities.StockAdjustment> StockAdjustments => Set<backend.Modules.Inventory.Entities.StockAdjustment>();
     public DbSet<backend.Modules.Inventory.Entities.StockAdjustmentItem> StockAdjustmentItems => Set<backend.Modules.Inventory.Entities.StockAdjustmentItem>();
 
+    // Day 19 - Accounting, Finance, Cash Flow & Expense Management
+    public DbSet<backend.Modules.Accounting.Entities.Account> Accounts => Set<backend.Modules.Accounting.Entities.Account>();
+    public DbSet<backend.Modules.Expenses.Entities.ExpenseCategory> ExpenseCategories => Set<backend.Modules.Expenses.Entities.ExpenseCategory>();
+    public DbSet<backend.Modules.Expenses.Entities.Expense> Expenses => Set<backend.Modules.Expenses.Entities.Expense>();
+    public DbSet<backend.Modules.Invoices.Entities.FinanceInvoice> FinanceInvoices => Set<backend.Modules.Invoices.Entities.FinanceInvoice>();
+    public DbSet<backend.Modules.Invoices.Entities.FinanceInvoiceItem> FinanceInvoiceItems => Set<backend.Modules.Invoices.Entities.FinanceInvoiceItem>();
+    public DbSet<backend.Modules.Payments.Entities.FinancePayment> FinancePayments => Set<backend.Modules.Payments.Entities.FinancePayment>();
+    public DbSet<backend.Modules.AccountsReceivable.Entities.AccountsReceivableRecord> AccountsReceivable => Set<backend.Modules.AccountsReceivable.Entities.AccountsReceivableRecord>();
+    public DbSet<backend.Modules.AccountsPayable.Entities.AccountsPayableRecord> AccountsPayable => Set<backend.Modules.AccountsPayable.Entities.AccountsPayableRecord>();
+    public DbSet<backend.Modules.CashFlow.Entities.CashFlowEntry> CashFlowEntries => Set<backend.Modules.CashFlow.Entities.CashFlowEntry>();
+    public DbSet<backend.Modules.Taxes.Entities.TaxRecord> TaxRecords => Set<backend.Modules.Taxes.Entities.TaxRecord>();
+    public DbSet<backend.Modules.FinancialReports.Entities.FinancialReport> FinancialReports => Set<backend.Modules.FinancialReports.Entities.FinancialReport>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -211,6 +223,22 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.Inventory.Entities.GoodsReceipt>().HasIndex(gr => gr.ReceiptNumber);
         modelBuilder.Entity<backend.Modules.Inventory.Entities.StockAdjustment>().HasIndex(sa => sa.OrganizationId);
         modelBuilder.Entity<backend.Modules.Inventory.Entities.StockAdjustment>().HasIndex(sa => sa.AdjustmentNumber);
+
+        // Day 19 Accounting & Finance Constraints
+        modelBuilder.Entity<backend.Modules.Accounting.Entities.Account>().HasIndex(a => a.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Accounting.Entities.Account>().HasIndex(a => new { a.OrganizationId, a.AccountCode }).IsUnique();
+        modelBuilder.Entity<backend.Modules.Expenses.Entities.ExpenseCategory>().HasIndex(ec => ec.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Expenses.Entities.Expense>().HasIndex(e => e.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Expenses.Entities.Expense>().HasIndex(e => e.ExpenseDate);
+        modelBuilder.Entity<backend.Modules.Invoices.Entities.FinanceInvoice>().HasIndex(fi => fi.OrganizationId);
+        modelBuilder.Entity<backend.Modules.Invoices.Entities.FinanceInvoice>().HasIndex(fi => fi.InvoiceNumber);
+        modelBuilder.Entity<backend.Modules.Payments.Entities.FinancePayment>().HasIndex(fp => fp.OrganizationId);
+        modelBuilder.Entity<backend.Modules.AccountsReceivable.Entities.AccountsReceivableRecord>().HasIndex(ar => ar.OrganizationId);
+        modelBuilder.Entity<backend.Modules.AccountsPayable.Entities.AccountsPayableRecord>().HasIndex(ap => ap.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CashFlow.Entities.CashFlowEntry>().HasIndex(cf => cf.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CashFlow.Entities.CashFlowEntry>().HasIndex(cf => cf.EntryDate);
+        modelBuilder.Entity<backend.Modules.Taxes.Entities.TaxRecord>().HasIndex(tr => tr.OrganizationId);
+        modelBuilder.Entity<backend.Modules.FinancialReports.Entities.FinancialReport>().HasIndex(fr => fr.OrganizationId);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 

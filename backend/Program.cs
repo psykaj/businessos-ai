@@ -13,6 +13,7 @@ using backend.Modules.AiAgent.Extensions;
 using backend.Modules.CustomerSuccess.Extensions;
 using backend.Modules.Documents.Extensions;
 using backend.Modules.Inventory.Extensions;
+using backend.Modules.Finance.Extensions;
 using backend.Seed;
 using backend.Interfaces;
 using backend.Middleware;
@@ -95,6 +96,7 @@ builder.Services.AddAiAgentModule();
 builder.Services.AddCustomerSuccessModule();
 builder.Services.AddDocumentModule(builder.Configuration);
 builder.Services.AddInventoryModule();
+builder.Services.AddFinanceModule();
 builder.Services.AddCoreModules();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddControllers()
