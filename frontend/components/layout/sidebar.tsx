@@ -44,7 +44,12 @@ import {
   Package,
   Layers,
   ShoppingBag,
-  ArrowRightLeft
+  ArrowRightLeft,
+  DollarSign,
+  Wallet,
+  TrendingUp,
+  ArrowUpRight,
+  ArrowDownLeft
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/auth-context";
@@ -116,6 +121,19 @@ const navGroups = [
       { label: "Purchase Orders", href: "/dashboard/purchase-orders", icon: ShoppingBag },
       { label: "Suppliers", href: "/dashboard/suppliers", icon: Users },
       { label: "Stock Audit & Movements", href: "/dashboard/stock-movements", icon: ArrowRightLeft },
+    ]
+  },
+  {
+    title: "Finance & Accounting",
+    items: [
+      { label: "Finance Dashboard", href: "/dashboard/finance", icon: DollarSign },
+      { label: "Expenses Workspace", href: "/dashboard/expenses", icon: CreditCard },
+      { label: "Customer Invoices", href: "/dashboard/invoices", icon: FileText },
+      { label: "Payment History", href: "/dashboard/payments", icon: Receipt },
+      { label: "Accounts Receivable", href: "/dashboard/accounts-receivable", icon: ArrowUpRight },
+      { label: "Accounts Payable", href: "/dashboard/accounts-payable", icon: ArrowDownLeft },
+      { label: "Cash Flow Analytics", href: "/dashboard/cash-flow", icon: Sparkles },
+      { label: "Financial Reports", href: "/dashboard/financial-reports", icon: BarChart3 },
     ]
   },
   {

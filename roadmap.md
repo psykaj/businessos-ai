@@ -36,6 +36,12 @@
 - Supplier Management ✅
 - Stock Management ✅
 - Smart Inventory Alerts ✅
+- Accounting Platform ✅
+- Expense Management ✅
+- Cash Flow Engine ✅
+- Accounts Receivable ✅
+- Accounts Payable ✅
+- Financial Reports ✅
 
 
 ## Upcoming
@@ -71,4 +77,8 @@
 - Inventory Analytics UI ✅
 - Activity Timeline ✅
 - AI Settings ✅
+- Finance Dashboard ✅
+- Expense Management UI ✅
+- Cash Flow Analytics ✅
+- Financial Reports UI ✅
 
