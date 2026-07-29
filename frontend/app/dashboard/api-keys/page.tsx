@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { CopyToClipboard } from "@/components/ui/copy-to-clipboard";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -24,6 +25,7 @@ import { KeyRound, MoreHorizontal, Plus, RefreshCw, Trash2, AlertTriangle, Shiel
 const createKeySchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
   expiresInDays: z.number().min(0).optional(),
+  scopes: z.array(z.string()).optional(),
 });
 
 type CreateKeyFormValues = z.infer<typeof createKeySchema>;
@@ -45,6 +47,7 @@ export default function ApiKeysPage() {
     defaultValues: {
       name: "",
       expiresInDays: 0,
+      scopes: ["all"],
     },
   });
 
@@ -53,7 +56,7 @@ export default function ApiKeysPage() {
     try {
       const response = await createKey.mutateAsync({ 
         orgId, 
-        data: { name: data.name, expiresInDays: data.expiresInDays || undefined } 
+        data: { name: data.name, expiresInDays: data.expiresInDays || undefined, scopes: data.scopes } 
       });
       setNewSecretKey(response.plainTextKey);
       toast.success("API key created successfully.");
@@ -112,6 +115,18 @@ export default function ApiKeysPage() {
     {
       header: "Status",
       cell: (item: ApiKey) => <StatusBadge status={item.isActive ? "Active" : "Revoked"} />
+    },
+    {
+      header: "Scopes",
+      cell: (item: ApiKey) => (
+        <div className="flex gap-1">
+          {item.scopes?.map((scope) => (
+            <Badge key={scope} variant="secondary" className="text-[10px] uppercase">
+              {scope}
+            </Badge>
+          )) || <span className="text-xs text-muted-foreground">All</span>}
+        </div>
+      )
     },
     {
       header: "Created",
@@ -211,6 +226,11 @@ export default function ApiKeysPage() {
                   <div className="space-y-2">
                     <Label htmlFor="expiresInDays">Expiration (Days, optional)</Label>
                     <Input id="expiresInDays" type="number" placeholder="Leave blank for no expiration" {...form.register("expiresInDays", { setValueAs: (v) => v === "" || v === null || v === undefined ? undefined : Number(v) })} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="scopes">Scopes (Optional)</Label>
+                    <Input id="scopes" placeholder="e.g. read:customers write:invoices" {...form.register("scopes", { setValueAs: (v) => v ? v.split(" ") : ["all"] })} />
+                    <p className="text-xs text-muted-foreground">Space separated scopes. Leave blank for full access.</p>
                   </div>
                   <DialogFooter className="pt-4">
                     <Button type="button" variant="outline" onClick={closeDialog}>Cancel</Button>

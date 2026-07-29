@@ -3,14 +3,14 @@ using backend.Modules.Webhooks.Entities;
 
 namespace backend.Modules.Webhooks.Interfaces;
 
-public interface IWebhookRepository : IGenericRepository<WebhookSubscription>
+public interface IWebhookRepository : IGenericRepository<WebhookEndpoint>
 {
-    Task<IReadOnlyList<WebhookSubscription>> GetActiveSubscriptionsByEventAsync(Guid organizationId, string eventType, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<WebhookEndpoint>> GetActiveSubscriptionsByEventAsync(Guid organizationId, string eventType, CancellationToken cancellationToken = default);
     
-    Task<WebhookDelivery?> GetDeliveryByIdAsync(Guid deliveryId, CancellationToken cancellationToken = default);
+    Task<WebhookDeliveryLog?> GetDeliveryByIdAsync(Guid deliveryId, CancellationToken cancellationToken = default);
     
-    Task AddDeliveryAsync(WebhookDelivery delivery, CancellationToken cancellationToken = default);
-    Task UpdateDeliveryAsync(WebhookDelivery delivery);
+    Task AddDeliveryAsync(WebhookDeliveryLog delivery, CancellationToken cancellationToken = default);
+    Task UpdateDeliveryAsync(WebhookDeliveryLog delivery);
     
-    Task<(IReadOnlyList<WebhookDelivery> Items, int TotalCount)> GetDeliveriesPagedAsync(Guid organizationId, Guid subscriptionId, int pageNumber, int pageSize, CancellationToken cancellationToken = default);
+    Task<(IReadOnlyList<WebhookDeliveryLog> Items, int TotalCount)> GetDeliveriesPagedAsync(Guid organizationId, Guid endpointId, int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 }

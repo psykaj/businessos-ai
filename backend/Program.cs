@@ -14,6 +14,8 @@ using backend.Modules.CustomerSuccess.Extensions;
 using backend.Modules.Documents.Extensions;
 using backend.Modules.Inventory.Extensions;
 using backend.Modules.Finance.Extensions;
+using backend.Modules.ApiPlatform.Extensions;
+using backend.Modules.ApiPlatform.Authentication;
 using backend.Seed;
 using backend.Interfaces;
 using backend.Middleware;
@@ -59,7 +61,8 @@ builder.Services
             ValidateLifetime = true,
             ClockSkew        = TimeSpan.Zero
         };
-    });
+    })
+    .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationOptions.DefaultScheme, null);
 
 builder.Services.AddAuthorization();
 
@@ -106,6 +109,7 @@ builder.Services.AddControllers()
     });
 builder.Services.AddOpenApi();
 builder.Services.AddSignalR();
+builder.Services.AddApiRateLimiting();
 
 // ─── Build ────────────────────────────────────────────────────────────────────
 var app = builder.Build();
@@ -120,6 +124,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("FrontendPolicy");
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

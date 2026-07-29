@@ -49,7 +49,11 @@ import {
   Wallet,
   TrendingUp,
   ArrowUpRight,
-  ArrowDownLeft
+  ArrowDownLeft,
+  Code2,
+  Webhook,
+  ShieldCheck,
+  Plug
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/auth-context";
@@ -162,11 +166,21 @@ const navGroups = [
     ]
   },
   {
+    title: "Developer Platform",
+    items: [
+      { label: "Developer Portal", href: "/dashboard/developer", icon: Code2 },
+      { label: "API Keys", href: "/dashboard/api-keys", icon: KeyRound },
+      { label: "Webhooks", href: "/dashboard/webhooks", icon: Webhook },
+      { label: "OAuth Apps", href: "/dashboard/oauth-apps", icon: ShieldCheck },
+      { label: "API Logs", href: "/dashboard/api-logs", icon: FileClock },
+      { label: "Connectors", href: "/dashboard/connectors", icon: Plug },
+    ]
+  },
+  {
     title: "Organization",
     items: [
       { label: "Team", href: "/dashboard/team", icon: Users },
       { label: "Roles & Permissions", href: "/dashboard/roles", icon: ShieldAlert },
-      { label: "API Keys", href: "/dashboard/api-keys", icon: KeyRound },
       { label: "Audit Logs", href: "/dashboard/audit-logs", icon: FileClock },
     ]
   },

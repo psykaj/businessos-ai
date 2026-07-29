@@ -56,6 +56,28 @@ Simplify is an all-in-one AI platform built for SMEs to manage sales, customer r
 | **Day 18** | Inventory Management, Purchasing & Supplier Platform | ✅ **Done** | Products, SKU/barcode, warehouses, stock levels & movements, purchase orders, goods receipts, suppliers, smart inventory alerts |
 | **Day 19** | Accounting, Finance, Cash Flow & Expense Management | ✅ **Done** | Chart of Accounts, General Ledger, Expense tracking & approvals, Receipt storage, Invoicing, Payments audit trail, AR/AP aging, 30-day Cash Flow Forecast Engine, GST/VAT Tax engine, Profit & Loss Statements (July 28, 2026) |
 
+| **Day 20** | Integration Platform, Public API, Webhooks & Developer Portal | ✅ **Done** | API Keys, Webhook dispatch engine, Connector Marketplace, OAuth Apps |
+
+---
+
+## 🌐 Day 20 Highlights: Integration Center & Developer Portal (July 29, 2026)
+
+This module provides SMEs with an enterprise-grade developer platform and integration ecosystem, comparable to Stripe Dashboard, Shopify Partner Dashboard, and HubSpot Developer Portal.
+
+### ⚙️ Backend Architecture (ASP.NET Core .NET 10)
+- **API Key Management**: Secure generation, prefix display, one-time secret view, rotation, revocation, and scope validation.
+- **Webhook Dispatch Engine**: Registration of `https://` webhook endpoints, event subscription management (`eventTypes`), and background job dispatching with delivery logs and auto-retry logic.
+- **Public API & Integration Models**: Foundation for exposing the BusinessOS AI ecosystem to external developers.
+- **OAuth Application Registration**: OAuth 2.0 app registration for third-party client integrations.
+
+### 🎨 Frontend Architecture (Next.js 16 + React 19 + React Query)
+- **Developer Portal (`/dashboard/developer`)**: Dedicated developer hub linking to API Keys, Webhooks, API Logs, and Documentation.
+- **Connector Marketplace (`/dashboard/connectors`)**: App discovery marketplace displaying integrations (e.g., Stripe, Shopify, Meta Ads) using a grid view and categorical search.
+- **Integration Center (`/dashboard/integrations`)**: Workspace to monitor installed connections, health sync status, and disconnect workflows.
+- **API Keys UI (`/dashboard/api-keys`)**: UI for generating API keys, mapping scopes, and securely revealing credentials.
+- **Webhooks UI (`/dashboard/webhooks`)**: Data table displaying endpoints, active statuses, last delivery timestamps, and testing triggers.
+- **OAuth Apps & API Logs**: Pages for registering OAuth clients and viewing an audit trail of incoming API traffic.
+
 ---
 
 ## 💰 Day 19 Highlights: Accounting, Finance, Cash Flow & Expense Management (July 28, 2026)
@@ -172,6 +194,14 @@ Detailed technical documents are available in the [`docs/`](backend/docs/) direc
 - [**docs/financial-reports-ui.md**](docs/financial-reports-ui.md) — Financial Reports UI
 - [**docs/day19-implementation-plan.md**](docs/day19-implementation-plan.md) — Day 19 Implementation Plan
 - [**docs/day19-walkthrough.md**](docs/day19-walkthrough.md) — Day 19 Walkthrough Verification
+
+- [**docs/integration-center-ui.md**](docs/integration-center-ui.md) — Integration Center UI
+- [**docs/developer-portal-ui.md**](docs/developer-portal-ui.md) — Developer Portal UI
+- [**docs/api-keys-ui.md**](docs/api-keys-ui.md) — API Keys UI
+- [**docs/webhooks-ui.md**](docs/webhooks-ui.md) — Webhooks UI
+- [**docs/day20/implementation_plan.md**](docs/day20/implementation_plan.md) — Day 20 Implementation Plan
+- [**docs/day20/task.md**](docs/day20/task.md) — Day 20 Tasks
+- [**docs/day20/walkthrough.md**](docs/day20/walkthrough.md) — Day 20 Walkthrough
 
 ---
 

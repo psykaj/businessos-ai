@@ -32,11 +32,12 @@ public class WebhookDispatchService : IWebhookDispatchService
 
         foreach (var sub in subscriptions)
         {
-            var delivery = new WebhookDelivery
+            var delivery = new WebhookDeliveryLog
             {
-                SubscriptionId = sub.Id,
+                WebhookEndpointId = sub.Id,
+                EventType = eventType,
                 Payload = jsonPayload,
-                AttemptCount = 0,
+                RetryCount = 0,
                 Status = "Pending"
             };
 

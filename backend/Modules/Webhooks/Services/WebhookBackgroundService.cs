@@ -58,41 +58,43 @@ public class WebhookBackgroundService : BackgroundService
         // Need subscription to get URL and Secret. 
         // Our repo GetByIdAsync doesn't include it. We should use a method that includes it or load it manually.
         // Let's assume generic GetById doesn't include navigational props, so we load subscription directly.
-        var subscription = await webhookRepository.GetByIdAsync(delivery.SubscriptionId, cancellationToken);
-        if (subscription == null || !subscription.IsActive) return;
+        var endpoint = await webhookRepository.GetByIdAsync(delivery.WebhookEndpointId, cancellationToken);
+        if (endpoint == null || endpoint.Status != "Active") return;
 
-        delivery.AttemptCount++;
-        delivery.LastAttemptAt = DateTime.UtcNow;
+        delivery.RetryCount++;
+        delivery.DeliveredAt = DateTime.UtcNow;
 
         try
         {
             var content = new StringContent(delivery.Payload, Encoding.UTF8, "application/json");
 
             // Add signature if secret exists
-            if (!string.IsNullOrWhiteSpace(subscription.Secret))
+            if (!string.IsNullOrWhiteSpace(endpoint.Secret))
             {
-                var signature = GenerateSignature(delivery.Payload, subscription.Secret);
+                var signature = GenerateSignature(delivery.Payload, endpoint.Secret);
                 content.Headers.Add("X-Hub-Signature-256", $"sha256={signature}");
             }
 
-            var response = await _httpClient.PostAsync(subscription.Url, content, cancellationToken);
+            var response = await _httpClient.PostAsync(endpoint.EndpointUrl, content, cancellationToken);
+
+            delivery.StatusCode = (int)response.StatusCode;
+            delivery.ResponseBody = await response.Content.ReadAsStringAsync(cancellationToken);
+            delivery.ResponseHeaders = response.Headers.ToString();
 
             if (response.IsSuccessStatusCode)
             {
                 delivery.Status = "Success";
-                delivery.LastError = string.Empty;
             }
             else
             {
-                delivery.Status = delivery.AttemptCount >= 3 ? "Failed" : "Pending";
-                delivery.LastError = $"HTTP {response.StatusCode}";
+                delivery.Status = delivery.RetryCount >= 3 ? "Failed" : "Pending";
                 
                 // If it failed and we can retry, re-queue after delay (simplified)
                 if (delivery.Status == "Pending")
                 {
                     _ = Task.Run(async () =>
                     {
-                        await Task.Delay(TimeSpan.FromMinutes(1 * delivery.AttemptCount), cancellationToken);
+                        await Task.Delay(TimeSpan.FromMinutes(1 * delivery.RetryCount), cancellationToken);
                         await _queue.EnqueueAsync(delivery.Id, cancellationToken);
                     }, cancellationToken);
                 }
@@ -100,14 +102,14 @@ public class WebhookBackgroundService : BackgroundService
         }
         catch (Exception ex)
         {
-            delivery.Status = delivery.AttemptCount >= 3 ? "Failed" : "Pending";
-            delivery.LastError = ex.Message;
+            delivery.Status = delivery.RetryCount >= 3 ? "Failed" : "Pending";
+            delivery.ResponseBody = ex.Message;
             
             if (delivery.Status == "Pending")
             {
                 _ = Task.Run(async () =>
                 {
-                    await Task.Delay(TimeSpan.FromMinutes(1 * delivery.AttemptCount), cancellationToken);
+                    await Task.Delay(TimeSpan.FromMinutes(1 * delivery.RetryCount), cancellationToken);
                     await _queue.EnqueueAsync(delivery.Id, cancellationToken);
                 }, cancellationToken);
             }

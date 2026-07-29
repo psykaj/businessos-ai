@@ -27,7 +27,7 @@ public class ApiKeysController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ApiKeyResponseDto>> GenerateApiKey(Guid organizationId, [FromBody] CreateApiKeyDto dto, CancellationToken cancellationToken)
     {
-        var result = await _apiKeyService.GenerateApiKeyAsync(organizationId, dto.Name, cancellationToken);
+        var result = await _apiKeyService.GenerateApiKeyAsync(organizationId, dto.Name, dto.Scopes, dto.ExpiresAt, null, cancellationToken);
         return Ok(result);
     }
 
@@ -41,7 +41,7 @@ public class ApiKeysController : ControllerBase
     [HttpPost("{keyId}/rotate")]
     public async Task<ActionResult<ApiKeyResponseDto>> RotateApiKey(Guid organizationId, Guid keyId, CancellationToken cancellationToken)
     {
-        var result = await _apiKeyService.RotateApiKeyAsync(organizationId, keyId, cancellationToken);
+        var result = await _apiKeyService.RotateApiKeyAsync(organizationId, keyId, null, cancellationToken);
         return Ok(result);
     }
 }

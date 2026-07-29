@@ -30,9 +30,9 @@ public class WebhooksController : ControllerBase
         var dtos = subs.Select(w => new WebhookSubscriptionDto
         {
             Id = w.Id,
-            EventType = w.EventType,
-            Url = w.Url,
-            IsActive = w.IsActive,
+            EventTypes = w.EventTypes,
+            EndpointUrl = w.EndpointUrl,
+            Status = w.Status,
             CreatedAt = w.CreatedAt
         });
         return Ok(dtos);
@@ -41,13 +41,13 @@ public class WebhooksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateSubscription([FromBody] CreateWebhookSubscriptionDto dto, CancellationToken cancellationToken)
     {
-        var sub = new WebhookSubscription
+        var sub = new WebhookEndpoint
         {
             OrganizationId = OrganizationId,
-            EventType = dto.EventType,
-            Url = dto.Url,
+            EventTypes = dto.EventTypes,
+            EndpointUrl = dto.EndpointUrl,
             Secret = dto.Secret,
-            IsActive = true
+            Status = "Active"
         };
 
         await _webhookRepository.AddAsync(sub, cancellationToken);
@@ -56,9 +56,9 @@ public class WebhooksController : ControllerBase
         return Ok(new WebhookSubscriptionDto
         {
             Id = sub.Id,
-            EventType = sub.EventType,
-            Url = sub.Url,
-            IsActive = sub.IsActive,
+            EventTypes = sub.EventTypes,
+            EndpointUrl = sub.EndpointUrl,
+            Status = sub.Status,
             CreatedAt = sub.CreatedAt
         });
     }

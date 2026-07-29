@@ -20,7 +20,7 @@ public class ApiKeyService : IApiKeyService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<ApiKeyResponseDto> GenerateApiKeyAsync(Guid organizationId, string name, CancellationToken cancellationToken = default)
+    public async Task<ApiKeyResponseDto> GenerateApiKeyAsync(Guid organizationId, string name, string scopes = "", DateTime? expiresAt = null, Guid? createdByUserId = null, CancellationToken cancellationToken = default)
     {
         var rawKey = GenerateSecureKey();
         var keyHash = HashKey(rawKey);
@@ -30,6 +30,9 @@ public class ApiKeyService : IApiKeyService
             OrganizationId = organizationId,
             Name = name,
             KeyHash = keyHash,
+            Scopes = scopes,
+            ExpiresAt = expiresAt,
+            CreatedByUserId = createdByUserId,
             Status = "Active"
         };
 
@@ -52,6 +55,8 @@ public class ApiKeyService : IApiKeyService
             Id = k.Id,
             OrganizationId = k.OrganizationId,
             Name = k.Name,
+            Scopes = k.Scopes,
+            ExpiresAt = k.ExpiresAt,
             Status = k.Status,
             LastUsedAt = k.LastUsedAt,
             CreatedAt = k.CreatedAt
@@ -69,7 +74,7 @@ public class ApiKeyService : IApiKeyService
         await _unitOfWork.CompleteAsync(cancellationToken);
     }
 
-    public async Task<ApiKeyResponseDto> RotateApiKeyAsync(Guid organizationId, Guid keyId, CancellationToken cancellationToken = default)
+    public async Task<ApiKeyResponseDto> RotateApiKeyAsync(Guid organizationId, Guid keyId, Guid? rotatedByUserId = null, CancellationToken cancellationToken = default)
     {
         var key = await _apiKeyRepository.GetByIdAsync(keyId, cancellationToken);
         if (key == null || key.OrganizationId != organizationId)
@@ -77,6 +82,7 @@ public class ApiKeyService : IApiKeyService
 
         // Revoke old key
         key.Status = "Revoked";
+        key.RotatedAt = DateTime.UtcNow;
         _apiKeyRepository.Update(key);
 
         // Generate new key with same name
@@ -88,6 +94,9 @@ public class ApiKeyService : IApiKeyService
             OrganizationId = organizationId,
             Name = key.Name,
             KeyHash = newKeyHash,
+            Scopes = key.Scopes,
+            ExpiresAt = key.ExpiresAt,
+            CreatedByUserId = rotatedByUserId ?? key.CreatedByUserId,
             Status = "Active"
         };
 

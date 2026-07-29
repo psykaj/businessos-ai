@@ -6,11 +6,13 @@ export interface ApiKey {
   lastUsedAt?: string;
   isActive: boolean;
   createdAt: string;
+  scopes?: string[];
 }
 
 export interface CreateApiKeyRequest {
   name: string;
   expiresInDays?: number;
+  scopes?: string[];
 }
 
 export interface CreateApiKeyResponse {
