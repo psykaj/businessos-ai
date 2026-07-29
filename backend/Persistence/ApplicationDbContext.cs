@@ -6,6 +6,10 @@ using backend.Modules.Forms.Entities;
 using backend.Modules.LeadCapture.Entities;
 using backend.Modules.CustomerJourney.Entities;
 using backend.Modules.Webhooks.Entities;
+using backend.Modules.OAuth.Entities;
+using backend.Modules.Connectors.Entities;
+using backend.Modules.ApiPlatform.Entities;
+using backend.Modules.EventBus.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Persistence;
@@ -44,6 +48,15 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<ApiKey> ApiKeys => Set<ApiKey>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
+    // Day 20 - Developer Platform & Webhooks
+    public DbSet<OAuthApplication> OAuthApplications => Set<OAuthApplication>();
+    public DbSet<WebhookEndpoint> WebhookEndpoints => Set<WebhookEndpoint>();
+    public DbSet<WebhookDeliveryLog> WebhookDeliveryLogs => Set<WebhookDeliveryLog>();
+    public DbSet<Connector> Connectors => Set<Connector>();
+    public DbSet<ApiLog> ApiLogs => Set<ApiLog>();
+    public DbSet<EventSubscription> EventSubscriptions => Set<EventSubscription>();
+    public DbSet<EventLog> EventLogs => Set<EventLog>();
+
     public DbSet<Brand> Brands => Set<Brand>();
     public DbSet<CustomDomain> CustomDomains => Set<CustomDomain>();
     public DbSet<Theme> Themes => Set<Theme>();
@@ -70,8 +83,6 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<FormSubmission> FormSubmissions => Set<FormSubmission>();
     public DbSet<LeadSource> LeadSources => Set<LeadSource>();
     public DbSet<backend.Modules.CustomerJourney.Entities.CustomerJourney> CustomerJourneys => Set<backend.Modules.CustomerJourney.Entities.CustomerJourney>();
-    public DbSet<WebhookSubscription> WebhookSubscriptions => Set<WebhookSubscription>();
-    public DbSet<WebhookDelivery> WebhookDeliveries => Set<WebhookDelivery>();
 
     // Day 13 - Workflow Automation, Integrations & Webhook Platform
     public DbSet<backend.Modules.Workflow.Entities.Workflow> Workflows => Set<backend.Modules.Workflow.Entities.Workflow>();
@@ -175,7 +186,6 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<FormSubmission>().HasIndex(fs => fs.OrganizationId);
         modelBuilder.Entity<LeadSource>().HasIndex(ls => ls.OrganizationId);
         modelBuilder.Entity<backend.Modules.CustomerJourney.Entities.CustomerJourney>().HasIndex(cj => cj.OrganizationId);
-        modelBuilder.Entity<WebhookSubscription>().HasIndex(ws => ws.OrganizationId);
         
         // Day 13 Workflow Constraints
         modelBuilder.Entity<backend.Modules.Workflow.Entities.Workflow>().HasIndex(w => w.OrganizationId);
@@ -239,6 +249,18 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.CashFlow.Entities.CashFlowEntry>().HasIndex(cf => cf.EntryDate);
         modelBuilder.Entity<backend.Modules.Taxes.Entities.TaxRecord>().HasIndex(tr => tr.OrganizationId);
         modelBuilder.Entity<backend.Modules.FinancialReports.Entities.FinancialReport>().HasIndex(fr => fr.OrganizationId);
+
+        // Day 20 Constraints
+        modelBuilder.Entity<OAuthApplication>().HasIndex(o => o.OrganizationId);
+        modelBuilder.Entity<OAuthApplication>().HasIndex(o => o.ClientId).IsUnique();
+        modelBuilder.Entity<WebhookEndpoint>().HasIndex(w => w.OrganizationId);
+        modelBuilder.Entity<WebhookDeliveryLog>().HasIndex(w => w.OrganizationId);
+        modelBuilder.Entity<WebhookDeliveryLog>().HasIndex(w => w.WebhookEndpointId);
+        modelBuilder.Entity<Connector>().HasIndex(c => c.OrganizationId);
+        modelBuilder.Entity<ApiLog>().HasIndex(a => a.OrganizationId);
+        modelBuilder.Entity<ApiLog>().HasIndex(a => a.ApiKeyId);
+        modelBuilder.Entity<EventSubscription>().HasIndex(e => e.OrganizationId);
+        modelBuilder.Entity<EventLog>().HasIndex(e => e.OrganizationId);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
