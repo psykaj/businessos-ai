@@ -8,7 +8,6 @@ using backend.Modules.Analytics.Extensions;
 using backend.Modules.Billing.Extensions;
 using backend.Modules.CRM.Extensions;
 using backend.Modules.Workflow.Extensions;
-using backend.Modules.BusinessIntelligence.Extensions;
 using backend.Modules.AiAgent.Extensions;
 using backend.Modules.CustomerSuccess.Extensions;
 using backend.Modules.Documents.Extensions;
@@ -16,6 +15,7 @@ using backend.Modules.Inventory.Extensions;
 using backend.Modules.Finance.Extensions;
 using backend.Modules.ApiPlatform.Extensions;
 using backend.Modules.ApiPlatform.Authentication;
+using backend.Modules.ExecutiveInsights.Extensions;
 using backend.Seed;
 using backend.Interfaces;
 using backend.Middleware;
@@ -94,13 +94,13 @@ builder.Services.AddAnalyticsModule();
 builder.Services.AddBillingModule();
 builder.Services.AddCrmModule();
 builder.Services.AddWorkflowModule();
-builder.Services.AddBusinessIntelligenceModule();
 builder.Services.AddAiAgentModule();
 builder.Services.AddCustomerSuccessModule();
 builder.Services.AddDocumentModule(builder.Configuration);
 builder.Services.AddInventoryModule();
 builder.Services.AddFinanceModule();
 builder.Services.AddCoreModules();
+builder.Services.AddExecutiveIntelligenceModule();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -110,6 +110,13 @@ builder.Services.AddControllers()
 builder.Services.AddOpenApi();
 builder.Services.AddSignalR();
 builder.Services.AddApiRateLimiting();
+
+// ─── Redis Caching ────────────────────────────────────────────────────────────
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis") ?? "localhost:6379";
+    options.InstanceName = "BusinessOS_";
+});
 
 // ─── Build ────────────────────────────────────────────────────────────────────
 var app = builder.Build();

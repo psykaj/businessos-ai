@@ -10,6 +10,16 @@ using backend.Modules.OAuth.Entities;
 using backend.Modules.Connectors.Entities;
 using backend.Modules.ApiPlatform.Entities;
 using backend.Modules.EventBus.Entities;
+using backend.Modules.KpiEngine.Entities;
+using backend.Modules.Forecasting.Entities;
+using backend.Modules.ExecutiveInsights.Entities;
+using backend.Modules.BusinessGoals.Entities;
+using backend.Modules.Scorecards.Entities;
+using backend.Modules.BusinessHealth.Entities;
+using backend.Modules.AiAgent.Entities;
+using backend.Modules.AiRecommendations.Entities;
+using backend.Modules.Benchmarks.Entities;
+using backend.Modules.DecisionCenter.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Persistence;
@@ -93,19 +103,24 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.Workflow.Entities.WorkflowExecutionLog> WorkflowExecutionLogs => Set<backend.Modules.Workflow.Entities.WorkflowExecutionLog>();
     public DbSet<backend.Modules.Workflow.Entities.Integration> Integrations => Set<backend.Modules.Workflow.Entities.Integration>();
 
-    // Day 14 - Business Intelligence, Executive Dashboard & AI Decision Engine
-    public DbSet<backend.Modules.BusinessIntelligence.Entities.KPI> KPIs => Set<backend.Modules.BusinessIntelligence.Entities.KPI>();
-    public DbSet<backend.Modules.BusinessIntelligence.Entities.Goal> Goals => Set<backend.Modules.BusinessIntelligence.Entities.Goal>();
-    public DbSet<backend.Modules.BusinessIntelligence.Entities.Report> Reports => Set<backend.Modules.BusinessIntelligence.Entities.Report>();
-    public DbSet<backend.Modules.BusinessIntelligence.Entities.Insight> Insights => Set<backend.Modules.BusinessIntelligence.Entities.Insight>();
-    public DbSet<backend.Modules.BusinessIntelligence.Entities.Forecast> Forecasts => Set<backend.Modules.BusinessIntelligence.Entities.Forecast>();
+    // Day 21 - Executive Decision Platform (Replaces Day 14 & Day 15 dummy entities)
+    public DbSet<KPI> KPIs => Set<KPI>();
+    public DbSet<KPIHistory> KPIHistories => Set<KPIHistory>();
+    public DbSet<Forecast> Forecasts => Set<Forecast>();
+    public DbSet<ExecutiveInsight> ExecutiveInsights => Set<ExecutiveInsight>();
+    public DbSet<BusinessGoal> BusinessGoals => Set<BusinessGoal>();
+    public DbSet<Scorecard> Scorecards => Set<Scorecard>();
+    public DbSet<BusinessHealthScore> BusinessHealthScores => Set<BusinessHealthScore>();
+    public DbSet<Recommendation> Recommendations => Set<Recommendation>();
+    public DbSet<AiRecommendation> AiRecommendations => Set<AiRecommendation>();
+    public DbSet<Benchmark> Benchmarks => Set<Benchmark>();
+    public DbSet<DecisionLog> DecisionLogs => Set<DecisionLog>();
 
     // Day 15 - AI Business Agent, Task Execution Engine & Enterprise AI Copilot
     public DbSet<backend.Modules.AiAgent.Entities.Conversation> Conversations => Set<backend.Modules.AiAgent.Entities.Conversation>();
     public DbSet<backend.Modules.AiAgent.Entities.Message> Messages => Set<backend.Modules.AiAgent.Entities.Message>();
     public DbSet<backend.Modules.AiAgent.Entities.CommandExecution> CommandExecutions => Set<backend.Modules.AiAgent.Entities.CommandExecution>();
     public DbSet<backend.Modules.AiAgent.Entities.ToolDefinition> ToolDefinitions => Set<backend.Modules.AiAgent.Entities.ToolDefinition>();
-    public DbSet<backend.Modules.AiAgent.Entities.Recommendation> Recommendations => Set<backend.Modules.AiAgent.Entities.Recommendation>();
 
     // Day 16 - Customer Success, Retention & Loyalty Platform
     public DbSet<backend.Modules.CustomerSuccess.CustomerHealth.Entities.CustomerHealth> CustomerHealths => Set<backend.Modules.CustomerSuccess.CustomerHealth.Entities.CustomerHealth>();
@@ -192,18 +207,23 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.Workflow.Entities.WorkflowExecution>().HasIndex(e => e.OrganizationId);
         modelBuilder.Entity<backend.Modules.Workflow.Entities.Integration>().HasIndex(i => i.OrganizationId);
         
-        // Day 14 BI Constraints
-        modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.KPI>().HasIndex(k => k.OrganizationId);
-        modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.Goal>().HasIndex(g => g.OrganizationId);
-        modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.Report>().HasIndex(r => r.OrganizationId);
-        modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.Insight>().HasIndex(i => i.OrganizationId);
-        modelBuilder.Entity<backend.Modules.BusinessIntelligence.Entities.Forecast>().HasIndex(f => f.OrganizationId);
+        // Day 21 Executive Decision Constraints
+        modelBuilder.Entity<KPI>().HasIndex(k => k.OrganizationId);
+        modelBuilder.Entity<KPIHistory>().HasIndex(k => k.OrganizationId);
+        modelBuilder.Entity<Forecast>().HasIndex(f => f.OrganizationId);
+        modelBuilder.Entity<ExecutiveInsight>().HasIndex(e => e.OrganizationId);
+        modelBuilder.Entity<BusinessGoal>().HasIndex(b => b.OrganizationId);
+        modelBuilder.Entity<Scorecard>().HasIndex(s => s.OrganizationId);
+        modelBuilder.Entity<BusinessHealthScore>().HasIndex(b => b.OrganizationId);
+        modelBuilder.Entity<Recommendation>().HasIndex(r => r.OrganizationId);
+        modelBuilder.Entity<AiRecommendation>().HasIndex(r => r.OrganizationId);
+        modelBuilder.Entity<Benchmark>().HasIndex(b => b.OrganizationId);
+        modelBuilder.Entity<DecisionLog>().HasIndex(d => d.OrganizationId);
 
         // Day 15 AI Agent Constraints
         modelBuilder.Entity<backend.Modules.AiAgent.Entities.Conversation>().HasIndex(c => c.OrganizationId);
         modelBuilder.Entity<backend.Modules.AiAgent.Entities.Message>().HasIndex(m => m.ConversationId);
         modelBuilder.Entity<backend.Modules.AiAgent.Entities.CommandExecution>().HasIndex(ce => ce.OrganizationId);
-        modelBuilder.Entity<backend.Modules.AiAgent.Entities.Recommendation>().HasIndex(r => r.OrganizationId);
 
         // Day 16 Customer Success Constraints
         modelBuilder.Entity<backend.Modules.CustomerSuccess.CustomerHealth.Entities.CustomerHealth>().HasIndex(ch => ch.OrganizationId);
