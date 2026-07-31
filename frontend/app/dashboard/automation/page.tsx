@@ -1,44 +1,50 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Zap, Plus, Activity, CheckCircle2, PlayCircle, Settings2 } from "lucide-react";
+import { 
+  Zap, Plus, Activity, CheckCircle2, PlayCircle, Settings2, 
+  LayoutTemplate, History, Clock, FileText
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { getAutomationRules, AutomationRule } from "@/lib/api/automation";
+import { useAutomationWorkflows, useAutomationExecutions } from "@/hooks/useAutomationStudio";
 
 export default function AutomationDashboardPage() {
-  const [rules, setRules] = useState<AutomationRule[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchRules = async () => {
-      try {
-        const data = await getAutomationRules();
-        setRules(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRules();
-  }, []);
+  const { data: workflows = [], isLoading: loadingWorkflows } = useAutomationWorkflows();
+  const { data: executions = [], isLoading: loadingExecutions } = useAutomationExecutions();
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto py-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Automation Engine</h1>
-          <p className="text-muted-foreground">Build and manage event-driven workflows.</p>
+          <h1 className="text-2xl font-bold tracking-tight">AI Automation Studio</h1>
+          <p className="text-muted-foreground">Build, manage, and monitor your event-driven workflows.</p>
         </div>
-        <Link href="/dashboard/automation/create">
-          <Button className="gap-2">
+        <Link href="/dashboard/automation/workflows/new/edit">
+          <Button className="gap-2 shadow-lg">
             <Plus className="h-4 w-4" />
             Create Workflow
           </Button>
         </Link>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        {[
+          { label: "Workflows", href: "/dashboard/automation/workflows", icon: Zap, color: "text-amber-500" },
+          { label: "Templates", href: "/dashboard/automation/templates", icon: LayoutTemplate, color: "text-blue-500" },
+          { label: "Execution History", href: "/dashboard/automation/history", icon: History, color: "text-emerald-500" },
+          { label: "Schedules", href: "/dashboard/automation/schedules", icon: Clock, color: "text-indigo-500" },
+        ].map((nav) => (
+          <Link key={nav.label} href={nav.href}>
+            <Card className="hover:border-primary transition-colors cursor-pointer group">
+              <CardContent className="p-4 flex flex-col items-center justify-center gap-2 text-center h-28">
+                <nav.icon className={`h-8 w-8 ${nav.color} group-hover:scale-110 transition-transform`} />
+                <span className="font-medium text-sm">{nav.label}</span>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -48,8 +54,8 @@ export default function AutomationDashboardPage() {
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{rules.filter(r => r.isEnabled).length}</div>
-            <p className="text-xs text-muted-foreground">Out of {rules.length} total</p>
+            <div className="text-2xl font-bold">{workflows.filter(r => r.status === 'Active').length}</div>
+            <p className="text-xs text-muted-foreground">Out of {workflows.length} total</p>
           </CardContent>
         </Card>
         <Card>
@@ -58,8 +64,8 @@ export default function AutomationDashboardPage() {
             <PlayCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1,245</div>
-            <p className="text-xs text-emerald-500">All successful</p>
+            <div className="text-2xl font-bold">{executions.length}</div>
+            <p className="text-xs text-emerald-500">{executions.filter(e => e.status === 'Completed').length} successful</p>
           </CardContent>
         </Card>
         <Card>
@@ -68,59 +74,78 @@ export default function AutomationDashboardPage() {
             <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">99.8%</div>
-            <p className="text-xs text-muted-foreground">+0.2% from last week</p>
+            <div className="text-2xl font-bold">
+              {executions.length ? Math.round((executions.filter(e => e.status === 'Completed').length / executions.length) * 100) : 0}%
+            </div>
+            <p className="text-xs text-muted-foreground">Last 24 hours</p>
           </CardContent>
         </Card>
       </div>
 
-      <h2 className="text-xl font-semibold mt-8 mb-4">Your Workflows</h2>
-
-      {loading ? (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3].map(i => (
-            <Card key={i} className="animate-pulse h-40 bg-muted/20" />
-          ))}
-        </div>
-      ) : rules.length === 0 ? (
-        <Card>
-          <CardContent className="p-12 text-center text-muted-foreground flex flex-col items-center gap-4">
-            <Zap className="h-12 w-12 text-muted-foreground/30" />
-            <div>
-              <h3 className="font-semibold text-lg text-foreground mb-1">No workflows found</h3>
-              <p>Create your first automation workflow to start saving time.</p>
-            </div>
-            <Link href="/dashboard/automation/create">
-              <Button variant="outline" className="mt-2">Create Workflow</Button>
+      <div className="grid md:grid-cols-2 gap-6 mt-8">
+        <div>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold">Recent Workflows</h2>
+            <Link href="/dashboard/automation/workflows">
+              <Button variant="ghost" size="sm">View All</Button>
             </Link>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {rules.map(rule => (
-            <Card key={rule.id} className="flex flex-col hover:border-primary/50 transition-colors">
-              <CardHeader className="pb-3">
-                <div className="flex justify-between items-start mb-2">
-                  <Badge variant={rule.isEnabled ? "default" : "secondary"}>
-                    {rule.isEnabled ? "Active" : "Paused"}
-                  </Badge>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground"><Settings2 className="h-4 w-4" /></Button>
+          </div>
+          
+          {loadingWorkflows ? (
+            <div className="space-y-3">
+              {[1,2,3].map(i => <Card key={i} className="h-16 animate-pulse bg-muted/20" />)}
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {workflows.slice(0, 3).map((wf) => (
+                <div key={wf.id} className="flex items-center justify-between p-3 border rounded-lg bg-card">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-primary/10 rounded-md">
+                      <Zap className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm">{wf.name}</p>
+                      <p className="text-xs text-muted-foreground">{wf.status}</p>
+                    </div>
+                  </div>
+                  <Link href={`/dashboard/automation/workflows/${wf.id}/edit`}>
+                    <Button variant="outline" size="sm">Edit</Button>
+                  </Link>
                 </div>
-                <CardTitle className="text-lg">{rule.name}</CardTitle>
-                <CardDescription className="truncate font-mono text-xs mt-1">
-                  Trigger: {rule.trigger}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="mt-auto pt-4 border-t text-xs text-muted-foreground flex justify-between items-center">
-                <span>Created {new Date(rule.createdAt).toLocaleDateString()}</span>
-                <Link href={`/dashboard/automation/${rule.id}/logs`} className="hover:text-primary transition-colors">
-                  View Logs
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
+              ))}
+            </div>
+          )}
         </div>
-      )}
+
+        <div>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold">Recent Executions</h2>
+            <Link href="/dashboard/automation/history">
+              <Button variant="ghost" size="sm">View All</Button>
+            </Link>
+          </div>
+          
+          {loadingExecutions ? (
+            <div className="space-y-3">
+              {[1,2,3].map(i => <Card key={i} className="h-16 animate-pulse bg-muted/20" />)}
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {executions.slice(0, 3).map((ex) => (
+                <div key={ex.id} className="flex items-center justify-between p-3 border rounded-lg bg-card">
+                  <div className="flex flex-col">
+                    <p className="font-medium text-sm">{ex.workflowName}</p>
+                    <p className="text-xs text-muted-foreground">{new Date(ex.startedAt).toLocaleString()}</p>
+                  </div>
+                  <Badge variant={ex.status === 'Completed' ? 'default' : ex.status === 'Failed' ? 'destructive' : 'secondary'}>
+                    {ex.status}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

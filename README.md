@@ -60,92 +60,21 @@ Simplify is an all-in-one AI platform built for SMEs to manage sales, customer r
 
 ---
 
-## 🌐 Day 20 Highlights: Integration Center & Developer Portal (July 29, 2026)
+## 🌐 Day 22 Highlights: AI Automation Studio (July 31, 2026)
 
-This module provides SMEs with an enterprise-grade developer platform and integration ecosystem, comparable to Stripe Dashboard, Shopify Partner Dashboard, and HubSpot Developer Portal.
-
-### ⚙️ Backend Architecture (ASP.NET Core .NET 10)
-- **API Key Management**: Secure generation, prefix display, one-time secret view, rotation, revocation, and scope validation.
-- **Webhook Dispatch Engine**: Registration of `https://` webhook endpoints, event subscription management (`eventTypes`), and background job dispatching with delivery logs and auto-retry logic.
-- **Public API & Integration Models**: Foundation for exposing the BusinessOS AI ecosystem to external developers.
-- **OAuth Application Registration**: OAuth 2.0 app registration for third-party client integrations.
-
-### 🎨 Frontend Architecture (Next.js 16 + React 19 + React Query)
-- **Developer Portal (`/dashboard/developer`)**: Dedicated developer hub linking to API Keys, Webhooks, API Logs, and Documentation.
-- **Connector Marketplace (`/dashboard/connectors`)**: App discovery marketplace displaying integrations (e.g., Stripe, Shopify, Meta Ads) using a grid view and categorical search.
-- **Integration Center (`/dashboard/integrations`)**: Workspace to monitor installed connections, health sync status, and disconnect workflows.
-- **API Keys UI (`/dashboard/api-keys`)**: UI for generating API keys, mapping scopes, and securely revealing credentials.
-- **Webhooks UI (`/dashboard/webhooks`)**: Data table displaying endpoints, active statuses, last delivery timestamps, and testing triggers.
-- **OAuth Apps & API Logs**: Pages for registering OAuth clients and viewing an audit trail of incoming API traffic.
-
----
-
-## 💰 Day 19 Highlights: Accounting, Finance, Cash Flow & Expense Management (July 28, 2026)
-
-This module provides SMEs with a complete financial operating system comparable to QuickBooks, Xero, and Zoho Books.
-
-### ⚙️ Backend Architecture (ASP.NET Core .NET 10 & EF Core 9)
-- **General Ledger & Chart of Accounts**: `Account` entity supporting default pre-configured SME chart of accounts across Assets, Liabilities, Equity, Revenue, and Expenses.
-- **Expense Management & Receipt Storage**: `Expense` and `ExpenseCategory` entities supporting tax calculation, recurring intervals, manager approvals, and receipt upload abstraction via `IReceiptStorageService`.
-- **Invoices & Payment Auditing**: `FinanceInvoice` and `FinancePayment` tracking line items, subtotal, discounts, tax rates, balance due, and payment receipts.
-- **Accounts Receivable & Accounts Payable**: `AccountsReceivableRecord` and `AccountsPayableRecord` tracking customer and supplier aging buckets (Current, 1-30, 31-60, 61-90, 90+ days overdue) with automated overdue reminder triggers.
-- **Cash Flow Engine**: Real-time position calculation (`Bank Balance + Cumulative Cash In - Cash Out`) and 30-day forward liquidity forecasting (`Current Position + AR Due In 30 Days - AP Due In 30 Days - Recurring Expenses`).
-- **GST/VAT Tax Engine**: Country-configurable tax calculation engine (`ITaxEngine`) with output vs input tax liability summaries.
-- **Financial Report Generator**: Structured JSON report generation for Profit & Loss (P&L), Statement of Cash Flows, Expense Summary, Revenue Summary, and Tax Summaries.
-
-### 🎨 Frontend Architecture (Next.js 16 + React 19 + React Query)
-- **Finance Dashboard (`/dashboard/finance`)**: Executive overview KPI cards, Recharts cash inflow vs outflow area chart, and recent transaction log.
-- **Expense Management (`/dashboard/expenses`)**: Expense list table, category color tags, manager approval workflow, modal form, and receipt uploader.
-- **Customer Invoices (`/dashboard/invoices`)**: Invoice list, payment status badges (Sent, Partial, Paid, Overdue), modal with dynamic line items, and payment recording.
-- **Payment History (`/dashboard/payments`)**: Complete audit history of incoming collections and outgoing disbursements.
-- **Accounts Receivable (`/dashboard/accounts-receivable`)**: AR aging buckets and overdue reminder email triggers.
-- **Accounts Payable (`/dashboard/accounts-payable`)**: Supplier bill logging, AP aging buckets, and bill payment disbursements.
-- **Cash Flow Analytics (`/dashboard/cash-flow`)**: 30-day forward liquidity forecast projection card and multi-month trend chart.
-- **Financial Reports Center (`/dashboard/financial-reports`)**: Formatted Profit & Loss Statement, Statement of Cash Flows, Tax Summary, Expense & Revenue reports with native browser print/PDF export capabilities.
-
----
-
-## 📄 Day 17 Highlights: Document Management System (DMS), E-Signature & Approval Workspace (July 26, 2026)
-
-This module provides SMEs with a centralized document management platform comparable to DocuSign, Google Drive, Dropbox Business, and PandaDoc, eliminating the need for multiple external software subscriptions.
+This module provides SMEs with a visual workflow engine to automate their business processes across the entire BusinessOS AI suite.
 
 ### ⚙️ Backend Architecture (ASP.NET Core .NET 10)
-- **Storage Abstraction (`IStorageService`)**: Unified storage layer with `LocalStorageService` (HMAC signed URLs) and `AzureBlobStorageService` integration with seamless fallback.
-- **Document & Version Control**: Multi-versioning pointer system, tag and metadata management, soft delete & restore, hierarchical path calculation, and full-text search.
-- **Multi-Level Approval Engine**: Sequential & parallel approval step workflows, approval comments, rejection handling, due date tracking, and automated escalation hooks.
-- **Provider-Independent E-Signatures**: Abstract `IESignatureProviderService` for self-hosted native digital signatures or DocuSign / Adobe Sign APIs. Includes token landing links, security PIN codes, multi-signer roles, completion certificates, and SHA-256 cryptographic hashes.
-- **Passcode & Public Link Sharing**: Internal RBAC permission sharing + external passcode-encrypted public links with expiration date and access count logging.
-- **Immutable Audit Trail**: Document audit entries capturing IP addresses, User Agents, timestamps, and action types.
+- **Workflow Engine Core**: Centralized processor supporting custom triggers, conditions, and actions via clean architecture.
+- **Background Worker**: Hangfire-based reliable worker for asynchronous execution of automation steps.
+- **Dynamic Configuration**: JSON payload configuration mapping to typed schemas for actions and conditions.
+- **Workflow State Management**: Entities to track workflow status (Active, Draft, Paused), versioning, and execution logs.
 
 ### 🎨 Frontend Architecture (Next.js 16 + React 19 + React Query)
-- **Document Center (`/dashboard/documents`)**: Folder breadcrumb navigation, grid/list view toggle, drag-and-drop upload dropzone with real-time percentage progress bar, search, tags, favorites, and storage metrics.
-- **Document Viewer & Detail (`/dashboard/documents/[id]`)**: Dual-tab view featuring interactive preview/download, historical version timeline with 1-click reversion, and activity audit trail.
-- **Document Templates (`/dashboard/documents/templates`)**: Categorized template library with variable placeholder substitution (`{{VariableName}}`) and 1-click document generator.
-- **Approval Workspace (`/dashboard/approvals`)**: Tabbed approval queue (Pending, Approved, Rejected) with sequence step badges, due date alerts, and review modal (approve, reject, comment, escalate).
-- **E-Signature Workspace (`/dashboard/signatures`)**: Signature request builder, progress tracking badges, SHA-256 hash verification, and audit certificates.
-- **Shared Files & Public Links (`/dashboard/shared`)**: Passcode share manager, link expiration settings, and access count logging.
-
-## 💖 Day 16 Highlights: Customer Success Center, Customer Retention & Loyalty Platform
-
-This module provides SMEs with an enterprise-grade customer retention workspace comparable to HubSpot Service Hub, Salesforce Service Cloud, and Freshworks Customer Success.
-
-### ⚙️ Backend Architecture (ASP.NET Core .NET 10)
-- **Customer Health Score Engine**: Multi-factor scoring engine (0-100) calculating account health and risk levels (`Healthy`, `Stable`, `Needs Attention`, `High Risk`).
-- **Loyalty & Rewards Platform**: Multi-program points engine with earning rules, minimum redemption thresholds, expiration rules, and manual adjustments.
-- **Referral Engine**: Automated code generation (`REF-XXXX-XXXXXX`), referral conversion tracking, and advocate reward disbursement.
-- **Customer Satisfaction (CSAT)**: Feedback submission, rating distributions, and negative feedback alert triggers (rating <= 2).
-- **Customer Success Tasks**: Automated creation of retention tasks for high-risk accounts, low CSAT alerts, and VIP milestones.
-- **Automated Customer Segmentation**: Cohort calculation (`VIP`, `High Spend`, `New`, `Repeat`, `Inactive`, `At-Risk`).
-
-### 🎨 Frontend Architecture (Next.js 16 + React 19 + React Query)
-- **Customer Success Center** (`/dashboard/customer-success`): Executive overview dashboard with retention rates, at-risk metrics, and action recommendations.
-- **Customer 360° Profile** (`/dashboard/customers/[id]`): Unified account view consolidating personal details, financial stats (LTV, orders, balance), open deals, marketing activity, loyalty balances, CSAT, and activity timeline.
-- **Customer Health Dashboard** (`/dashboard/customer-health`): Risk level category filters, customer search, and score recalculations.
-- **Loyalty Dashboard** (`/dashboard/loyalty`): Program builder modal, point adjustment tool, reward redemption tool, and transaction logs.
-- **Referral Dashboard** (`/dashboard/referrals`): Code generator, status conversion dialog, top advocates leaderboard, and conversion funnel charts.
-- **Customer Feedback & CSAT** (`/dashboard/customer-feedback`): Average CSAT gauge, rating distribution chart, negative feedback alert box, and feedback submission dialog.
-- **Customer Segments** (`/dashboard/customer-segments`): Cohort filters, segment search, CSV exporter, and recalculation triggers.
-- **Customer Success Tasks** (`/dashboard/customer-success/tasks`): Status tabs, priority filters, task creation modal, and auto-generate task runner.
+- **Visual Workflow Builder (`/dashboard/automation/workflows/[id]/edit`)**: Interactive drag-and-drop canvas powered by React Flow (`@xyflow/react`) to connect nodes and visually define logic.
+- **Automation Hub (`/dashboard/automation`)**: Overview dashboard showing execution statistics and active automations.
+- **Templates Library (`/dashboard/automation/templates`)**: Curated list of workflows designed for immediate business value (e.g., Lead Followup, Invoice Reminders).
+- **Execution History (`/dashboard/automation/history`)**: Audit trail for troubleshooting failed workflow steps with robust retry support.
 
 ---
 
@@ -172,36 +101,8 @@ This module provides SMEs with an enterprise-grade customer retention workspace 
 
 Detailed technical documents are available in the [`docs/`](backend/docs/) directory:
 
-- [**docs/DOCUMENT_MANAGEMENT_SYSTEM.md**](docs/DOCUMENT_MANAGEMENT_SYSTEM.md) — Document Management System (DMS) Backend Architecture & APIs
-- [**docs/DOCUMENT_MANAGEMENT_FRONTEND.md**](docs/DOCUMENT_MANAGEMENT_FRONTEND.md) — Document Center & Workspaces Frontend Guide
-- [**docs/customer-success.md**](backend/docs/customer-success.md) — Customer Success Platform Architecture
-- [**docs/customer-health.md**](backend/docs/customer-health.md) — Customer Health Score Engine
-- [**docs/loyalty-program.md**](backend/docs/loyalty-program.md) — Loyalty & Rewards Engine
-- [**docs/referrals.md**](backend/docs/referrals.md) — Referral System & Funnel
-- [**docs/customer-satisfaction.md**](backend/docs/customer-satisfaction.md) — Customer Satisfaction (CSAT) Architecture
-- [**frontend/docs/customer-success-ui.md**](frontend/docs/customer-success-ui.md) — Customer Success Center UI
-- [**frontend/docs/customer-health-ui.md**](frontend/docs/customer-health-ui.md) — Customer Health Dashboard UI
-- [**frontend/docs/loyalty-ui.md**](frontend/docs/loyalty-ui.md) — Loyalty & Rewards UI
-- [**frontend/docs/referrals-ui.md**](frontend/docs/referrals-ui.md) — Referral System UI
-- [**docs/accounting.md**](docs/accounting.md) — Chart of Accounts & General Ledger Architecture
-- [**docs/finance.md**](docs/finance.md) — Financial Platform Overview & Payment Auditing
-- [**docs/cashflow.md**](docs/cashflow.md) — Cash Flow Engine & 30-Day Liquidity Forecast
-- [**docs/expenses.md**](docs/expenses.md) — Expense Management & Receipt Storage
-- [**docs/financial-reports.md**](docs/financial-reports.md) — Financial Statements (P&L, Cash Flow, Tax Summary)
-- [**docs/finance-ui.md**](docs/finance-ui.md) — Finance Center & Executive Dashboard UI
-- [**docs/expenses-ui.md**](docs/expenses-ui.md) — Expense Management UI
-- [**docs/cashflow-ui.md**](docs/cashflow-ui.md) — Cash Flow Analytics & Forecast UI
-- [**docs/financial-reports-ui.md**](docs/financial-reports-ui.md) — Financial Reports UI
-- [**docs/day19-implementation-plan.md**](docs/day19-implementation-plan.md) — Day 19 Implementation Plan
-- [**docs/day19-walkthrough.md**](docs/day19-walkthrough.md) — Day 19 Walkthrough Verification
-
-- [**docs/integration-center-ui.md**](docs/integration-center-ui.md) — Integration Center UI
-- [**docs/developer-portal-ui.md**](docs/developer-portal-ui.md) — Developer Portal UI
-- [**docs/api-keys-ui.md**](docs/api-keys-ui.md) — API Keys UI
-- [**docs/webhooks-ui.md**](docs/webhooks-ui.md) — Webhooks UI
-- [**docs/day20/implementation_plan.md**](docs/day20/implementation_plan.md) — Day 20 Implementation Plan
-- [**docs/day20/task.md**](docs/day20/task.md) — Day 20 Tasks
-- [**docs/day20/walkthrough.md**](docs/day20/walkthrough.md) — Day 20 Walkthrough
+- [**docs/day22/implementation_plan.md**](docs/day22/implementation_plan.md) — Day 22 Implementation Plan
+- [**docs/day22/walkthrough.md**](docs/day22/walkthrough.md) — Day 22 Walkthrough Verification
 
 ---
 
