@@ -128,3 +128,58 @@ public class PaymentConfiguration : BaseEntityConfiguration<Payment> {
         builder.HasIndex(e => e.OrganizationId);
     }
 }
+
+// Day 22 - AI Automation Studio
+public class AutomationWorkflowConfiguration : BaseEntityConfiguration<AutomationWorkflow> {
+    public override void Configure(EntityTypeBuilder<AutomationWorkflow> builder) {
+        base.Configure(builder);
+        builder.HasIndex(e => e.OrganizationId);
+    }
+}
+public class TriggerConfiguration : BaseEntityConfiguration<backend.Entities.Trigger> {
+    public override void Configure(EntityTypeBuilder<backend.Entities.Trigger> builder) {
+        base.Configure(builder);
+        builder.HasIndex(e => e.OrganizationId);
+    }
+}
+public class ConditionConfiguration : BaseEntityConfiguration<backend.Entities.Condition> {
+    public override void Configure(EntityTypeBuilder<backend.Entities.Condition> builder) {
+        base.Configure(builder);
+        builder.HasIndex(e => e.OrganizationId);
+    }
+}
+public class ActionConfiguration : BaseEntityConfiguration<backend.Entities.Action> {
+    public override void Configure(EntityTypeBuilder<backend.Entities.Action> builder) {
+        base.Configure(builder);
+        builder.HasIndex(e => e.OrganizationId);
+    }
+}
+public class WorkflowExecutionConfiguration : BaseEntityConfiguration<backend.Entities.WorkflowExecution> {
+    public override void Configure(EntityTypeBuilder<backend.Entities.WorkflowExecution> builder) {
+        base.Configure(builder);
+        builder.HasIndex(e => e.OrganizationId);
+    }
+}
+public class ExecutionLogConfiguration : BaseEntityConfiguration<backend.Entities.ExecutionLog> {
+    public override void Configure(EntityTypeBuilder<backend.Entities.ExecutionLog> builder) {
+        base.Configure(builder);
+        builder.HasIndex(e => e.OrganizationId);
+    }
+}
+public class ScheduleConfiguration : BaseEntityConfiguration<Schedule> {
+    public override void Configure(EntityTypeBuilder<Schedule> builder) {
+        base.Configure(builder);
+        builder.HasIndex(e => e.OrganizationId);
+    }
+}
+public class WorkflowTemplateConfiguration : BaseEntityConfiguration<WorkflowTemplate> {
+    public override void Configure(EntityTypeBuilder<WorkflowTemplate> builder) {
+        base.Configure(builder);
+    }
+}
+public class WorkflowVersionConfiguration : BaseEntityConfiguration<WorkflowVersion> {
+    public override void Configure(EntityTypeBuilder<WorkflowVersion> builder) {
+        base.Configure(builder);
+        builder.HasIndex(e => e.OrganizationId);
+    }
+}

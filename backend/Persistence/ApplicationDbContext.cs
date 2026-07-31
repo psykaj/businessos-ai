@@ -170,6 +170,17 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.Taxes.Entities.TaxRecord> TaxRecords => Set<backend.Modules.Taxes.Entities.TaxRecord>();
     public DbSet<backend.Modules.FinancialReports.Entities.FinancialReport> FinancialReports => Set<backend.Modules.FinancialReports.Entities.FinancialReport>();
 
+    // Day 22 - AI Automation Studio
+    public DbSet<AutomationWorkflow> AutomationWorkflows => Set<AutomationWorkflow>();
+    public DbSet<backend.Entities.Trigger> AutomationTriggers => Set<backend.Entities.Trigger>();
+    public DbSet<backend.Entities.Condition> AutomationConditions => Set<backend.Entities.Condition>();
+    public DbSet<backend.Entities.Action> AutomationActions => Set<backend.Entities.Action>();
+    public DbSet<backend.Entities.WorkflowExecution> StudioWorkflowExecutions => Set<backend.Entities.WorkflowExecution>();
+    public DbSet<backend.Entities.ExecutionLog> StudioExecutionLogs => Set<backend.Entities.ExecutionLog>();
+    public DbSet<Schedule> Schedules => Set<Schedule>();
+    public DbSet<WorkflowTemplate> WorkflowTemplates => Set<WorkflowTemplate>();
+    public DbSet<WorkflowVersion> WorkflowVersions => Set<WorkflowVersion>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -281,6 +292,16 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<ApiLog>().HasIndex(a => a.ApiKeyId);
         modelBuilder.Entity<EventSubscription>().HasIndex(e => e.OrganizationId);
         modelBuilder.Entity<EventLog>().HasIndex(e => e.OrganizationId);
+
+        // Day 22 - AI Automation Studio Constraints
+        modelBuilder.Entity<AutomationWorkflow>().HasIndex(w => w.OrganizationId);
+        modelBuilder.Entity<backend.Entities.Trigger>().HasIndex(t => t.OrganizationId);
+        modelBuilder.Entity<backend.Entities.Condition>().HasIndex(c => c.OrganizationId);
+        modelBuilder.Entity<backend.Entities.Action>().HasIndex(a => a.OrganizationId);
+        modelBuilder.Entity<backend.Entities.WorkflowExecution>().HasIndex(e => e.OrganizationId);
+        modelBuilder.Entity<backend.Entities.ExecutionLog>().HasIndex(l => l.OrganizationId);
+        modelBuilder.Entity<Schedule>().HasIndex(s => s.OrganizationId);
+        modelBuilder.Entity<WorkflowVersion>().HasIndex(v => v.OrganizationId);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
