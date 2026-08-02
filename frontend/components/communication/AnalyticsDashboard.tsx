@@ -169,7 +169,7 @@ export function AnalyticsDashboard() {
             <span className="text-xs text-muted-foreground">Total Today: {analytics.totalMessagesToday} messages</span>
           </div>
           <div className="w-full h-72">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={280}>
               <BarChart data={channelData}>
                 <XAxis dataKey="name" stroke="#888888" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis stroke="#888888" fontSize={11} tickLine={false} axisLine={false} />
@@ -186,7 +186,7 @@ export function AnalyticsDashboard() {
         <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs flex flex-col justify-between">
           <h3 className="text-sm font-bold text-foreground mb-4">CSAT Score Breakdown</h3>
           <div className="w-full h-60 flex items-center justify-center">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={240}>
               <PieChart>
                 <Pie data={csatData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={70} label>
                   {csatData.map((entry, index) => (
