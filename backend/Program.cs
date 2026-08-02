@@ -17,6 +17,8 @@ using backend.Modules.Finance.Extensions;
 using backend.Modules.ApiPlatform.Extensions;
 using backend.Modules.ApiPlatform.Authentication;
 using backend.Modules.ExecutiveInsights.Extensions;
+using backend.Modules.CommunicationHub;
+using backend.Modules.CommunicationHub.RealTime;
 using backend.Seed;
 using backend.Interfaces;
 using backend.Middleware;
@@ -103,6 +105,7 @@ builder.Services.AddInventoryModule();
 builder.Services.AddFinanceModule();
 builder.Services.AddCoreModules();
 builder.Services.AddExecutiveIntelligenceModule();
+builder.Services.AddCommunicationHubModule();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -138,6 +141,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHub<NotificationHub>("/hubs/notifications");
+app.MapHub<CommunicationHubSignalR>("/hubs/communication");
 
 // ─── Auto-apply Migrations & Seed on Startup ──────────────────────────────────
 try

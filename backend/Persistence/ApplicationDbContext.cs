@@ -181,6 +181,17 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<WorkflowTemplate> WorkflowTemplates => Set<WorkflowTemplate>();
     public DbSet<WorkflowVersion> WorkflowVersions => Set<WorkflowVersion>();
 
+    // Day 23 - Customer Communication Hub & Omnichannel Messaging
+    public DbSet<backend.Modules.CommunicationHub.Entities.Conversation> CommConversations => Set<backend.Modules.CommunicationHub.Entities.Conversation>();
+    public DbSet<backend.Modules.CommunicationHub.Entities.Message> CommMessages => Set<backend.Modules.CommunicationHub.Entities.Message>();
+    public DbSet<backend.Modules.CommunicationHub.Entities.CommunicationChannel> CommunicationChannels => Set<backend.Modules.CommunicationHub.Entities.CommunicationChannel>();
+    public DbSet<backend.Modules.CommunicationHub.Entities.MessageTemplate> CommMessageTemplates => Set<backend.Modules.CommunicationHub.Entities.MessageTemplate>();
+    public DbSet<backend.Modules.CommunicationHub.Entities.Assignment> CommAssignments => Set<backend.Modules.CommunicationHub.Entities.Assignment>();
+    public DbSet<backend.Modules.CommunicationHub.Entities.CommunicationNotification> CommNotifications => Set<backend.Modules.CommunicationHub.Entities.CommunicationNotification>();
+    public DbSet<backend.Modules.CommunicationHub.Entities.ConversationTag> ConversationTags => Set<backend.Modules.CommunicationHub.Entities.ConversationTag>();
+    public DbSet<backend.Modules.CommunicationHub.Entities.ConversationStatusEntity> ConversationStatuses => Set<backend.Modules.CommunicationHub.Entities.ConversationStatusEntity>();
+    public DbSet<backend.Modules.CommunicationHub.Entities.CommunicationMetric> CommunicationMetrics => Set<backend.Modules.CommunicationHub.Entities.CommunicationMetric>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -302,6 +313,18 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Entities.ExecutionLog>().HasIndex(l => l.OrganizationId);
         modelBuilder.Entity<Schedule>().HasIndex(s => s.OrganizationId);
         modelBuilder.Entity<WorkflowVersion>().HasIndex(v => v.OrganizationId);
+
+        // Day 23 - Communication Hub Constraints & Indexes
+        modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.Conversation>().HasIndex(c => c.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.Conversation>().HasIndex(c => new { c.OrganizationId, c.Status });
+        modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.Message>().HasIndex(m => m.ConversationId);
+        modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.CommunicationChannel>().HasIndex(c => c.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.MessageTemplate>().HasIndex(t => t.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.Assignment>().HasIndex(a => a.ConversationId);
+        modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.CommunicationNotification>().HasIndex(n => new { n.OrganizationId, n.TargetUserId });
+        modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.ConversationTag>().HasIndex(t => t.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.ConversationStatusEntity>().HasIndex(s => s.OrganizationId);
+        modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.CommunicationMetric>().HasIndex(m => m.OrganizationId);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
