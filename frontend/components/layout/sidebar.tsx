@@ -53,7 +53,9 @@ import {
   Code2,
   Webhook,
   ShieldCheck,
-  Plug
+  Plug,
+  Inbox,
+  MessageSquare
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/auth-context";
@@ -93,6 +95,16 @@ const navGroups = [
       { label: "Calendar", href: "/dashboard/calendar", icon: CalendarDays },
       { label: "Activities", href: "/dashboard/activities", icon: Activity },
       { label: "Tags", href: "/dashboard/tags", icon: Tags },
+    ]
+  },
+  {
+    title: "Customer Communication",
+    items: [
+      { label: "Communication Hub", href: "/dashboard/communication", icon: MessageCircle },
+      { label: "Unified Inbox", href: "/dashboard/inbox", icon: Inbox },
+      { label: "Live Workspace", href: "/dashboard/conversations", icon: MessageSquare },
+      { label: "Message Templates", href: "/dashboard/templates", icon: LayoutTemplate },
+      { label: "Comm Analytics", href: "/dashboard/communication-analytics", icon: BarChart3 },
     ]
   },
   {

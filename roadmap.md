@@ -85,4 +85,7 @@
 - Expense Management UI ✅
 - Cash Flow Analytics ✅
 - Financial Reports UI ✅
-
+- Communication Hub UI ✅
+- Unified Inbox ✅
+- Conversation Workspace ✅
+- Communication Analytics ✅
