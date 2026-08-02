@@ -19,6 +19,7 @@ Contains documentation regarding system design, technology stack, and structural
 ### 3. `plans/`
 Contains detailed implementation plans for specific milestones.
 - [Day 4 Implementation Plan](plans/day4-implementation-plan.md)
+- [Day 23 Implementation Plan](day23/implementation_plan.md)
 
 ### 4. `walkthroughs/`
 Contains step-by-step summaries of work completed in each phase of the project.
@@ -26,6 +27,7 @@ Contains step-by-step summaries of work completed in each phase of the project.
 - [Day 2: Dashboard UI](walkthroughs/day2-dashboard-ui.md)
 - [Day 3: Authentication](walkthroughs/day3-authentication.md)
 - [Day 4: Database Architecture](walkthroughs/day4-database-architecture.md)
+- [Day 23: Customer Communication Center](day23/walkthrough.md)
 
 ### 5. `testing/`
 Contains Quality Assurance (QA) testing logs and reports.
