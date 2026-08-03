@@ -89,3 +89,9 @@
 - Unified Inbox ✅
 - Conversation Workspace ✅
 - Communication Analytics ✅
+- Customer Feedback Center UI ✅
+- Survey Campaign Builder UI ✅
+- Verified Star Ratings Hub ✅
+- Service Quality SLA Monitor ✅
+- AI Sentiment & Root Cause Intelligence ✅
+- NPS & Churn Risk Predictor ✅
