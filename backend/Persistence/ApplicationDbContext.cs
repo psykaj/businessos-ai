@@ -192,6 +192,17 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.CommunicationHub.Entities.ConversationStatusEntity> ConversationStatuses => Set<backend.Modules.CommunicationHub.Entities.ConversationStatusEntity>();
     public DbSet<backend.Modules.CommunicationHub.Entities.CommunicationMetric> CommunicationMetrics => Set<backend.Modules.CommunicationHub.Entities.CommunicationMetric>();
 
+    // Day 24 - Customer Feedback & Service Quality
+    public DbSet<backend.Modules.CustomerFeedback.Entities.Feedback> Feedbacks => Set<backend.Modules.CustomerFeedback.Entities.Feedback>();
+    public DbSet<backend.Modules.CustomerFeedback.Entities.Survey> Surveys => Set<backend.Modules.CustomerFeedback.Entities.Survey>();
+    public DbSet<backend.Modules.CustomerFeedback.Entities.SurveyQuestion> SurveyQuestions => Set<backend.Modules.CustomerFeedback.Entities.SurveyQuestion>();
+    public DbSet<backend.Modules.CustomerFeedback.Entities.SurveyResponse> SurveyResponses => Set<backend.Modules.CustomerFeedback.Entities.SurveyResponse>();
+    public DbSet<backend.Modules.CustomerFeedback.Entities.Rating> Ratings => Set<backend.Modules.CustomerFeedback.Entities.Rating>();
+    public DbSet<backend.Modules.CustomerFeedback.Entities.SentimentAnalysis> SentimentAnalyses => Set<backend.Modules.CustomerFeedback.Entities.SentimentAnalysis>();
+    public DbSet<backend.Modules.CustomerFeedback.Entities.CustomerSatisfactionScore> CustomerSatisfactionScores => Set<backend.Modules.CustomerFeedback.Entities.CustomerSatisfactionScore>();
+    public DbSet<backend.Modules.CustomerFeedback.Entities.ServiceMetric> ServiceMetrics => Set<backend.Modules.CustomerFeedback.Entities.ServiceMetric>();
+    public DbSet<backend.Modules.CustomerFeedback.Entities.ImprovementRecommendation> ImprovementRecommendations => Set<backend.Modules.CustomerFeedback.Entities.ImprovementRecommendation>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -325,6 +336,17 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.ConversationTag>().HasIndex(t => t.OrganizationId);
         modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.ConversationStatusEntity>().HasIndex(s => s.OrganizationId);
         modelBuilder.Entity<backend.Modules.CommunicationHub.Entities.CommunicationMetric>().HasIndex(m => m.OrganizationId);
+
+        // Day 24 - Customer Feedback Indexes
+        modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.Feedback>().HasIndex(e => new { e.OrganizationId, e.IsDeleted, e.Status });
+        modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.Survey>().HasIndex(e => new { e.OrganizationId, e.IsActive });
+        modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.SurveyQuestion>().HasIndex(e => e.SurveyId);
+        modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.SurveyResponse>().HasIndex(e => new { e.OrganizationId, e.SurveyId });
+        modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.Rating>().HasIndex(e => new { e.OrganizationId, e.EntityType, e.EntityId });
+        modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.SentimentAnalysis>().HasIndex(e => new { e.OrganizationId, e.TargetEntityType, e.TargetEntityId });
+        modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.CustomerSatisfactionScore>().HasIndex(e => new { e.OrganizationId, e.CustomerId });
+        modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.ServiceMetric>().HasIndex(e => new { e.OrganizationId, e.MetricDate });
+        modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.ImprovementRecommendation>().HasIndex(e => new { e.OrganizationId, e.Priority, e.Status });
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 

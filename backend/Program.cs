@@ -18,6 +18,7 @@ using backend.Modules.ApiPlatform.Extensions;
 using backend.Modules.ApiPlatform.Authentication;
 using backend.Modules.ExecutiveInsights.Extensions;
 using backend.Modules.CommunicationHub;
+using backend.Modules.CustomerFeedback;
 using backend.Modules.CommunicationHub.RealTime;
 using backend.Seed;
 using backend.Interfaces;
@@ -106,6 +107,7 @@ builder.Services.AddFinanceModule();
 builder.Services.AddCoreModules();
 builder.Services.AddExecutiveIntelligenceModule();
 builder.Services.AddCommunicationHubModule();
+builder.Services.AddCustomerFeedbackModule();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

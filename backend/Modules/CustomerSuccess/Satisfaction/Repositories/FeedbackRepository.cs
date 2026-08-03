@@ -1,4 +1,5 @@
 using backend.Modules.CustomerSuccess.Satisfaction.Entities;
+using CustomerFeedback = backend.Modules.CustomerSuccess.Satisfaction.Entities.CustomerFeedback;
 using backend.Modules.CustomerSuccess.Satisfaction.Interfaces;
 using backend.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -14,14 +15,14 @@ public class FeedbackRepository : IFeedbackRepository
         _context = context;
     }
 
-    public async Task<CustomerFeedback?> GetByIdAsync(Guid orgId, Guid id)
+    public async Task<Entities.CustomerFeedback?> GetByIdAsync(Guid orgId, Guid id)
     {
         return await _context.CustomerFeedbacks
             .Include(f => f.Customer)
             .FirstOrDefaultAsync(f => f.OrganizationId == orgId && f.Id == id);
     }
 
-    public async Task<IEnumerable<CustomerFeedback>> GetByCustomerIdAsync(Guid orgId, Guid customerId)
+    public async Task<IEnumerable<Entities.CustomerFeedback>> GetByCustomerIdAsync(Guid orgId, Guid customerId)
     {
         return await _context.CustomerFeedbacks
             .Where(f => f.OrganizationId == orgId && f.CustomerId == customerId)
@@ -29,7 +30,7 @@ public class FeedbackRepository : IFeedbackRepository
             .ToListAsync();
     }
 
-    public async Task<(IEnumerable<CustomerFeedback> Items, int TotalCount)> GetPagedAsync(
+    public async Task<(IEnumerable<Entities.CustomerFeedback> Items, int TotalCount)> GetPagedAsync(
         Guid orgId, Guid? customerId, int? minRating, int? maxRating, string? feedbackType, int page, int pageSize)
     {
         var query = _context.CustomerFeedbacks
@@ -101,7 +102,7 @@ public class FeedbackRepository : IFeedbackRepository
         return result;
     }
 
-    public async Task AddAsync(CustomerFeedback feedback)
+    public async Task AddAsync(Entities.CustomerFeedback feedback)
     {
         await _context.CustomerFeedbacks.AddAsync(feedback);
     }
