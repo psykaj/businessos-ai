@@ -203,6 +203,16 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.CustomerFeedback.Entities.ServiceMetric> ServiceMetrics => Set<backend.Modules.CustomerFeedback.Entities.ServiceMetric>();
     public DbSet<backend.Modules.CustomerFeedback.Entities.ImprovementRecommendation> ImprovementRecommendations => Set<backend.Modules.CustomerFeedback.Entities.ImprovementRecommendation>();
 
+    // Day 25 - AI Business Performance & Growth Intelligence
+    public DbSet<backend.Modules.BusinessPerformance.Entities.BusinessMetric> BusinessMetrics => Set<backend.Modules.BusinessPerformance.Entities.BusinessMetric>();
+    public DbSet<backend.Modules.RevenueAnalytics.Entities.RevenueSnapshot> RevenueSnapshots => Set<backend.Modules.RevenueAnalytics.Entities.RevenueSnapshot>();
+    public DbSet<backend.Modules.Profitability.Entities.ProfitSnapshot> ProfitSnapshots => Set<backend.Modules.Profitability.Entities.ProfitSnapshot>();
+    public DbSet<backend.Modules.ProductAnalytics.Entities.ProductPerformance> ProductPerformances => Set<backend.Modules.ProductAnalytics.Entities.ProductPerformance>();
+    public DbSet<backend.Modules.CustomerAnalytics.Entities.CustomerPerformance> CustomerPerformances => Set<backend.Modules.CustomerAnalytics.Entities.CustomerPerformance>();
+    public DbSet<backend.Modules.MarketingROI.Entities.MarketingPerformance> MarketingPerformances => Set<backend.Modules.MarketingROI.Entities.MarketingPerformance>();
+    public DbSet<backend.Modules.GrowthRecommendations.Entities.GrowthRecommendation> GrowthRecommendations => Set<backend.Modules.GrowthRecommendations.Entities.GrowthRecommendation>();
+    public DbSet<backend.Modules.Benchmarking.Entities.BenchmarkMetric> BenchmarkMetrics => Set<backend.Modules.Benchmarking.Entities.BenchmarkMetric>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -348,8 +358,17 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.ServiceMetric>().HasIndex(e => new { e.OrganizationId, e.MetricDate });
         modelBuilder.Entity<backend.Modules.CustomerFeedback.Entities.ImprovementRecommendation>().HasIndex(e => new { e.OrganizationId, e.Priority, e.Status });
 
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        // Day 25 - AI Growth Intelligence Indexes
+        modelBuilder.Entity<backend.Modules.BusinessPerformance.Entities.BusinessMetric>().HasIndex(e => new { e.OrganizationId, e.MetricType, e.Period });
+        modelBuilder.Entity<backend.Modules.RevenueAnalytics.Entities.RevenueSnapshot>().HasIndex(e => new { e.OrganizationId, e.SnapshotDate });
+        modelBuilder.Entity<backend.Modules.Profitability.Entities.ProfitSnapshot>().HasIndex(e => new { e.OrganizationId, e.SnapshotDate });
+        modelBuilder.Entity<backend.Modules.ProductAnalytics.Entities.ProductPerformance>().HasIndex(e => new { e.OrganizationId, e.Period, e.IsTopPerformer });
+        modelBuilder.Entity<backend.Modules.CustomerAnalytics.Entities.CustomerPerformance>().HasIndex(e => new { e.OrganizationId, e.CustomerSegment, e.ChurnRiskScore });
+        modelBuilder.Entity<backend.Modules.MarketingROI.Entities.MarketingPerformance>().HasIndex(e => new { e.OrganizationId, e.Channel, e.Period });
+        modelBuilder.Entity<backend.Modules.GrowthRecommendations.Entities.GrowthRecommendation>().HasIndex(e => new { e.OrganizationId, e.Priority, e.Status });
+        modelBuilder.Entity<backend.Modules.Benchmarking.Entities.BenchmarkMetric>().HasIndex(e => new { e.OrganizationId, e.ComparisonType, e.MetricName });
 
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 
     public override int SaveChanges()
