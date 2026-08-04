@@ -2,6 +2,7 @@ using backend.Modules.CustomerSuccess.CustomerHealth.DTOs;
 using backend.Modules.CustomerSuccess.CustomerHealth.Interfaces;
 using backend.Modules.CustomerSuccess.Satisfaction.DTOs;
 using backend.Modules.CustomerSuccess.Satisfaction.Entities;
+using CustomerFeedback = backend.Modules.CustomerSuccess.Satisfaction.Entities.CustomerFeedback;
 using backend.Modules.CustomerSuccess.Satisfaction.Interfaces;
 using backend.Modules.CustomerSuccess.SuccessTasks.Entities;
 using backend.Modules.CustomerSuccess.SuccessTasks.Interfaces;
@@ -26,7 +27,7 @@ public class SatisfactionService : ISatisfactionService
 
     public async Task<CustomerFeedbackDto> SubmitFeedbackAsync(Guid orgId, SubmitFeedbackDto dto)
     {
-        var feedback = new CustomerFeedback
+        var feedback = new Entities.CustomerFeedback
         {
             OrganizationId = orgId,
             CustomerId = dto.CustomerId,
@@ -114,7 +115,7 @@ public class SatisfactionService : ISatisfactionService
         return items.Select(MapToDto);
     }
 
-    private static CustomerFeedbackDto MapToDto(CustomerFeedback f)
+    private static CustomerFeedbackDto MapToDto(Entities.CustomerFeedback f)
     {
         return new CustomerFeedbackDto(
             f.Id,

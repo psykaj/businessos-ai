@@ -1,283 +1,146 @@
 "use client";
 
 import React, { useState } from "react";
-import { useSatisfactionSummary, useFeedbackPaged, useSubmitFeedback } from "@/hooks/use-customer-success";
-import { CSATDistributionChart } from "@/components/customer-success/csat-distribution-chart";
+import { useFeedbackSearch, useCsatDashboard, useSentimentAnalytics, useSubmitFeedback } from "@/hooks/use-customer-feedback";
+import { FeedbackKpiCards } from "@/components/customer-feedback/feedback-kpi-cards";
+import { FeedbackManagementTable } from "@/components/customer-feedback/feedback-management-table";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { MessageSquare, Star, Plus, AlertTriangle, ThumbsUp, ThumbsDown, ShieldAlert, Filter } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { MessageSquare, Plus, Sparkles, Star, Zap, Building2, ExternalLink } from "lucide-react";
 
-export default function CustomerFeedbackPage() {
-  const { data: summary, isLoading: summaryLoading } = useSatisfactionSummary();
-  const { data: feedbackData } = useFeedbackPaged({ pageSize: 15 });
+export default function CustomerFeedbackCenterPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [typeFilter, setTypeFilter] = useState("All");
 
-  // Dialog States
-  const [submitFeedbackOpen, setSubmitFeedbackOpen] = useState(false);
+  const { data: feedbacksData, isLoading: feedbacksLoading } = useFeedbackSearch(searchTerm, statusFilter, typeFilter);
+  const { data: csatData, isLoading: csatLoading } = useCsatDashboard();
+  const { data: sentimentData, isLoading: sentimentLoading } = useSentimentAnalytics();
+  const submitMutation = useSubmitFeedback();
 
-  // Form States
-  const [targetCustomerId, setTargetCustomerId] = useState("");
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState("");
-  const [channel, setChannel] = useState("Web");
+  // Modal states for manual feedback capture / widget simulator
+  const [isRecordOpen, setIsRecordOpen] = useState(false);
+  const [customerName, setCustomerName] = useState("");
+  const [customerCompany, setCustomerCompany] = useState("");
+  const [feedbackType, setFeedbackType] = useState<"Complaint" | "Inquiry" | "Praise" | "FeatureRequest">("Complaint");
+  const [ratingValue, setRatingValue] = useState(3);
+  const [content, setContent] = useState("");
 
-  const submitFeedbackMutation = useSubmitFeedback();
-
-  const handleSubmitFeedback = (e: React.FormEvent) => {
+  const handleRecordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!targetCustomerId) return;
-    submitFeedbackMutation.mutate(
+    if (!customerName.trim() || !content.trim()) return;
+    submitMutation.mutate(
       {
-        customerId: targetCustomerId,
-        rating,
-        feedback: comment,
-        channel,
+        customerName,
+        customerCompany: customerCompany || "Independent Account",
+        type: feedbackType,
+        ratingValue,
+        content,
+        channel: "Web Widget",
+        isUrgent: feedbackType === "Complaint" || ratingValue <= 2,
       },
       {
         onSuccess: () => {
-          setSubmitFeedbackOpen(false);
-          setTargetCustomerId("");
-          setComment("");
+          setIsRecordOpen(false);
+          setCustomerName("");
+          setCustomerCompany("");
+          setContent("");
         },
       }
     );
   };
 
   return (
-    <div className="space-y-6 p-6 max-w-7xl mx-auto">
-      {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+    <div className="space-y-8 p-6 max-w-7xl mx-auto">
+      {/* Header Banner */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-3">
-            <MessageSquare className="h-8 w-8 text-amber-500" />
-            Customer Satisfaction & CSAT
+          <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-3">
+            <MessageSquare className="h-8 w-8 text-indigo-500" />
+            Customer Feedback Center
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">
-            Capture satisfaction scores, monitor star distributions, and receive automated alerts on negative feedback.
+          <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm font-medium">
+            Centralized intake and triage workspace. Identify dissatisfied accounts before cancellation to protect Annual Recurring Revenue.
           </p>
         </div>
-
-        {/* Dialog: Submit Customer CSAT */}
-        <Dialog open={submitFeedbackOpen} onOpenChange={setSubmitFeedbackOpen}>
-          <DialogTrigger
-            render={
-              <Button size="sm" className="gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold">
-                <Plus className="h-4 w-4" /> Submit Customer Feedback
-              </Button>
-            }
-          />
-
-          <DialogContent className="sm:max-w-[440px]">
-            <DialogHeader>
-              <DialogTitle>Record Customer CSAT Feedback</DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleSubmitFeedback} className="space-y-4 py-2">
-              <div className="space-y-2">
-                <Label htmlFor="cId">Customer ID (Guid)</Label>
-                <Input
-                  id="cId"
-                  placeholder="Paste Customer Guid..."
-                  value={targetCustomerId}
-                  onChange={(e) => setTargetCustomerId(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="ratingVal">Satisfaction Rating (1 to 5 Stars)</Label>
-                <div className="flex items-center gap-2 pt-1">
-                  {[1, 2, 3, 4, 5].map((s) => (
-                    <button
-                      key={s}
-                      type="button"
-                      onClick={() => setRating(s)}
-                      className={`p-2 rounded-lg border transition-all ${
-                        rating >= s
-                          ? "bg-amber-500/10 border-amber-500 text-amber-500"
-                          : "bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400"
-                      }`}
-                    >
-                      <Star className={`h-5 w-5 ${rating >= s ? "fill-amber-400" : ""}`} />
-                    </button>
-                  ))}
+        <div className="flex items-center gap-3">
+          <Button onClick={() => setIsRecordOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 h-10 shadow-lg flex items-center gap-2">
+            <Plus className="h-4 w-4" /> Record Customer Feedback
+          </Button>
+          <Dialog open={isRecordOpen} onOpenChange={setIsRecordOpen}>
+            <DialogContent className="max-w-md p-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xl">
+              <DialogHeader>
+                <DialogTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-indigo-500" /> Capture Live Customer Feedback
+                </DialogTitle>
+                <CardDescription className="text-xs text-slate-500">
+                  Submissions trigger real-time Provider-Independent AI sentiment classification in milliseconds.
+                </CardDescription>
+              </DialogHeader>
+              <form onSubmit={handleRecordSubmit} className="space-y-4 py-3">
+                <div>
+                  <Label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Customer Name & Role</Label>
+                  <Input placeholder="E.g. Elena Vance (COO)" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="mt-1 h-10 text-sm" required />
                 </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="comments">Feedback Comment</Label>
-                <Input
-                  id="comments"
-                  placeholder="e.g. Great product onboarding experience!"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="channelVal">Submission Channel</Label>
-                <Input
-                  id="channelVal"
-                  placeholder="Web, InApp, Email, SMS"
-                  value={channel}
-                  onChange={(e) => setChannel(e.target.value)}
-                />
-              </div>
-              <DialogFooter className="pt-2">
-                <Button type="submit" disabled={submitFeedbackMutation.isPending} className="w-full bg-amber-500 text-slate-950 font-bold">
-                  Save Feedback
-                </Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
+                <div>
+                  <Label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Company Name</Label>
+                  <Input placeholder="E.g. VentureScale AI" value={customerCompany} onChange={(e) => setCustomerCompany(e.target.value)} className="mt-1 h-10 text-sm" />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <Label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Feedback Type</Label>
+                    <select value={feedbackType} onChange={(e) => setFeedbackType(e.target.value as any)} className="w-full mt-1 h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium">
+                      <option value="Complaint">Complaint</option>
+                      <option value="Inquiry">Inquiry</option>
+                      <option value="Praise">Praise (Promoter)</option>
+                      <option value="FeatureRequest">Feature Request</option>
+                    </select>
+                  </div>
+                  <div>
+                    <Label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Star Rating ({ratingValue}/5)</Label>
+                    <div className="flex items-center gap-1.5 mt-2">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <button key={s} type="button" onClick={() => setRatingValue(s)} className={`p-1.5 rounded ${s <= ratingValue ? "text-amber-500 font-bold" : "text-slate-300 dark:text-slate-700"}`}>
+                          <Star className="h-5 w-5 fill-current" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <Label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Feedback Content / Customer Voice</Label>
+                  <textarea placeholder="Describe customer interaction, latency issues, or positive remarks..." value={content} onChange={(e) => setContent(e.target.value)} className="w-full mt-1 h-24 p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-200" required />
+                </div>
+                <DialogFooter>
+                  <Button type="button" variant="outline" size="sm" onClick={() => setIsRecordOpen(false)}>Cancel</Button>
+                  <Button type="submit" size="sm" disabled={submitMutation.isPending || !customerName || !content} className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold">
+                    Submit to AI Engine
+                  </Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
-      {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-slate-200 dark:border-slate-800">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Average CSAT Score</span>
-              <Star className="h-5 w-5 text-amber-500 fill-amber-500/20" />
-            </div>
-            <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-slate-900 dark:text-white font-mono">
-                {summary?.averageRating ?? 4.8}
-              </span>
-              <span className="text-sm text-slate-500">/ 5.0</span>
-            </div>
-            <p className="text-xs text-slate-500 mt-1">Based on {summary?.totalSubmissions ?? 0} reviews</p>
-          </CardContent>
-        </Card>
+      {/* KPI Summary Dashboard */}
+      <FeedbackKpiCards csatData={csatData} sentimentData={sentimentData} isLoading={csatLoading || sentimentLoading} />
 
-        <Card className="border-slate-200 dark:border-slate-800">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Positive Feedback</span>
-              <ThumbsUp className="h-5 w-5 text-emerald-500" />
-            </div>
-            <div className="mt-3">
-              <span className="text-3xl font-bold text-slate-900 dark:text-white font-mono">
-                {summary?.positiveFeedbackPercentage ?? 92}%
-              </span>
-            </div>
-            <p className="text-xs text-slate-500 mt-1">4 & 5 Star Ratings</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-slate-200 dark:border-slate-800">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Negative Feedback</span>
-              <ThumbsDown className="h-5 w-5 text-rose-500" />
-            </div>
-            <div className="mt-3">
-              <span className="text-3xl font-bold text-slate-900 dark:text-white font-mono">
-                {summary?.negativeFeedbackPercentage ?? 4}%
-              </span>
-            </div>
-            <p className="text-xs text-slate-500 mt-1">1 & 2 Star Ratings (Triggers Tasks)</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-slate-200 dark:border-slate-800">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wider">Total Submissions</span>
-              <MessageSquare className="h-5 w-5 text-purple-500" />
-            </div>
-            <div className="mt-3">
-              <span className="text-3xl font-bold text-slate-900 dark:text-white font-mono">
-                {summary?.totalSubmissions ?? 0}
-              </span>
-            </div>
-            <p className="text-xs text-slate-500 mt-1">Recorded across all channels</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Distribution Chart & Negative Feedback Alert Box */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 border-slate-200 dark:border-slate-800">
-          <CardHeader>
-            <CardTitle className="text-base">Rating Distribution Breakdown</CardTitle>
-            <CardDescription>Star rating distribution across customer feedback responses</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <CSATDistributionChart
-              distribution={summary?.ratingDistribution ?? { 5: 18, 4: 5, 3: 2, 2: 1, 1: 0 }}
-              totalSubmissions={summary?.totalSubmissions ?? 26}
-            />
-          </CardContent>
-        </Card>
-
-        <Card className="border-slate-200 dark:border-slate-800 bg-rose-500/5">
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2 text-rose-600 dark:text-rose-400">
-              <ShieldAlert className="h-5 w-5" /> Negative Feedback Alert System
-            </CardTitle>
-            <CardDescription>Proactive churn prevention</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3 text-xs text-slate-600 dark:text-slate-300">
-            <p>
-              When a customer submits a CSAT score of <strong>1 or 2 stars</strong>, BusinessOS AI automatically:
-            </p>
-            <ul className="list-disc pl-4 space-y-1">
-              <li>Triggers an urgent Outreach Success Task.</li>
-              <li>Lowers the customer's account Health Score.</li>
-              <li>Flags account for manager review.</li>
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Feedback History Log */}
-      <Card className="border-slate-200 dark:border-slate-800">
-        <CardHeader>
-          <CardTitle className="text-base">Customer Feedback History</CardTitle>
-        </CardHeader>
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-slate-200 dark:border-slate-800">
-                <TableHead>Customer</TableHead>
-                <TableHead>Rating</TableHead>
-                <TableHead>Channel</TableHead>
-                <TableHead>Feedback</TableHead>
-                <TableHead className="text-right">Submitted At</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {feedbackData?.items.length ? (
-                feedbackData.items.map((fb) => (
-                  <TableRow key={fb.id} className="border-slate-100 dark:border-slate-800/60">
-                    <TableCell className="font-semibold text-slate-900 dark:text-white">{fb.customerName || "Customer"}</TableCell>
-                    <TableCell>
-                      <span className="font-bold text-amber-500 flex items-center gap-1">
-                        <Star className="h-3.5 w-3.5 fill-amber-400" /> {fb.rating} / 5
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className="text-xs">{fb.channel}</Badge>
-                    </TableCell>
-                    <TableCell className="text-xs text-slate-600 dark:text-slate-300">{fb.feedback || "No comment provided."}</TableCell>
-                    <TableCell className="text-right text-xs text-slate-500">
-                      {new Date(fb.submittedAt).toLocaleDateString()}
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={5} className="text-center py-6 text-slate-500 text-sm">
-                    No customer feedback records logged yet.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      {/* Feedback Management Workspace */}
+      <FeedbackManagementTable
+        feedbacks={feedbacksData?.items}
+        total={feedbacksData?.total}
+        isLoading={feedbacksLoading}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        statusFilter={statusFilter}
+        onStatusChange={setStatusFilter}
+        typeFilter={typeFilter}
+        onTypeChange={setTypeFilter}
+      />
     </div>
   );
 }

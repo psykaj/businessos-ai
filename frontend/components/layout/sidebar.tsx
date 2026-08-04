@@ -55,7 +55,12 @@ import {
   ShieldCheck,
   Plug,
   Inbox,
-  MessageSquare
+  MessageSquare,
+  HeartHandshake,
+  ListOrdered,
+  Gauge,
+  BrainCircuit,
+  Award
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/auth-context";
@@ -69,6 +74,18 @@ const navGroups = [
       { label: "Executive Command", href: "/dashboard/executive", icon: Crown },
       { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
       { label: "Customers", href: "/dashboard/customers", icon: Users },
+    ]
+  },
+  {
+    title: "AI Growth & Performance",
+    items: [
+      { label: "Business Performance", href: "/dashboard/business-performance", icon: TrendingUp },
+      { label: "AI Growth Center", href: "/dashboard/growth-center", icon: Sparkles, badge: "AI" },
+      { label: "Revenue Analytics", href: "/dashboard/revenue-analytics", icon: DollarSign },
+      { label: "Customer LTV / CAC", href: "/dashboard/customer-analytics", icon: Users },
+      { label: "Product Margin Matrix", href: "/dashboard/product-analytics", icon: Package },
+      { label: "Marketing ROAS", href: "/dashboard/marketing-roi", icon: Zap },
+      { label: "Industry Benchmarks", href: "/dashboard/benchmarks", icon: Award },
     ]
   },
   {
@@ -105,6 +122,17 @@ const navGroups = [
       { label: "Live Workspace", href: "/dashboard/conversations", icon: MessageSquare },
       { label: "Message Templates", href: "/dashboard/templates", icon: LayoutTemplate },
       { label: "Comm Analytics", href: "/dashboard/communication-analytics", icon: BarChart3 },
+    ]
+  },
+  {
+    title: "Customer Experience & CX",
+    items: [
+      { label: "Feedback Center", href: "/dashboard/customer-feedback", icon: MessageSquare },
+      { label: "Survey Builder", href: "/dashboard/surveys", icon: ListOrdered },
+      { label: "Star Ratings", href: "/dashboard/ratings", icon: Star },
+      { label: "Service Quality SLA", href: "/dashboard/service-quality", icon: Gauge },
+      { label: "AI Sentiment", href: "/dashboard/sentiment", icon: BrainCircuit },
+      { label: "CSAT & Retention", href: "/dashboard/customer-satisfaction", icon: HeartHandshake },
     ]
   },
   {
