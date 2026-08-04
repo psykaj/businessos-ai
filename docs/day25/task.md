@@ -1,0 +1,33 @@
+# Task List: Day 25 Business Performance Dashboard & AI Growth Center
+
+- [x] Create git feature branch `feature/day25-business-performance` <!-- id: 0 -->
+- [x] Implement API service & state management <!-- id: 1 -->
+  - [x] Create `frontend/lib/business-performance-service.ts` with comprehensive DTOs and realistic mock fallback data <!-- id: 2 -->
+  - [x] Create `frontend/hooks/use-business-performance.ts` with React Query hooks and optimistic action mutations <!-- id: 3 -->
+- [x] Implement reusable actionable KPI & UI components <!-- id: 4 -->
+  - [x] Create `frontend/components/business-performance/kpi-action-card.tsx` <!-- id: 5 -->
+  - [x] Create `frontend/components/business-performance/growth-opportunity-banner.tsx` <!-- id: 6 -->
+  - [x] Create `frontend/components/business-performance/revenue-trend-chart.tsx` <!-- id: 7 -->
+  - [x] Create `frontend/components/business-performance/ltv-cac-matrix.tsx` <!-- id: 8 -->
+  - [x] Create `frontend/components/business-performance/margin-ranking-table.tsx` <!-- id: 9 -->
+  - [x] Create `frontend/components/business-performance/roas-channel-optimizer.tsx` <!-- id: 10 -->
+  - [x] Create `frontend/components/business-performance/benchmark-gauge.tsx` <!-- id: 11 -->
+- [x] Build strategic analytical dashboards & page routes <!-- id: 12 -->
+  - [x] Implement `/dashboard/business-performance/page.tsx` (Master Performance Overview) <!-- id: 13 -->
+  - [x] Implement `/dashboard/growth-center/page.tsx` (AI Growth Center Master Orchestrator) <!-- id: 14 -->
+  - [x] Implement `/dashboard/revenue-analytics/page.tsx` (Revenue & Profitability Deep Dive) <!-- id: 15 -->
+  - [x] Implement `/dashboard/customer-analytics/page.tsx` (Customer LTV & Churn Risk Intelligence) <!-- id: 16 -->
+  - [x] Implement `/dashboard/product-analytics/page.tsx` (Product Margin Ranking & Stock Optimization) <!-- id: 17 -->
+  - [x] Implement `/dashboard/marketing-roi/page.tsx` (Marketing ROAS & Attribution Optimizer) <!-- id: 18 -->
+  - [x] Implement `/dashboard/benchmarks/page.tsx` (Industry Benchmarking & Quartile Standing) <!-- id: 19 -->
+- [x] Update Navigation & Roadmap <!-- id: 20 -->
+  - [x] Update `frontend/components/layout/sidebar.tsx` with `"AI Growth & Performance"` section <!-- id: 21 -->
+  - [x] Update root `roadmap.md` to mark frontend features completed <!-- id: 22 -->
+- [x] Create system documentation in `docs/` <!-- id: 23 -->
+  - [x] Create `docs/business-performance-ui.md` <!-- id: 24 -->
+  - [x] Create `docs/growth-center-ui.md` <!-- id: 25 -->
+  - [x] Create `docs/revenue-dashboard-ui.md` <!-- id: 26 -->
+  - [x] Create `docs/customer-product-analytics-ui.md` <!-- id: 27 -->
+- [x] Build & Verification <!-- id: 28 -->
+  - [x] Run `npx tsc --noEmit` in frontend to verify zero TypeScript errors <!-- id: 29 -->
+  - [x] Create walkthrough artifact illustrating implemented architecture and interactive workflows <!-- id: 30 -->
