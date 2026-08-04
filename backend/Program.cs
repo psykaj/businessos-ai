@@ -108,6 +108,7 @@ builder.Services.AddCoreModules();
 builder.Services.AddExecutiveIntelligenceModule();
 builder.Services.AddCommunicationHubModule();
 builder.Services.AddCustomerFeedbackModule();
+builder.Services.AddGrowthIntelligenceModule();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
