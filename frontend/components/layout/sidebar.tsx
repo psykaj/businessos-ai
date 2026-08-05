@@ -60,7 +60,8 @@ import {
   ListOrdered,
   Gauge,
   BrainCircuit,
-  Award
+  Award,
+  MapPin
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/auth-context";
@@ -74,6 +75,16 @@ const navGroups = [
       { label: "Executive Command", href: "/dashboard/executive", icon: Crown },
       { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
       { label: "Customers", href: "/dashboard/customers", icon: Users },
+    ]
+  },
+  {
+    title: "Multi-Branch Operations",
+    items: [
+      { label: "Branches Hub", href: "/dashboard/branches", icon: Building2 },
+      { label: "Regional Locations", href: "/dashboard/locations", icon: MapPin },
+      { label: "Multi-Branch Warehouses", href: "/dashboard/warehouses", icon: Building },
+      { label: "Inventory Transfers", href: "/dashboard/transfers", icon: ArrowRightLeft },
+      { label: "Regional Analytics", href: "/dashboard/regional-analytics", icon: BarChart3, badge: "Live" },
     ]
   },
   {
