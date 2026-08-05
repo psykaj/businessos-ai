@@ -213,6 +213,15 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.GrowthRecommendations.Entities.GrowthRecommendation> GrowthRecommendations => Set<backend.Modules.GrowthRecommendations.Entities.GrowthRecommendation>();
     public DbSet<backend.Modules.Benchmarking.Entities.BenchmarkMetric> BenchmarkMetrics => Set<backend.Modules.Benchmarking.Entities.BenchmarkMetric>();
 
+    // Day 26 - Multi-Branch & Multi-Location Management Platform
+    public DbSet<backend.Modules.Locations.Entities.Location> Locations => Set<backend.Modules.Locations.Entities.Location>();
+    public DbSet<backend.Modules.Branches.Entities.Branch> Branches => Set<backend.Modules.Branches.Entities.Branch>();
+    public DbSet<backend.Modules.Branches.Entities.BranchManager> BranchManagers => Set<backend.Modules.Branches.Entities.BranchManager>();
+    public DbSet<backend.Modules.Warehouses.Entities.Warehouse> BranchWarehouses => Set<backend.Modules.Warehouses.Entities.Warehouse>();
+    public DbSet<backend.Modules.Transfers.Entities.WarehouseTransfer> WarehouseTransfers => Set<backend.Modules.Transfers.Entities.WarehouseTransfer>();
+    public DbSet<backend.Modules.BranchAnalytics.Entities.BranchPerformance> BranchPerformances => Set<backend.Modules.BranchAnalytics.Entities.BranchPerformance>();
+    public DbSet<backend.Modules.RegionalReports.Entities.RegionalSummary> RegionalSummaries => Set<backend.Modules.RegionalReports.Entities.RegionalSummary>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -367,6 +376,15 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.MarketingROI.Entities.MarketingPerformance>().HasIndex(e => new { e.OrganizationId, e.Channel, e.Period });
         modelBuilder.Entity<backend.Modules.GrowthRecommendations.Entities.GrowthRecommendation>().HasIndex(e => new { e.OrganizationId, e.Priority, e.Status });
         modelBuilder.Entity<backend.Modules.Benchmarking.Entities.BenchmarkMetric>().HasIndex(e => new { e.OrganizationId, e.ComparisonType, e.MetricName });
+
+        // Day 26 - Multi-Branch & Multi-Location Management Platform
+        modelBuilder.Entity<backend.Modules.Locations.Entities.Location>().HasIndex(e => new { e.OrganizationId, e.IsDeleted });
+        modelBuilder.Entity<backend.Modules.Branches.Entities.Branch>().HasIndex(e => new { e.OrganizationId, e.IsDeleted, e.Code });
+        modelBuilder.Entity<backend.Modules.Branches.Entities.BranchManager>().HasIndex(e => new { e.OrganizationId, e.BranchId, e.UserId });
+        modelBuilder.Entity<backend.Modules.Warehouses.Entities.Warehouse>().ToTable("BranchWarehouses").HasIndex(e => new { e.OrganizationId, e.BranchId, e.IsDeleted });
+        modelBuilder.Entity<backend.Modules.Transfers.Entities.WarehouseTransfer>().HasIndex(e => new { e.OrganizationId, e.SourceWarehouseId, e.DestinationWarehouseId });
+        modelBuilder.Entity<backend.Modules.BranchAnalytics.Entities.BranchPerformance>().HasIndex(e => new { e.OrganizationId, e.BranchId, e.Year, e.Month });
+        modelBuilder.Entity<backend.Modules.RegionalReports.Entities.RegionalSummary>().HasIndex(e => new { e.OrganizationId, e.Region, e.Year, e.Month });
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
