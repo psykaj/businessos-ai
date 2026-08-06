@@ -72,6 +72,7 @@ const navGroups = [
     title: "Overview",
     items: [
       { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+      { label: "AI Business Intelligence", href: "/business-intelligence", icon: BrainCircuit, badge: "AI Engine" },
       { label: "Executive Command", href: "/dashboard/executive", icon: Crown },
       { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
       { label: "Customers", href: "/dashboard/customers", icon: Users },
@@ -102,6 +103,7 @@ const navGroups = [
   {
     title: "Executive & Intelligence",
     items: [
+      { label: "AI Business Intelligence", href: "/business-intelligence", icon: BrainCircuit, badge: "New" },
       { label: "Executive Dashboard", href: "/dashboard/executive", icon: Crown },
       { label: "KPI Workspace", href: "/dashboard/kpis", icon: BarChart3 },
       { label: "AI Recommendations", href: "/dashboard/recommendations", icon: Sparkles },
