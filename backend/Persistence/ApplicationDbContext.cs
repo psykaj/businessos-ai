@@ -20,6 +20,7 @@ using backend.Modules.AiAgent.Entities;
 using backend.Modules.AiRecommendations.Entities;
 using backend.Modules.Benchmarks.Entities;
 using backend.Modules.DecisionCenter.Entities;
+using backend.Modules.ActionCenter.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Persistence;
@@ -98,6 +99,9 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.Workflow.Entities.Workflow> Workflows => Set<backend.Modules.Workflow.Entities.Workflow>();
     public DbSet<backend.Modules.Workflow.Entities.WorkflowTrigger> WorkflowTriggers => Set<backend.Modules.Workflow.Entities.WorkflowTrigger>();
     public DbSet<backend.Modules.Workflow.Entities.WorkflowAction> WorkflowActions => Set<backend.Modules.Workflow.Entities.WorkflowAction>();
+
+    // Day 16 - Action Center
+    public DbSet<AiAction> AiActions => Set<AiAction>();
     public DbSet<backend.Modules.Workflow.Entities.WorkflowCondition> WorkflowConditions => Set<backend.Modules.Workflow.Entities.WorkflowCondition>();
     public DbSet<backend.Modules.Workflow.Entities.WorkflowExecution> WorkflowExecutions => Set<backend.Modules.Workflow.Entities.WorkflowExecution>();
     public DbSet<backend.Modules.Workflow.Entities.WorkflowExecutionLog> WorkflowExecutionLogs => Set<backend.Modules.Workflow.Entities.WorkflowExecutionLog>();
