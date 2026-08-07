@@ -12,6 +12,7 @@ using backend.Modules.AutomationStudio.Extensions;
 using backend.Modules.AiAgent.Extensions;
 using backend.Modules.CustomerSuccess.Extensions;
 using backend.Modules.Documents.Extensions;
+using backend.Modules.ActionCenter.Extensions;
 using backend.Modules.Inventory.Extensions;
 using backend.Modules.Finance.Extensions;
 using backend.Modules.ApiPlatform.Extensions;
@@ -31,6 +32,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using backend.Modules.BusinessIntelligence.Extensions;
+using Scalar.AspNetCore;
 using Serilog;
 using System.Reflection;
 using System.IO;
@@ -124,6 +126,7 @@ builder.Services.AddCustomerFeedbackModule();
 builder.Services.AddGrowthIntelligenceModule();
 builder.Services.AddMultiBranchModule();
 builder.Services.AddBusinessIntelligenceModule();
+builder.Services.AddActionCenterModule();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddMemoryCache();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
@@ -152,10 +155,7 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/openapi/v1.json", "BusinessOS AI v1 (OpenAPI)");
-    });
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

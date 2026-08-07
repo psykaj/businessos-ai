@@ -1,0 +1,12 @@
+- [x] Install missing UI components (Sheet)
+- [x] Create Types & Interfaces (`types/action-center.ts`)
+- [x] Create Custom Hooks for API (`hooks/useActionCenter.ts`)
+- [x] Create `BusinessImpactDashboard` component
+- [x] Create `ActionFilters` component
+- [x] Create `ActionDetailsDrawer` component
+- [x] Create `AiActionCard` component
+- [x] Create `AiActionList` component
+- [x] Create `ExecutionTimeline` component
+- [x] Create Main Page Layout (`app/dashboard/action-center/page.tsx`)
+- [x] Verify functionality (Typecheck, Lint)
+- [x] Update `walkthrough.md`
