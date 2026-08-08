@@ -226,6 +226,13 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.BranchAnalytics.Entities.BranchPerformance> BranchPerformances => Set<backend.Modules.BranchAnalytics.Entities.BranchPerformance>();
     public DbSet<backend.Modules.RegionalReports.Entities.RegionalSummary> RegionalSummaries => Set<backend.Modules.RegionalReports.Entities.RegionalSummary>();
 
+    // Day 28 - AI Automation & Workflow Engine
+    public DbSet<backend.Modules.Automation.Domain.Entities.AiWorkflow> AiEngineWorkflows => Set<backend.Modules.Automation.Domain.Entities.AiWorkflow>();
+    public DbSet<backend.Modules.Automation.Domain.Entities.WorkflowStep> AiEngineWorkflowSteps => Set<backend.Modules.Automation.Domain.Entities.WorkflowStep>();
+    public DbSet<backend.Modules.Automation.Domain.Entities.WorkflowExecution> AiEngineWorkflowExecutions => Set<backend.Modules.Automation.Domain.Entities.WorkflowExecution>();
+    public DbSet<backend.Modules.Automation.Domain.Entities.WorkflowExecutionStep> AiEngineWorkflowExecutionSteps => Set<backend.Modules.Automation.Domain.Entities.WorkflowExecutionStep>();
+    public DbSet<backend.Modules.Automation.Domain.Entities.WorkflowTemplate> AiEngineWorkflowTemplates => Set<backend.Modules.Automation.Domain.Entities.WorkflowTemplate>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -389,6 +396,35 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.Transfers.Entities.WarehouseTransfer>().HasIndex(e => new { e.OrganizationId, e.SourceWarehouseId, e.DestinationWarehouseId });
         modelBuilder.Entity<backend.Modules.BranchAnalytics.Entities.BranchPerformance>().HasIndex(e => new { e.OrganizationId, e.BranchId, e.Year, e.Month });
         modelBuilder.Entity<backend.Modules.RegionalReports.Entities.RegionalSummary>().HasIndex(e => new { e.OrganizationId, e.Region, e.Year, e.Month });
+
+        // Day 28 - AI Automation & Workflow Engine Constraints
+        modelBuilder.Entity<backend.Modules.Automation.Domain.Entities.AiWorkflow>()
+            .ToTable("AiEngine_Workflows")
+            .HasIndex(w => w.OrganizationId);
+        
+        modelBuilder.Entity<backend.Modules.Automation.Domain.Entities.AiWorkflow>()
+            .HasIndex(w => w.Status);
+        
+        modelBuilder.Entity<backend.Modules.Automation.Domain.Entities.AiWorkflow>()
+            .HasIndex(w => w.TriggerType);
+            
+        modelBuilder.Entity<backend.Modules.Automation.Domain.Entities.WorkflowStep>()
+            .ToTable("AiEngine_WorkflowSteps")
+            .HasIndex(ws => ws.WorkflowId);
+
+        modelBuilder.Entity<backend.Modules.Automation.Domain.Entities.WorkflowExecution>()
+            .ToTable("AiEngine_WorkflowExecutions")
+            .HasIndex(e => e.OrganizationId);
+            
+        modelBuilder.Entity<backend.Modules.Automation.Domain.Entities.WorkflowExecution>()
+            .HasIndex(e => e.WorkflowId);
+
+        modelBuilder.Entity<backend.Modules.Automation.Domain.Entities.WorkflowExecutionStep>()
+            .ToTable("AiEngine_WorkflowExecutionSteps")
+            .HasIndex(es => es.ExecutionId);
+
+        modelBuilder.Entity<backend.Modules.Automation.Domain.Entities.WorkflowTemplate>()
+            .ToTable("AiEngine_WorkflowTemplates");
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
