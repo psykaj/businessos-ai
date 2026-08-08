@@ -61,5 +61,7 @@ public static class SeedData
                 await context.SaveChangesAsync();
             }
         }
+
+        await backend.Modules.Automation.Seed.AutomationEngineSeeder.SeedTemplatesAsync(serviceProvider);
     }
 }

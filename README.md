@@ -67,11 +67,28 @@ Simplify is an all-in-one AI platform built for SMEs to manage sales, customer r
 | **Day 25** | Business Performance Dashboard & AI Growth Center | ✅ **Done** | Power BI & HubSpot-inspired executive command center, 14 Actionable KPIs, MRR Component Decomposition (New, Expansion, Contraction, Churned), LTV:CAC Unit Economics Matrix, Margin Loss Center Sunsetting, Marketing ROAS Channel Optimizer & Industry Benchmarking (August 4, 2026) |
 | **Day 26** | Multi-Branch & Regional Analytics Management | ✅ **Done** | Multi-branch organizational hierarchy, regional performance worker jobs & KPI telemetry, multi-warehouse stock transfer engine with step-by-step approvals, branch manager assignments, settings overrides, and Next.js reactive branch management UI (August 5, 2026) |
 | **Day 27** | AI Business Intelligence Engine & Dashboard | ✅ **Done** | Real-time 0–100 Business Health Score gauge, actionable AI recommendations grid with one-click automated execution, Recharts dual-mode revenue intelligence, predictive customer churn warning table with retention triggers, smart inventory replenishment schedule, and cash flow liquidity runway calculations (August 6, 2026) |
-| **Day 28** | AI Action Center & Execution Dashboard | ✅ **Done** | Centralized AI recommended actions hub, one-click approvals, risk-based execution workflow, visual execution timeline, business impact analytics (August 7, 2026) |
+| **Day 27** | AI Action Center & Execution Dashboard | ✅ **Done** | Centralized AI recommended actions hub, one-click approvals, risk-based execution workflow, visual execution timeline, business impact analytics (August 7, 2026) |
+| **Day 28** | AI Automation & Workflow Engine | ✅ **Done** | Turn business events into intelligent, controlled, repeatable workflows. 4-step wizard for non-technical users, AI Workflow Assistant, and Visual Workflow Preview (August 8, 2026) |
 
 ---
 
-## 🚀 Day 28 Highlights: AI Action Center & Execution Dashboard (August 7, 2026)
+## 🚀 Day 28 Highlights: AI Automation & Workflow Engine (August 8, 2026)
+
+Built on **ASP.NET Core .NET 10** with **CQRS & MediatR** for the backend, and **Next.js 16**, **React 19**, **TailwindCSS**, and **TanStack Query v5** for the frontend, this module provides a dedicated engine for executing automated business workflows.
+
+### ⚙️ Backend Architecture (.NET 10)
+- **Extensible Workflow Engine**: Built with robust architecture mapping triggers, conditions, AI Decisions, and Actions.
+- **Workflow Seeder**: 4 powerful predefined templates mapping to real business use cases.
+- **RESTful Endpoints**: Clean API routes (`/api/automation/workflows`, `/api/automation/templates`) mapped perfectly to frontend capabilities.
+
+### 🎨 Frontend Architecture (Next.js 16 + React Query + Framer Motion)
+- **AI Workflow Assistant**: Natural language parsing to generate workflows from English inputs.
+- **Visual Workflow Preview**: Beautiful visual node-based representation tailored to business owners instead of technical users.
+- **4-Step Wizard**: Simplified creation flow capturing Triggers, Actions, Conditions, and Approvals seamlessly.
+
+---
+
+## 🎯 Day 27 Highlights: AI Action Center & Execution Dashboard (August 7, 2026)
 
 Built on **ASP.NET Core .NET 10** with **CQRS & MediatR** for the backend, and **Next.js 16**, **React 19**, **TailwindCSS**, **Framer Motion**, and **TanStack Query v5** for the frontend, this module provides a dedicated command center for executing AI-generated business recommendations.
 
@@ -211,6 +228,9 @@ This module provides SMEs with a visual workflow engine to automate their busine
 
 Detailed technical documents and verification proofs are available in the [`docs/`](docs/) directory:
 
+- [**docs/day28/implementation_plan.md**](docs/day28/implementation_plan.md) — Day 28 Implementation Plan (AI Automation & Workflow Engine)
+- [**docs/day28/task.md**](docs/day28/task.md) — Day 28 Task Checklist
+- [**docs/day28/walkthrough.md**](docs/day28/walkthrough.md) — Day 28 Walkthrough Verification & Business Value Proof
 - [**docs/day25/implementation_plan.md**](docs/day25/implementation_plan.md) — Day 25 Implementation Plan (Business Performance Dashboard & AI Growth Center)
 - [**docs/day25/task.md**](docs/day25/task.md) — Day 25 Task Checklist
 - [**docs/day25/walkthrough.md**](docs/day25/walkthrough.md) — Day 25 Walkthrough Verification & Business Value Proof
