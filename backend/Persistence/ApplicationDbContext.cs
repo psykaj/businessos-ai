@@ -21,6 +21,7 @@ using backend.Modules.AiRecommendations.Entities;
 using backend.Modules.Benchmarks.Entities;
 using backend.Modules.DecisionCenter.Entities;
 using backend.Modules.ActionCenter.Entities;
+using backend.Modules.BusinessIntelligence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Persistence;
@@ -233,6 +234,11 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<backend.Modules.Automation.Domain.Entities.WorkflowExecutionStep> AiEngineWorkflowExecutionSteps => Set<backend.Modules.Automation.Domain.Entities.WorkflowExecutionStep>();
     public DbSet<backend.Modules.Automation.Domain.Entities.WorkflowTemplate> AiEngineWorkflowTemplates => Set<backend.Modules.Automation.Domain.Entities.WorkflowTemplate>();
 
+    // Day 29 - Business Intelligence & Alerts
+    public DbSet<BusinessBriefing> BusinessBriefings => Set<BusinessBriefing>();
+    public DbSet<BriefingItem> BriefingItems => Set<BriefingItem>();
+    public DbSet<ProactiveAlert> ProactiveAlerts => Set<ProactiveAlert>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -425,6 +431,17 @@ public sealed class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<backend.Modules.Automation.Domain.Entities.WorkflowTemplate>()
             .ToTable("AiEngine_WorkflowTemplates");
+
+        // Day 29 - Business Intelligence & Alerts
+        modelBuilder.Entity<BusinessBriefing>().HasIndex(b => b.OrganizationId);
+        modelBuilder.Entity<BusinessBriefing>().HasIndex(b => new { b.OrganizationId, b.Date }).IsUnique();
+        
+        modelBuilder.Entity<BriefingItem>().HasIndex(b => b.BriefingId);
+        modelBuilder.Entity<BriefingItem>().HasIndex(b => b.Priority);
+        
+        modelBuilder.Entity<ProactiveAlert>().HasIndex(a => a.OrganizationId);
+        modelBuilder.Entity<ProactiveAlert>().HasIndex(a => new { a.OrganizationId, a.Status });
+        modelBuilder.Entity<ProactiveAlert>().HasIndex(a => a.DeduplicationKey);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }

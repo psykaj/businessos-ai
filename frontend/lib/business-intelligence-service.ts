@@ -114,6 +114,7 @@ export interface ExecutiveSummaryDto {
   topOpportunities: Array<{ id: string; title: string; estimatedValue: number; recommendedAction: string }>;
   topRisks: Array<{ id: string; title: string; severity: "Critical" | "High" | "Medium"; mitigation: string }>;
   nextBestActions: Array<{ id: string; title: string; department: string; expectedResult: string; actionText: string }>;
+  aiSummary?: string;
 }
 
 export interface DashboardSummaryDto {
@@ -282,6 +283,7 @@ const defaultDashboardSummary: DashboardSummaryDto = {
       "Repeat purchasing accounted for 64.5% of total sales volume, confirming strong brand affinity & LTV growth.",
       "Fastest selling product ('Enterprise Wireless AP-9000') hit record turnover velocity of 142 units per week.",
     ],
+    aiSummary: "Revenue increased 12.5% this week driven by repeat enterprise purchases, but 8 overdue invoices require immediate attention to protect working capital. Furthermore, 5 high-value customers are showing churn indicators and 4 critical inventory items are nearing stockout.",
     topOpportunities: [
       { id: "opp-1", title: "Expand VIP Loyalty Rewards Program", estimatedValue: 45000, recommendedAction: "Activate automated Tier-2 subscription discount bundles for Diamond & Platinum clients." },
       { id: "opp-2", title: "Recover Overdue Working Capital", estimatedValue: 24500, recommendedAction: "Trigger automated SMS/Email dunning workflow for 8 overdue accounts receivable bills." },
@@ -465,4 +467,22 @@ export const businessIntelligenceService = {
       message: `Successfully initiated automated workflow for: "${title}". Real-time status updated across department connectors.`,
     };
   },
+
+  getBriefingToday: async (organizationId?: string): Promise<DashboardSummaryDto> => {
+    try {
+      const params = organizationId ? { organizationId } : undefined;
+      const response = await apiClient.get<Partial<DashboardSummaryDto>>("/api/business-intelligence/briefing/today", { params });
+      if (response?.data && Object.keys(response.data).length > 0) {
+        // Assume API returns valid data, fall back just in case
+        return {
+          ...defaultDashboardSummary,
+          ...response.data
+        } as DashboardSummaryDto;
+      }
+    } catch (error) {
+      console.warn("Fallback to demo business briefing today.", error);
+    }
+    // Return standard dashboard summary as the briefing source for now
+    return businessIntelligenceService.getDashboardSummary(organizationId);
+  }
 };

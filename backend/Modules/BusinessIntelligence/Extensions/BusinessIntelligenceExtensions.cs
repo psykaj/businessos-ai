@@ -21,6 +21,15 @@ public static class BusinessIntelligenceExtensions
         services.AddScoped<IBusinessIntelligenceRepository, BusinessIntelligenceRepository>();
         services.AddScoped<IAiRecommendationEngine, AiRecommendationEngine>();
         services.AddScoped<IBusinessHealthCalculator, BusinessHealthCalculator>();
+        
+        // Day 29 - Briefing & Alerts
+        services.AddScoped<backend.Modules.BusinessIntelligence.Interfaces.IBusinessInsightAggregator, backend.Modules.BusinessIntelligence.Services.BusinessInsightAggregator>();
+        services.AddScoped<backend.Modules.BusinessIntelligence.Interfaces.IInsightPrioritizer, backend.Modules.BusinessIntelligence.Services.InsightPrioritizer>();
+        services.AddScoped<backend.Modules.BusinessIntelligence.Interfaces.IBriefingGenerator, backend.Modules.BusinessIntelligence.Services.BriefingGenerator>();
+        services.AddScoped<backend.Modules.BusinessIntelligence.Interfaces.IBusinessBriefingService, backend.Modules.BusinessIntelligence.Services.BusinessBriefingService>();
+        services.AddScoped<backend.Modules.BusinessIntelligence.Interfaces.IProactiveAlertService, backend.Modules.BusinessIntelligence.Services.ProactiveAlertService>();
+        
+        services.AddHostedService<backend.Modules.BusinessIntelligence.BackgroundServices.BriefingSchedulerBackgroundService>();
 
         services.AddValidatorsFromAssembly(typeof(BusinessIntelligenceExtensions).Assembly);
 
