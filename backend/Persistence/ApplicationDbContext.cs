@@ -22,6 +22,7 @@ using backend.Modules.Benchmarks.Entities;
 using backend.Modules.DecisionCenter.Entities;
 using backend.Modules.ActionCenter.Entities;
 using backend.Modules.BusinessIntelligence.Entities;
+using backend.Modules.BusinessMemory.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Persistence;
@@ -238,6 +239,9 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<BusinessBriefing> BusinessBriefings => Set<BusinessBriefing>();
     public DbSet<BriefingItem> BriefingItems => Set<BriefingItem>();
     public DbSet<ProactiveAlert> ProactiveAlerts => Set<ProactiveAlert>();
+    
+    // Day 31 - AI Business Memory & Context Engine
+    public DbSet<BusinessMemory> BusinessMemories => Set<BusinessMemory>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -442,6 +446,12 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<ProactiveAlert>().HasIndex(a => a.OrganizationId);
         modelBuilder.Entity<ProactiveAlert>().HasIndex(a => new { a.OrganizationId, a.Status });
         modelBuilder.Entity<ProactiveAlert>().HasIndex(a => a.DeduplicationKey);
+
+        // Day 31 - AI Business Memory & Context Engine Indexes
+        modelBuilder.Entity<BusinessMemory>().HasIndex(m => m.OrganizationId);
+        modelBuilder.Entity<BusinessMemory>().HasIndex(m => new { m.OrganizationId, m.MemoryType, m.IsActive });
+        modelBuilder.Entity<BusinessMemory>().HasIndex(m => new { m.OrganizationId, m.SourceModule, m.SourceEntityId });
+        modelBuilder.Entity<BusinessMemory>().HasIndex(m => m.ExpiresAt);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }

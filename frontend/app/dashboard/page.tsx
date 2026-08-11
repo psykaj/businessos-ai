@@ -57,32 +57,32 @@ export default function DashboardPage() {
       {/* 2. Top Row: Health & AI Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <CommandCenterHealth health={summary?.BusinessHealth} isLoading={isLoading} />
+          <CommandCenterHealth health={summary?.businessHealth} isLoading={isLoading} />
         </div>
         <div className="lg:col-span-2 h-full">
-          <CommandCenterAiSummary summary={summary?.ExecutiveSummary} isLoading={isLoading} />
+          <CommandCenterAiSummary summary={summary?.executiveSummary} isLoading={isLoading} />
         </div>
       </div>
 
       {/* 3. Metrics */}
       <div className="space-y-3">
         <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Key Metrics</h3>
-        <CommandCenterMetrics metrics={summary?.Metrics} isLoading={isLoading} />
+        <CommandCenterMetrics metrics={summary?.metrics} isLoading={isLoading} />
       </div>
 
       {/* 4. Actionable Sections: Needs Attention & Opportunities */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <CommandCenterNeedsAttention alerts={summary?.PriorityAlerts} actions={summary?.RecommendedActions} isLoading={isLoading} />
-        <CommandCenterOpportunities opportunities={summary?.Opportunities} isLoading={isLoading} />
+        <CommandCenterNeedsAttention alerts={summary?.priorityAlerts} actions={summary?.recommendedActions} isLoading={isLoading} />
+        <CommandCenterOpportunities opportunities={summary?.opportunities} isLoading={isLoading} />
       </div>
 
       {/* 5. Lower Row: Automations & Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <CommandCenterAutomations summary={summary?.AutomationSummary} isLoading={isLoading} />
+          <CommandCenterAutomations summary={summary?.automationSummary} isLoading={isLoading} />
         </div>
         <div className="lg:col-span-2">
-          <CommandCenterActivity activities={summary?.RecentActivity} isLoading={isLoading} />
+          <CommandCenterActivity activities={summary?.recentActivity} isLoading={isLoading} />
         </div>
       </div>
     </div>

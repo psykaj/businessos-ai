@@ -66,17 +66,17 @@ export function CommandCenterAskAi() {
                   </div>
                 </div>
                 <div className="space-y-3 flex-1">
-                  <div className="text-sm leading-relaxed">{response.Answer}</div>
+                  <div className="text-sm leading-relaxed">{response.answer}</div>
                   
-                  {response.SuggestedActions && response.SuggestedActions.length > 0 && (
+                  {response.suggestedActions && response.suggestedActions.length > 0 && (
                     <div className="mt-4 p-4 rounded-lg border bg-muted/30">
                       <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
                         Suggested Actions
                       </h4>
                       <div className="flex flex-wrap gap-2">
-                        {response.SuggestedActions.map((action, idx) => (
+                        {response.suggestedActions.map((action, idx) => (
                           <Link href="/dashboard/action-center" key={idx} className={buttonVariants({ size: "sm", variant: "secondary", className: "text-xs" })}>
-                            {action.Description}
+                            {action.description}
                             <ArrowRight className="w-3 h-3 ml-2" />
                           </Link>
                         ))}

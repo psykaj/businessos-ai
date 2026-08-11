@@ -46,7 +46,7 @@ export function CommandCenterAiSummary({ summary, isLoading }: CommandCenterAiSu
     );
   }
 
-  const generatedTime = summary.GeneratedAt ? formatDistanceToNow(new Date(summary.GeneratedAt), { addSuffix: true }) : "recently";
+  const generatedTime = summary.generatedAt ? formatDistanceToNow(new Date(summary.generatedAt), { addSuffix: true }) : "recently";
 
   return (
     <Card className="h-full bg-gradient-to-br from-primary/10 via-background to-background border-primary/20 shadow-sm relative overflow-hidden">
@@ -64,14 +64,14 @@ export function CommandCenterAiSummary({ summary, isLoading }: CommandCenterAiSu
       </CardHeader>
       <CardContent className="space-y-4 relative z-10">
         <p className="text-sm leading-relaxed text-foreground/90 font-medium">
-          {summary.ExecutiveSummary}
+          {summary.executiveSummary}
         </p>
         
-        {summary.KeyHighlights?.length > 0 && (
+        {summary.keyHighlights?.length > 0 && (
           <div className="pt-2 border-t border-border/50">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Key Highlights</h4>
             <ul className="space-y-1">
-              {summary.KeyHighlights.slice(0, 2).map((highlight, idx) => (
+              {summary.keyHighlights.slice(0, 2).map((highlight, idx) => (
                 <li key={idx} className="text-sm flex items-start">
                   <span className="text-primary mr-2">•</span>
                   {highlight}

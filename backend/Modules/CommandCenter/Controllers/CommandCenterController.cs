@@ -25,7 +25,7 @@ public class CommandCenterController : ControllerBase
 
     private Guid GetOrganizationId()
     {
-        var orgIdClaim = User.FindFirst("OrganizationId")?.Value;
+        var orgIdClaim = User.FindFirst("OrganizationId")?.Value ?? User.FindFirst("organizationId")?.Value;
         if (Guid.TryParse(orgIdClaim, out var orgId)) return orgId;
         throw new UnauthorizedAccessException("Organization ID is missing or invalid in the token.");
     }
@@ -33,6 +33,7 @@ public class CommandCenterController : ControllerBase
     private string GetUserId()
     {
         return User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value 
+            ?? User.FindFirst(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub)?.Value
             ?? throw new UnauthorizedAccessException("User ID is missing in the token.");
     }
 

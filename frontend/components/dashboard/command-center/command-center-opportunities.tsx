@@ -64,17 +64,17 @@ export function CommandCenterOpportunities({ opportunities = [], isLoading }: Co
       <CardContent className="p-0">
         <div className="divide-y">
           {opportunities.slice(0, 4).map((opp) => (
-            <div key={opp.Id} className="p-4 hover:bg-muted/50 transition-colors group">
+            <div key={opp.id} className="p-4 hover:bg-muted/50 transition-colors group">
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-1">
                   <h4 className="text-sm font-semibold group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                    {opp.Title}
+                    {opp.title}
                   </h4>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{opp.Description}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{opp.description}</p>
                   
-                  {opp.PotentialValue > 0 && (
+                  {opp.potentialValue > 0 && (
                     <div className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 mt-2">
-                      +₹{opp.PotentialValue.toLocaleString()} potential
+                      +₹{opp.potentialValue.toLocaleString()} potential
                     </div>
                   )}
                 </div>

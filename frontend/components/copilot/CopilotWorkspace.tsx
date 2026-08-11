@@ -18,19 +18,25 @@ import {
   ChevronRight,
   MessageSquare,
   Search,
+  BrainCircuit,
 } from "lucide-react";
 import { useCopilot } from "@/hooks/use-copilot";
 import { Message, ExecutionResponse } from "@/lib/copilot-service";
 import { CommandCenter } from "./CommandCenter";
 import { ActionConfirmationModal } from "./ActionConfirmationModal";
+import { BusinessContextDrawer } from "./BusinessContextDrawer";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useMemory } from "@/hooks/use-memory";
+import { CopilotContextResponseDto } from "@/types/memory";
 
 export function CopilotWorkspace() {
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [prompt, setPrompt] = useState("");
   const [copiedMsgId, setCopiedMsgId] = useState<string | null>(null);
   const [showCommandCenter, setShowCommandCenter] = useState(true);
+  const [contextDrawerOpen, setContextDrawerOpen] = useState(false);
+  const [lastContextData, setLastContextData] = useState<CopilotContextResponseDto | null>(null);
   const [pendingConfirmation, setPendingConfirmation] = useState<{
     command: string;
     toolName: string;
@@ -47,6 +53,10 @@ export function CopilotWorkspace() {
     executeCommand,
     isExecuting,
   } = useCopilot();
+
+  const {
+    useBusinessMemories // Just importing to have access if needed, actual call is manual for context
+  } = useMemory();
 
   const { data: conversationsData, isLoading: isLoadingConversations } = useConversations();
   const { data: activeConversation, isLoading: isLoadingConversation } = useConversation(activeConversationId);
@@ -73,8 +83,21 @@ export function CopilotWorkspace() {
 
     if (!customCommand) setPrompt("");
     setShowCommandCenter(false);
+    setLastContextData(null); // Reset context for new query
 
     try {
+      // Opt: In a real app we'd fetch copilot context here in parallel, 
+      // but to simulate the behavior we'll construct a mock request to our new endpoint 
+      // to retrieve the memory context immediately.
+      import("@/lib/memory-service").then(async ({ memoryService }) => {
+        try {
+          const ctx = await memoryService.getCopilotContext({ question: textToExecute });
+          setLastContextData(ctx);
+        } catch (e) {
+          console.error("Context fetch failed", e);
+        }
+      });
+
       const res: ExecutionResponse = await executeCommand({
         command: textToExecute,
         conversationId: targetConvId,
@@ -251,6 +274,19 @@ export function CopilotWorkspace() {
                       {msg.content}
                     </ReactMarkdown>
 
+                    {/* AI Context Indicator for AI Messages */}
+                    {!isUser && lastContextData && (
+                      <div className="mt-3 border-t border-border/50 pt-3">
+                        <button 
+                          onClick={() => setContextDrawerOpen(true)}
+                          className="flex items-center gap-1.5 rounded-full bg-indigo-500/10 px-2.5 py-1 text-[11px] font-medium text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/20 transition-colors"
+                        >
+                          <BrainCircuit className="h-3 w-3" />
+                          Using Business Context
+                        </button>
+                      </div>
+                    )}
+
                     {msg.toolInvoked && (
                       <div className="mt-2 flex items-center gap-1.5 rounded-md bg-indigo-500/10 px-2 py-1 text-[11px] font-mono text-indigo-500">
                         <span>Invoked Tool:</span>
@@ -329,6 +365,13 @@ export function CopilotWorkspace() {
         description={pendingConfirmation?.description || ""}
         toolName={pendingConfirmation?.toolName}
         isPending={isExecuting}
+      />
+
+      {/* Business Context Drawer */}
+      <BusinessContextDrawer 
+        isOpen={contextDrawerOpen} 
+        onClose={() => setContextDrawerOpen(false)} 
+        contextData={lastContextData} 
       />
     </div>
   );

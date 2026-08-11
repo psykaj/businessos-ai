@@ -4,114 +4,114 @@ import apiClient from "./api-client";
 // --- DTOs ---
 
 export interface CommandMetricDto {
-  Id: string;
-  Name: string;
-  Value: number;
-  FormattedValue: string;
-  PreviousValue: number;
-  TrendPercentage: number;
-  TrendDirection: "Up" | "Down" | "Flat";
-  Category: string;
+  id: string;
+  name: string;
+  value: number;
+  Formattedvalue: string;
+  Previousvalue: number;
+  trendPercentage: number;
+  trendDirection: "Up" | "Down" | "Flat";
+  category: string;
 }
 
 export interface ProactiveAlertDto {
-  Id: string;
-  Title: string;
-  Description: string;
-  Category: string; // Finance, Inventory, CRM, System
-  Priority: string; // High, Medium, Low
-  RecommendedAction: string;
+  id: string;
+  title: string;
+  description: string;
+  category: string; // Finance, Inventory, CRM, System
+  priority: string; // High, Medium, Low
+  recommendedAction: string;
   SourceEntityId?: string;
-  CreatedAt: string;
-  IsRead: boolean;
+  createdAt: string;
+  isRead: boolean;
 }
 
 export interface CommandOpportunityDto {
-  Id: string;
-  Title: string;
-  Description: string;
-  PotentialValue: number;
-  Category: string; // Upsell, Recovery, Optimization
-  RecommendedAction: string;
+  id: string;
+  title: string;
+  description: string;
+  Potentialvalue: number;
+  category: string; // Upsell, Recovery, Optimization
+  recommendedAction: string;
 }
 
 export interface AiActionDto {
-  Id: string;
-  Title: string;
-  Description: string;
-  Priority: "High" | "Medium" | "Low";
-  ActionType: string;
-  SourceEntityId: string;
-  CreatedAt: string;
+  id: string;
+  title: string;
+  description: string;
+  priority: "High" | "Medium" | "Low";
+  actionType: string;
+  SourceEntityid: string;
+  createdAt: string;
 }
 
 export interface CommandAutomationSummaryDto {
-  ActiveWorkflowsCount: number;
-  ActionsExecutedToday: number;
-  FailedExecutionsToday: number;
-  TimeSavedHours: number;
+  activeWorkflowsCount: number;
+  actionsExecutedToday: number;
+  failedExecutionsToday: number;
+  timeSavedHours: number;
 }
 
 export interface CommandActivityDto {
-  Id: string;
-  ActivityType: string;
-  Description: string;
-  Timestamp: string;
-  SourceModule: string;
+  id: string;
+  activityType: string;
+  description: string;
+  timestamp: string;
+  sourceModule: string;
 }
 
 export interface CommandTrendDto {
-  Id: string;
-  MetricName: string;
-  DataPoints: { Date: string; Value: number }[];
-  TrendAnalysis: string;
+  id: string;
+  Metricname: string;
+  dataPoints: { date: string; value: number }[];
+  trendAnalysis: string;
 }
 
 export interface BusinessBriefingDto {
-  Id: string;
-  OrganizationId: string;
-  Date: string;
-  ExecutiveSummary: string;
-  KeyHighlights: string[];
-  RisksAndBlockers: string[];
-  RecommendedActions: string[];
-  GeneratedAt: string;
+  id: string;
+  Organizationid: string;
+  date: string;
+  executiveSummary: string;
+  keyHighlights: string[];
+  risksAndBlockers: string[];
+  recommendedActions: string[];
+  generatedAt: string;
 }
 
 export interface BusinessHealthDto {
-  HealthScore: number;
-  Status: "Healthy" | "AtRisk" | "Critical";
-  Trend: "Improving" | "Declining" | "Stable";
-  Explanation: string;
+  healthScore: number;
+  status: "Healthy" | "AtRisk" | "Critical";
+  trend: "Improving" | "Declining" | "Stable";
+  explanation: string;
 }
 
 export interface CommandCenterSummaryDto {
-  BusinessHealth: BusinessHealthDto;
-  ExecutiveSummary: BusinessBriefingDto;
-  Metrics: CommandMetricDto[];
-  PriorityAlerts: ProactiveAlertDto[];
-  Opportunities: CommandOpportunityDto[];
-  RecommendedActions: AiActionDto[];
-  AutomationSummary: CommandAutomationSummaryDto;
-  RecentActivity: CommandActivityDto[];
+  businessHealth: BusinessHealthDto;
+  executiveSummary: BusinessBriefingDto;
+  metrics: CommandMetricDto[];
+  priorityAlerts: ProactiveAlertDto[];
+  opportunities: CommandOpportunityDto[];
+  recommendedActions: AiActionDto[];
+  automationSummary: CommandAutomationSummaryDto;
+  recentActivity: CommandActivityDto[];
 }
 
 export interface SuggestedActionDto {
-  Description: string;
-  ActionType: string;
+  description: string;
+  actionType: string;
   ActionCenterActionId?: string;
 }
 
 export interface CommandCenterAskRequestDto {
-  Question: string;
+  question: string;
   OptionalContext?: string;
 }
 
 export interface CommandCenterAskResponseDto {
-  Answer: string;
-  Confidence: string;
-  SuggestedActions: SuggestedActionDto[];
-  RelatedDataAvailable: boolean;
+  answer: string;
+  confidence: string;
+  suggestedActions: SuggestedActionDto[];
+  relatedDataAvailable: boolean;
 }
 
 // --- API Service Calls ---

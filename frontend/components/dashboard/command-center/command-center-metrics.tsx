@@ -47,36 +47,36 @@ export function CommandCenterMetrics({ metrics, isLoading }: CommandCenterMetric
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {metrics.map((metric) => {
-        const isUp = metric.TrendDirection === "Up";
-        const isDown = metric.TrendDirection === "Down";
-        const isFlat = metric.TrendDirection === "Flat";
+        const isUp = metric.trendDirection === "Up";
+        const isDown = metric.trendDirection === "Down";
+        const isFlat = metric.trendDirection === "Flat";
         
         // Generally up is good, down is bad, but for "Outstanding Payments" or "Churn", it's the opposite.
         // A simple heuristic for this demo:
-        const isNegativeMetric = metric.Name.toLowerCase().includes("outstanding") || 
-                                 metric.Name.toLowerCase().includes("churn") ||
-                                 metric.Name.toLowerCase().includes("failed");
+        const isNegativeMetric = metric.name.toLowerCase().includes("outstanding") || 
+                                 metric.name.toLowerCase().includes("churn") ||
+                                 metric.name.toLowerCase().includes("failed");
                                  
         const trendColor = isUp ? (isNegativeMetric ? "text-red-500" : "text-green-500") 
                          : isDown ? (isNegativeMetric ? "text-green-500" : "text-red-500") 
                          : "text-muted-foreground";
 
         return (
-          <Link href={getLinkForCategory(metric.Category)} key={metric.Id} className="block group">
+          <Link href={getLinkForCategory(metric.category)} key={metric.id} className="block group">
             <Card className="transition-all hover:border-primary/50 hover:shadow-sm">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                  {metric.Name}
+                  {metric.name}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{metric.FormattedValue}</div>
+                <div className="text-2xl font-bold">{metric.formattedValue}</div>
                 <div className="flex items-center text-xs mt-1">
                   <span className={`flex items-center font-medium ${trendColor}`}>
                     {isUp && <ArrowUpRight className="h-3 w-3 mr-1" />}
                     {isDown && <ArrowDownRight className="h-3 w-3 mr-1" />}
                     {isFlat && <Minus className="h-3 w-3 mr-1" />}
-                    {Math.abs(metric.TrendPercentage).toFixed(1)}%
+                    {Math.abs(metric.trendPercentage).toFixed(1)}%
                   </span>
                   <span className="text-muted-foreground ml-2">vs last period</span>
                 </div>
