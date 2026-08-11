@@ -61,16 +61,16 @@ export function CommandCenterNeedsAttention({ alerts = [], actions = [], isLoadi
   
   alerts.forEach(a => {
     let link = "/dashboard/alerts";
-    if (a.Category === "Finance") link = "/dashboard/finance";
-    else if (a.Category === "Inventory") link = "/dashboard/inventory";
-    else if (a.Category === "CRM") link = "/dashboard/crm";
+    if (a.category === "Finance") link = "/dashboard/finance";
+    else if (a.category === "Inventory") link = "/dashboard/inventory";
+    else if (a.category === "CRM") link = "/dashboard/crm";
     
     combined.push({
       type: 'alert',
-      id: a.Id,
-      title: a.Title,
-      desc: a.Description,
-      priority: a.Priority,
+      id: a.id,
+      title: a.title,
+      desc: a.description,
+      priority: a.priority,
       cta: "View Details",
       link
     });
@@ -79,10 +79,10 @@ export function CommandCenterNeedsAttention({ alerts = [], actions = [], isLoadi
   actions.forEach(a => {
     combined.push({
       type: 'action',
-      id: a.Id,
-      title: a.Title,
-      desc: a.Description,
-      priority: a.Priority,
+      id: a.id,
+      title: a.title,
+      desc: a.description,
+      priority: a.priority,
       cta: "Take Action",
       link: "/dashboard/action-center"
     });

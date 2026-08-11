@@ -8,21 +8,30 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
+  Send,
+  Sparkles,
+  Bot,
   User,
-  Building2,
-  Phone,
-  Mail,
-  DollarSign,
+  Copy,
+  RefreshCw,
+  Plus,
+  Trash2,
+  Check,
+  AlertCircle,
+  Command as CommandIcon,
+  ChevronRight,
+  MessageSquare,
+  Search,
+  BrainCircuit,
   Briefcase,
   QrCode,
-  Clock,
   Award,
-  Star,
+  Clock,
+  DollarSign,
   CheckCircle2,
-  FileText,
-  Send,
-  Zap,
+  Star,
 } from "lucide-react";
+import { CustomerAiContext } from "@/components/customer-success/CustomerAiContext";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -85,6 +94,9 @@ export default function Customer360Page({ params }: PageProps) {
           </TabsTrigger>
           <TabsTrigger value="timeline" className="gap-2">
             <Clock className="h-4 w-4" /> Activity Timeline
+          </TabsTrigger>
+          <TabsTrigger value="ai-context" className="gap-2 text-indigo-600 data-[state=active]:text-indigo-600">
+            <BrainCircuit className="h-4 w-4" /> AI Context
           </TabsTrigger>
         </TabsList>
 
@@ -273,6 +285,11 @@ export default function Customer360Page({ params }: PageProps) {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        {/* Tab 6: AI Context */}
+        <TabsContent value="ai-context" className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-300">
+          <CustomerAiContext customerId={customerId} />
         </TabsContent>
       </Tabs>
     </div>

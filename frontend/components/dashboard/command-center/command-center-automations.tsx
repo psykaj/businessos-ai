@@ -49,7 +49,7 @@ export function CommandCenterAutomations({ summary, isLoading }: CommandCenterAu
               <PlayCircle className="w-3.5 h-3.5 mr-1" />
               <span className="text-xs">Active</span>
             </div>
-            <div className="text-2xl font-semibold">{summary.ActiveWorkflowsCount}</div>
+            <div className="text-2xl font-semibold">{summary.activeWorkflowsCount}</div>
           </div>
           
           <div>
@@ -57,7 +57,7 @@ export function CommandCenterAutomations({ summary, isLoading }: CommandCenterAu
               <ZapIcon className="w-3.5 h-3.5 mr-1 text-yellow-500" />
               <span className="text-xs">Executions</span>
             </div>
-            <div className="text-2xl font-semibold">{summary.ActionsExecutedToday}</div>
+            <div className="text-2xl font-semibold">{summary.actionsExecutedToday}</div>
           </div>
 
           <div>
@@ -65,17 +65,17 @@ export function CommandCenterAutomations({ summary, isLoading }: CommandCenterAu
               <Clock className="w-3.5 h-3.5 mr-1 text-blue-500" />
               <span className="text-xs">Time Saved</span>
             </div>
-            <div className="text-2xl font-semibold">{summary.TimeSavedHours}h</div>
+            <div className="text-2xl font-semibold">{summary.timeSavedHours}h</div>
           </div>
 
           <div>
             <div className="flex items-center text-muted-foreground mb-1">
-              <AlertTriangle className={`w-3.5 h-3.5 mr-1 ${summary.FailedExecutionsToday > 0 ? 'text-red-500' : ''}`} />
+              <AlertTriangle className={`w-3.5 h-3.5 mr-1 ${summary.failedExecutionsToday > 0 ? 'text-red-500' : ''}`} />
               <span className="text-xs">Failed</span>
             </div>
             <div className="text-2xl font-semibold">
-              {summary.FailedExecutionsToday > 0 ? (
-                <span className="text-red-500">{summary.FailedExecutionsToday}</span>
+              {summary.failedExecutionsToday > 0 ? (
+                <span className="text-red-500">{summary.failedExecutionsToday}</span>
               ) : (
                 "0"
               )}
@@ -83,7 +83,7 @@ export function CommandCenterAutomations({ summary, isLoading }: CommandCenterAu
           </div>
         </div>
 
-        {summary.FailedExecutionsToday > 0 && (
+        {summary.failedExecutionsToday > 0 && (
           <Link href="/dashboard/automation" className={buttonVariants({ variant: "destructive", size: "sm", className: "w-full mt-4 h-8" })}>Review Failures</Link>
         )}
       </CardContent>

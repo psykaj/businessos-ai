@@ -44,10 +44,10 @@ export function CommandCenterHealth({ health, isLoading }: CommandCenterHealthPr
   let statusColor = "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20";
   let progressColor = "bg-green-500";
   
-  if (health.Status === "AtRisk") {
+  if (health.status === "AtRisk") {
     statusColor = "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20";
     progressColor = "bg-amber-500";
-  } else if (health.Status === "Critical") {
+  } else if (health.status === "Critical") {
     statusColor = "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20";
     progressColor = "bg-red-500";
   }
@@ -58,22 +58,22 @@ export function CommandCenterHealth({ health, isLoading }: CommandCenterHealthPr
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">Business Health</CardTitle>
         <Badge variant="outline" className={statusColor}>
-          {health.Status}
+          {health.status}
         </Badge>
       </CardHeader>
       <CardContent>
         <div className="flex items-baseline space-x-2">
-          <div className="text-3xl font-bold">{health.HealthScore}</div>
+          <div className="text-3xl font-bold">{health.healthScore}</div>
           <div className="text-sm text-muted-foreground">/ 100</div>
-          {health.Trend === "Improving" && <ArrowUpRight className="h-4 w-4 text-green-500 ml-2" />}
-          {health.Trend === "Declining" && <ArrowDownRight className="h-4 w-4 text-red-500 ml-2" />}
-          {health.Trend === "Stable" && <Minus className="h-4 w-4 text-muted-foreground ml-2" />}
+          {health.trend === "Improving" && <ArrowUpRight className="h-4 w-4 text-green-500 ml-2" />}
+          {health.trend === "Declining" && <ArrowDownRight className="h-4 w-4 text-red-500 ml-2" />}
+          {health.trend === "Stable" && <Minus className="h-4 w-4 text-muted-foreground ml-2" />}
         </div>
         <Progress 
-          value={health.HealthScore} 
+          value={health.healthScore} 
           className="h-2 mt-3 mb-4" 
         />
-        <p className="text-sm text-muted-foreground">{health.Explanation}</p>
+        <p className="text-sm text-muted-foreground">{health.explanation}</p>
       </CardContent>
     </Card>
   );

@@ -58,18 +58,18 @@ export function CommandCenterActivity({ activities, isLoading }: CommandCenterAc
       <CardContent className="pt-4 flex-1 overflow-auto max-h-[300px]">
         <div className="relative border-l border-muted ml-2 space-y-6">
           {activities.map((activity, idx) => {
-            const timeAgo = formatDistanceToNow(new Date(activity.Timestamp), { addSuffix: true });
+            const timeAgo = formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true });
             
             return (
-              <div key={activity.Id || idx} className="relative pl-6">
+              <div key={activity.id || idx} className="relative pl-6">
                 <span className="absolute left-[-5px] top-1.5 h-2.5 w-2.5 rounded-full bg-primary/20 ring-4 ring-background">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-20"></span>
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary"></span>
                 </span>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium leading-none mb-1">{activity.Description}</span>
+                  <span className="text-sm font-medium leading-none mb-1">{activity.description}</span>
                   <div className="flex items-center text-[10px] text-muted-foreground uppercase tracking-wider gap-2 mt-1">
-                    <span>{activity.SourceModule}</span>
+                    <span>{activity.sourceModule}</span>
                     <span>•</span>
                     <span>{timeAgo}</span>
                   </div>

@@ -36,7 +36,7 @@ Simplify is an all-in-one AI platform built for SMEs to manage sales, customer r
 
 ---
 
-## 🗺️ Development Roadmap & Progress (Days 1–26 Summary)
+## 🗺️ Development Roadmap & Progress (Days 1–31 Summary)
 
 | Day | Module / Feature | Status | Tech / Details |
 |-----|------------------|--------|----------------|
@@ -70,17 +70,19 @@ Simplify is an all-in-one AI platform built for SMEs to manage sales, customer r
 | **Day 27** | AI Action Center & Execution Dashboard | ✅ **Done** | Centralized AI recommended actions hub, one-click approvals, risk-based execution workflow, visual execution timeline, business impact analytics (August 7, 2026) |
 | **Day 28** | AI Automation & Workflow Engine | ✅ **Done** | Turn business events into intelligent, controlled, repeatable workflows. 4-step wizard for non-technical users, AI Workflow Assistant, and Visual Workflow Preview (August 8, 2026) |
 | **Day 29** | AI Business Briefing & Proactive Alert Center | ✅ **Done** | Executive morning briefing, Proactive alerts engine with tabs, Smart severity mapping, and interactive action execution drawer (August 9, 2026) |
+| **Day 31** | AI Business Memory & Context Engine | ✅ **Done** | Persistent knowledge graph, entity extraction, command center integration, Next.js Drawer UI (August 11, 2026) |
 
 ---
 
-## 🚀 Day 29 Highlights: AI Business Briefing & Proactive Alert Center (August 9, 2026)
+## 🚀 Day 31 Highlights: AI Business Memory & Context Engine (August 11, 2026)
 
-Built on **Next.js 16**, **React 19**, **TailwindCSS**, and **TanStack Query v5**, this module delivers a hyper-focused executive morning briefing and alert system.
+Built on **.NET 9**, **Next.js 16**, and **EF Core**, this module provides a persistent knowledge graph for the AI agent.
 
-### 🎨 Frontend Architecture
-- **AI Business Briefing**: Overhauls the Executive Dashboard to present a 10-second summary answering "What should I care about today?". Includes live top summaries, natural language AI context, Opportunities, Risks, and Priority Action triggers.
-- **Proactive Alert Center**: A dedicated command center (`/dashboard/alerts`) filtering high-value business anomalies by severity and status.
-- **Interactive Details Drawer**: Slide-out sheets explaining *Why it matters*, calculating real *Business Impact*, and enabling one-click *Execute Action* resolutions or workflow automation up-sells.
+### 🎨 Features
+- **Context-Aware Copilot**: The AI now remembers past interactions, customer preferences, and business patterns.
+- **Background Extraction**: Automatically extracts entities, preferences, and constraints from chat transcripts.
+- **Knowledge Management UI**: Dedicated settings page for admins to view, edit, and toggle active memories.
+- **CRM Integration**: Displays relevant AI context directly on the Customer 360 profile.
 
 ---
 
@@ -107,6 +109,9 @@ Built on **Next.js 16**, **React 19**, **TailwindCSS**, and **TanStack Query v5*
 
 Detailed technical documents and verification proofs are available in the [`docs/`](docs/) directory:
 
+- [**docs/day31/implementation_plan.md**](docs/day31/implementation_plan.md) — Day 31 Implementation Plan (AI Business Memory & Context Engine)
+- [**docs/day31/task.md**](docs/day31/task.md) — Day 31 Task Checklist
+- [**docs/day31/walkthrough.md**](docs/day31/walkthrough.md) — Day 31 Walkthrough Verification & Business Value Proof
 - [**docs/day28/implementation_plan.md**](docs/day28/implementation_plan.md) — Day 28 Implementation Plan (AI Automation & Workflow Engine)
 - [**docs/day28/task.md**](docs/day28/task.md) — Day 28 Task Checklist
 - [**docs/day28/walkthrough.md**](docs/day28/walkthrough.md) — Day 28 Walkthrough Verification & Business Value Proof
