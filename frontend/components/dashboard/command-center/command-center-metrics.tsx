@@ -70,7 +70,7 @@ export function CommandCenterMetrics({ metrics, isLoading }: CommandCenterMetric
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{metric.formattedValue}</div>
+                <div className="text-2xl font-bold text-foreground mt-2">{metric.Formattedvalue || metric.value}</div>
                 <div className="flex items-center text-xs mt-1">
                   <span className={`flex items-center font-medium ${trendColor}`}>
                     {isUp && <ArrowUpRight className="h-3 w-3 mr-1" />}

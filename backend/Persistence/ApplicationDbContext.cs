@@ -23,6 +23,7 @@ using backend.Modules.DecisionCenter.Entities;
 using backend.Modules.ActionCenter.Entities;
 using backend.Modules.BusinessIntelligence.Entities;
 using backend.Modules.BusinessMemory.Entities;
+using backend.Modules.Outcomes.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Persistence;
@@ -243,6 +244,9 @@ public sealed class ApplicationDbContext : DbContext
     // Day 31 - AI Business Memory & Context Engine
     public DbSet<BusinessMemory> BusinessMemories => Set<BusinessMemory>();
 
+    // Day 32 - AI Outcome & ROI Intelligence Engine
+    public DbSet<BusinessOutcome> BusinessOutcomes => Set<BusinessOutcome>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -452,6 +456,15 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<BusinessMemory>().HasIndex(m => new { m.OrganizationId, m.MemoryType, m.IsActive });
         modelBuilder.Entity<BusinessMemory>().HasIndex(m => new { m.OrganizationId, m.SourceModule, m.SourceEntityId });
         modelBuilder.Entity<BusinessMemory>().HasIndex(m => m.ExpiresAt);
+
+        // Day 32 - AI Outcomes
+        modelBuilder.Entity<BusinessOutcome>().HasIndex(o => o.BusinessId);
+        modelBuilder.Entity<BusinessOutcome>().HasIndex(o => new { o.BusinessId, o.OutcomeType });
+        modelBuilder.Entity<BusinessOutcome>().HasIndex(o => new { o.BusinessId, o.SourceType, o.SourceId });
+        modelBuilder.Entity<BusinessOutcome>().HasIndex(o => new { o.BusinessId, o.SourceType, o.SourceId, o.OutcomeType }).IsUnique();
+        modelBuilder.Entity<BusinessOutcome>().HasIndex(o => o.OccurredAt);
+        modelBuilder.Entity<BusinessOutcome>().HasIndex(o => o.Confidence);
+        modelBuilder.Entity<BusinessOutcome>().HasIndex(o => o.Status);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }

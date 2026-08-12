@@ -107,6 +107,7 @@ const navGroups = [
       { label: "Executive Dashboard", href: "/dashboard/executive", icon: Crown },
       { label: "KPI Workspace", href: "/dashboard/kpis", icon: BarChart3 },
       { label: "AI Recommendations", href: "/dashboard/recommendations", icon: Sparkles },
+      { label: "Business Outcomes", href: "/dashboard/outcomes", icon: TrendingUp },
       { label: "Forecasting", href: "/dashboard/forecasting", icon: Activity },
       { label: "Business Goals", href: "/dashboard/business-goals", icon: Target },
       { label: "Scorecards", href: "/dashboard/scorecards", icon: Users },

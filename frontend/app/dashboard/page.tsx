@@ -9,6 +9,7 @@ import { CommandCenterMetrics } from "@/components/dashboard/command-center/comm
 import { CommandCenterAutomations } from "@/components/dashboard/command-center/command-center-automations";
 import { CommandCenterActivity } from "@/components/dashboard/command-center/command-center-activity";
 import { CommandCenterAskAi } from "@/components/dashboard/command-center/command-center-ask-ai";
+import { CommandCenterBusinessValue } from "@/components/dashboard/command-center/command-center-business-value";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw } from "lucide-react";
 import { format } from "date-fns";
@@ -63,6 +64,9 @@ export default function DashboardPage() {
           <CommandCenterAiSummary summary={summary?.executiveSummary} isLoading={isLoading} />
         </div>
       </div>
+
+      {/* 2.5 Business Value */}
+      <CommandCenterBusinessValue isLoading={isLoading} />
 
       {/* 3. Metrics */}
       <div className="space-y-3">
