@@ -15,7 +15,7 @@ export function CommandCenterAskAi() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!question.trim() || isPending) return;
-    mutate({ Question: question });
+    mutate({ question: question });
   };
 
   return (

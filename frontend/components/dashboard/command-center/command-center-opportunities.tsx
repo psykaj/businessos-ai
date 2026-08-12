@@ -72,9 +72,9 @@ export function CommandCenterOpportunities({ opportunities = [], isLoading }: Co
                   </h4>
                   <p className="text-sm text-muted-foreground line-clamp-2">{opp.description}</p>
                   
-                  {opp.potentialValue > 0 && (
+                  {opp.Potentialvalue > 0 && (
                     <div className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 mt-2">
-                      +₹{opp.potentialValue.toLocaleString()} potential
+                      +₹{opp.Potentialvalue.toLocaleString()} potential
                     </div>
                   )}
                 </div>
