@@ -24,6 +24,10 @@ export interface CommandOption {
 }
 
 const COMMAND_OPTIONS: CommandOption[] = [
+  // Operations & Daily Loop
+  { label: "What should I do first?", command: "What should I do first today?", category: "Operations", icon: Sparkles, description: "Analyze today's highest priority" },
+  { label: "Show Today's Briefing", command: "Summarize today's business briefing", category: "Operations", icon: Clock, description: "Get daily business summary" },
+  
   // Sales
   { label: "Show Today's Revenue", command: "Show today's revenue", category: "Sales", icon: DollarSign, description: "Instant revenue & sales aggregate" },
   { label: "Assign New Leads", command: "Assign new leads to Rahul", category: "Sales", icon: UserPlus, description: "Auto-assign incoming leads" },

@@ -38,6 +38,9 @@ public static class ExecutiveIntelligenceExtensions
         // Business Goals
         services.AddScoped<IBusinessGoalRepository, BusinessGoalRepository>();
         services.AddScoped<GoalTrackingService>();
+        services.AddScoped<IGoalProjectionService, GoalProjectionService>();
+        services.AddScoped<IGoalGapAnalysisService, GoalGapAnalysisService>();
+        services.AddScoped<IGoalCoachService, GoalCoachService>();
 
         // Scorecards
         services.AddScoped<IScorecardRepository, ScorecardRepository>();

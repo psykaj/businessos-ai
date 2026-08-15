@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Persistence;
@@ -12,9 +13,11 @@ using backend.Persistence;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260813025027_Day33_BusinessGoalsAndKPIs")]
+    partial class Day33_BusinessGoalsAndKPIs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -7329,197 +7332,6 @@ namespace backend.Migrations
                     b.ToTable("SuccessTasks");
                 });
 
-            modelBuilder.Entity("backend.Modules.DailyOperatingLoop.Entities.DailyBusinessBriefing", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("BriefingDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("BusinessHealth")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CompletedPriorityCount")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("GeneratedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("OpportunityCount")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("OrganizationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("PriorityCount")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RiskCount")
-                        .HasColumnType("integer");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("OrganizationId", "BriefingDate");
-
-                    b.ToTable("DailyBusinessBriefings");
-                });
-
-            modelBuilder.Entity("backend.Modules.DailyOperatingLoop.Entities.DailyPriority", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BriefingId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("CompletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("Confidence")
-                        .HasColumnType("decimal(5,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("DueAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ExpectedImpact")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImpactType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("OrganizationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("PriorityScore")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("PriorityType")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("RelatedEntityId")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("RelatedEntityType")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<Guid?>("RelatedGoalId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("RelatedKpiId")
-                        .HasColumnType("uuid");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
-
-                    b.Property<string>("Severity")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("SuggestedAction")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BriefingId");
-
-                    b.HasIndex("PriorityScore");
-
-                    b.HasIndex("RelatedEntityId");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("OrganizationId", "BriefingId");
-
-                    b.HasIndex("OrganizationId", "PriorityType");
-
-                    b.ToTable("DailyPriorities");
-                });
-
             modelBuilder.Entity("backend.Modules.DecisionCenter.Entities.DecisionLog", b =>
                 {
                     b.Property<Guid>("Id")
@@ -13095,17 +12907,6 @@ namespace backend.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("backend.Modules.DailyOperatingLoop.Entities.DailyPriority", b =>
-                {
-                    b.HasOne("backend.Modules.DailyOperatingLoop.Entities.DailyBusinessBriefing", "Briefing")
-                        .WithMany("Priorities")
-                        .HasForeignKey("BriefingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Briefing");
-                });
-
             modelBuilder.Entity("backend.Modules.DecisionCenter.Entities.DecisionLog", b =>
                 {
                     b.HasOne("backend.Entities.Organization", "Organization")
@@ -13829,11 +13630,6 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.CustomerSuccess.Loyalty.Entities.LoyaltyProgram", b =>
                 {
                     b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("backend.Modules.DailyOperatingLoop.Entities.DailyBusinessBriefing", b =>
-                {
-                    b.Navigation("Priorities");
                 });
 
             modelBuilder.Entity("backend.Modules.Documents.Entities.ApprovalRequest", b =>

@@ -20,16 +20,16 @@ public class BusinessGoalRepository : IBusinessGoalRepository
     public async Task<IEnumerable<BusinessGoal>> GetAllAsync(Guid organizationId)
     {
         return await _context.BusinessGoals
-            .Include(b => b.KPI)
+            .Include(b => b.KPIs)
             .Where(b => b.OrganizationId == organizationId && !b.IsDeleted)
-            .OrderBy(b => b.EndDate)
+            .OrderBy(b => b.TargetDate)
             .ToListAsync();
     }
 
     public async Task<BusinessGoal?> GetByIdAsync(Guid id, Guid organizationId)
     {
         return await _context.BusinessGoals
-            .Include(b => b.KPI)
+            .Include(b => b.KPIs)
             .FirstOrDefaultAsync(b => b.Id == id && b.OrganizationId == organizationId && !b.IsDeleted);
     }
 
