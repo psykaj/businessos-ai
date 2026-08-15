@@ -71,6 +71,7 @@ const navGroups = [
   {
     title: "Overview",
     items: [
+      { label: "Today", href: "/dashboard/today", icon: Sparkles, badge: "New" },
       { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
       { label: "AI Business Intelligence", href: "/business-intelligence", icon: BrainCircuit, badge: "AI Engine" },
       { label: "Executive Command", href: "/dashboard/executive", icon: Crown },

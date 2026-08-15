@@ -116,6 +116,7 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<Forecast> Forecasts => Set<Forecast>();
     public DbSet<ExecutiveInsight> ExecutiveInsights => Set<ExecutiveInsight>();
     public DbSet<BusinessGoal> BusinessGoals => Set<BusinessGoal>();
+    public DbSet<BusinessKPI> BusinessKPIs => Set<BusinessKPI>();
     public DbSet<Scorecard> Scorecards => Set<Scorecard>();
     public DbSet<BusinessHealthScore> BusinessHealthScores => Set<BusinessHealthScore>();
     public DbSet<Recommendation> Recommendations => Set<Recommendation>();
@@ -247,6 +248,10 @@ public sealed class ApplicationDbContext : DbContext
     // Day 32 - AI Outcome & ROI Intelligence Engine
     public DbSet<BusinessOutcome> BusinessOutcomes => Set<BusinessOutcome>();
 
+    // Day 34 - AI Daily Business Operating Loop
+    public DbSet<backend.Modules.DailyOperatingLoop.Entities.DailyBusinessBriefing> DailyBusinessBriefings => Set<backend.Modules.DailyOperatingLoop.Entities.DailyBusinessBriefing>();
+    public DbSet<backend.Modules.DailyOperatingLoop.Entities.DailyPriority> DailyPriorities => Set<backend.Modules.DailyOperatingLoop.Entities.DailyPriority>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -290,6 +295,9 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<Forecast>().HasIndex(f => f.OrganizationId);
         modelBuilder.Entity<ExecutiveInsight>().HasIndex(e => e.OrganizationId);
         modelBuilder.Entity<BusinessGoal>().HasIndex(b => b.OrganizationId);
+        modelBuilder.Entity<BusinessGoal>().HasIndex(b => new { b.OrganizationId, b.Status });
+        modelBuilder.Entity<BusinessKPI>().HasIndex(k => k.OrganizationId);
+        modelBuilder.Entity<BusinessKPI>().HasIndex(k => k.BusinessGoalId);
         modelBuilder.Entity<Scorecard>().HasIndex(s => s.OrganizationId);
         modelBuilder.Entity<BusinessHealthScore>().HasIndex(b => b.OrganizationId);
         modelBuilder.Entity<Recommendation>().HasIndex(r => r.OrganizationId);
@@ -347,8 +355,31 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.Entity<backend.Modules.Taxes.Entities.TaxRecord>().HasIndex(tr => tr.OrganizationId);
         modelBuilder.Entity<backend.Modules.FinancialReports.Entities.FinancialReport>().HasIndex(fr => fr.OrganizationId);
 
+        modelBuilder.Entity<backend.Modules.DailyOperatingLoop.Entities.DailyBusinessBriefing>(entity =>
+        {
+            entity.HasIndex(e => new { e.OrganizationId, e.BriefingDate });
+            entity.HasIndex(e => e.Status);
+        });
+
+        modelBuilder.Entity<backend.Modules.DailyOperatingLoop.Entities.DailyPriority>(entity =>
+        {
+            entity.HasIndex(e => new { e.OrganizationId, e.BriefingId });
+            entity.HasIndex(e => new { e.OrganizationId, e.PriorityType });
+            entity.HasIndex(e => e.Status);
+            entity.HasIndex(e => e.RelatedEntityId);
+            entity.HasIndex(e => e.PriorityScore);
+            
+            entity.HasOne(p => p.Briefing)
+                  .WithMany(b => b.Priorities)
+                  .HasForeignKey(p => p.BriefingId)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
         // Day 20 Constraints
         modelBuilder.Entity<OAuthApplication>().HasIndex(o => o.OrganizationId);
+
+        // Day 21 - Event Sourcing / Bus
+        modelBuilder.Entity<EventSubscription>().HasIndex(o => o.OrganizationId);
         modelBuilder.Entity<OAuthApplication>().HasIndex(o => o.ClientId).IsUnique();
         modelBuilder.Entity<WebhookEndpoint>().HasIndex(w => w.OrganizationId);
         modelBuilder.Entity<WebhookDeliveryLog>().HasIndex(w => w.OrganizationId);
